@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>意见反馈</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_hkj4622n5z.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top .record{
+            font-size: .3rem;
+            font-weight: normal;
+            color: #0086F7;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .list{
+            width: 100%;
+            height: 1.11rem;
+            background: #FFFFFF;
+            font-size: .3rem;
+            font-weight: bold;
+            border-bottom:1px solid #EEEEEE; 
+        }
+        .list input{
+            width: 4.8rem;
+            height: .36rem;
+            font-weight: normal;
+            font-size: .3rem;
+        }
+        /* 谷歌浏览器 blink v8引擎*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 苹果公司 safari*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 火狐内核 */
+        input::-moz-placeholder{ 
+            color: #CCCCCC;
+
+        }
+        /* 由于我的IE刚好是IE9及以下不支持， */
+        input:-ms-input-placeholder{ 
+            color: #CCCCCC;    
+        }
+        textarea::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        textarea::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        textarea::-moz-placeholder{ 
+            color: #CCCCCC;
+        }
+        textarea:-ms-input-placeholder{ 
+            color: #CCCCCC;    
+        }
+        .border0{
+            border: 0;
+        }
+        .advice{
+            width: 100%;
+            height: 4rem;
+            margin-top: .2rem;
+            padding: .4rem .3rem;
+            background: #FFFFFF;
+        }
+        .advice textarea{
+            width: 100%;
+            height: 1.5rem;
+            font-size: .3rem;
+        }
+        .advice .picture{
+            height: 1.7rem;
+            background: #FFFFFF;
+            overflow-x: scroll;
+        }
+        .advice .picture .img{
+            width: 1.4rem;
+            height: 1.4rem;
+            padding-top: .2rem;
+            background: #EFEFEF;
+            border-radius: .05rem;
+            text-align: center;
+        }
+        .advice .picture .img .add{
+            font-size: .6rem;
+            color: #B2B2B2;
+        }
+        .advice .picture .img .tip{
+            font-size: .22rem;
+            color: #999999;
+            margin-top: .1rem;
+        }
+        .advice .picture img{
+            width: 1.4rem;
+            height: 1.4rem;
+            border-radius: .05rem;
+        }
+        .advice .picture .img-list{
+            width: 1.4rem;
+            height: 1.4rem;
+            margin-right: .3rem;
+            overflow: visible;
+            position: relative;
+        }
+        .advice .picture .img-list img{
+            width: 100%;
+            height: 100%;
+        }
+        .advice .picture .img-list .iconfont{
+            position: absolute;
+            top: -0.08rem;
+            right: -0.08rem;
+            font-size: .24rem;
+            color: #999;
+        }
+        .submit{
+            width: 100%;
+            height: .9rem;
+            background: #ccc;
+            line-height: .9rem;
+            text-align: center;
+            font-size: .32rem;
+            color: #FFFFFF;
+            font-weight: bold;
+            position: fixed;
+            bottom: 0;
+        }
+        .submitactive{
+            background: #0086F7;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" opt=".65"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>意见反馈</div>
+        <div class="content record" @click="jumpSuggestList">反馈记录</div>
+    </div>
+    <div class="top88"></div>
+    <div class="wrapper">
+        <div class="list  flex space-between align-items">
+            <div>姓名</div>
+            <input type="text" name="" id="" placeholder="请输入" v-model="suggest.name">
+        </div>
+        <div class="list  flex space-between align-items border0">
+            <div>联系电话</div>
+            <input type="number" name="" id="" placeholder="请输入" v-model="suggest.phone">
+        </div>
+    </div>
+    <div class="advice">
+        <textarea name="" id=""placeholder="请输入反馈意见" v-model="suggest.content"></textarea>
+        <div class="picture flex flex_start flex_nwrap align-items">
+            <div class="img-list" v-for="(item,index) in imgs" :key="index">
+                <img :src="item" alt="">
+                <i class="iconfont iconchahao" @click="deleteImg(index)"></i>
+            </div>
+            <div v-show="isAdd" class="img" @click="addPhoto()">
+                <i class="add iconfont iconjiahao3"></i>
+                <div class="tip" >添加照片</div>
+            </div>
+        </div>
+    </div>
+    <div class="submit" :class="{submitactive : isBtnActive}" @click="submitData">提交</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    suggest:{
+                       name:"",
+                       phone:"",
+                       content:"",
+                    },
+                    imgs:[],
+                    loading:false,
+                },
+                methods:{
+                    submitData:function(){
+                        var _this = this;
+                        if (_this.suggest.name == "" || _this.suggest.phone == "" || _this.suggest.content == "") {
+                            return false
+                        }
+                        _this.loading = true;
+                        api.ajax({
+                            url: url+"/my/feedback",
+                            method: 'post',
+                            data: {
+                                values: _this.suggest,
+                                files: {
+                                    'images[]': _this.imgs
+                                }
+                            }
+                        }, function(ret, err) {
+                            _this.loading = false;
+                            if (err == "" && ret.code == 1 ) {
+                                api.toast({msg:"提交成功",location:"middle"})
+                                setTimeout(function(){
+                                   api.closeWin()
+                                },700)
+                            }else{
+                                err ? api.toast({msg:"提交失败"}) : api.toast({msg:ret.msg})
+                                console.log(JSON.stringify(err))
+                                console.log(JSON.stringify(ret))
+                            }
+                        });
+                    },
+                    //删除添加的照片
+                    deleteImg:function(index){
+                        this.imgs.splice(index,1);
+                    },
+                    //反馈记录
+                    jumpSuggestList:function(){
+                        api.openWin({
+                            name:"feedbackRecord",
+                            url:"../zhangtiantian/feedback-record.html"
+                        })
+                    },
+                    //返回
+                    back:function(){
+                        api.closeWin()
+                    },
+                    //添加照片
+                    addPhoto:function(){
+                        var _this = this;
+                        api.actionSheet({
+                            title: '添加图片',
+                            cancelTitle: '取消',
+                            buttons: ['本地图片','拍照']
+                        },function(ret,err){
+                            var index = ret.buttonIndex;
+                            if (index == 2) {
+                                api.getPicture({
+                                    sourceType: 'camera',
+                                    encodingType: 'jpg',
+                                    mediaValue: 'pic',
+                                    destinationType: 'url',
+                                    allowEdit: true,
+                                    quality: 50,
+                                    targetWidth: 100,
+                                    targetHeight: 100,
+                                    saveToPhotoAlbum: false
+                                }, function(ret, err) {
+                                    if (ret.data != "" && err == "") {
+                                        //ret.data
+                                        _this.imgs.push(ret.data); 
+                                    } else {
+                                        
+                                        // alert(JSON.stringify(err));
+                                    }
+                                });
+                            } else {
+                                api.getPicture({
+                                    sourceType: 'library',
+                                    encodingType: 'jpg',
+                                    mediaValue: 'pic',
+                                    destinationType: 'url',
+                                    allowEdit: true,
+                                    quality: 50,
+                                    targetWidth: 100,
+                                    targetHeight: 100,
+                                    saveToPhotoAlbum: false
+                                }, function(ret, err) {
+                                    if (ret.data != "" && err == "") {
+                                        _this.imgs.push(ret.data); 
+                                    } else {
+                                        // alert(JSON.stringify(err));
+                                    }
+                                });
+                            }
+                        })
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top8   = document.querySelector('.top88');
+                        searchHeight = search.clientHeight;
+                        top8Height = top8.clientHeight;
+                        search.style.height = safeArea + searchHeight + "px";
+                        top8.style.height  = safeArea + top8Height + "px";
+                        search.style.paddingTop = safeArea + "px";
+                    };
+
+                },
+                computed:{
+                    //是否允许继续添加
+                    isAdd:function(){
+                        return this.imgs.length < 3;
+                    },
+                    //是否允许激活按钮
+                    isBtnActive:function(){
+                        var _this = this;
+                        var status = true
+                        if (_this.suggest.name == "" || _this.suggest.phone == "" || _this.suggest.content == "") {
+                            status = false
+                        }
+                        return status
+                    }
+                }
+            })
+        }
+            
+    
+    
+    </script>
+</body>
+</html>

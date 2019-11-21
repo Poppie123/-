@@ -1,0 +1,93 @@
+ <widget id="A6012445050426"  version="0.0.1">
+
+    <name>鑫海</name>
+
+    <description>
+
+        Example For APICloud.
+
+    </description>
+
+    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+
+        Developer
+
+    </author>
+
+    <content src="index.html" />
+
+    <access origin="*" />
+
+    <preference name="pageBounce" value="false"/>
+
+	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+
+	<preference name="hScrollBarEnabled" value="false"/>
+
+	<preference name="vScrollBarEnabled" value="false"/>
+
+	<preference name="autoLaunch" value="true"/>
+
+	<preference name="fullScreen" value="false"/>
+
+	<preference name="autoUpdate" value="true" />
+
+	<preference name="smartUpdate" value="false" />
+
+	<preference name="debug" value="true"/>
+
+	<preference name="statusBarAppearance" value="true"/>
+
+	<permission name="readPhoneState" />
+
+	<permission name="camera" />
+
+	<permission name="record" />
+
+	<permission name="location" />
+
+	<permission name="fileSystem" />
+
+	<permission name="internet" />
+
+	<permission name="bootCompleted" />
+
+	<permission name="hardware" />
+<preference name="customRefreshHeader" value="UIPullRefreshMotive"/>
+<!-- IOS 微博白名单 -->
+<preference name="querySchemes" value="sinaweibohd,sinaweibo,weibosdk,weibosdk2.5" />
+<!-- 微博登录 -->
+<feature name="weiboPlus">
+	<param name="urlScheme" value="wb4206185800" />
+	<param name="apiKey" value="4206185800" />
+	<param name="registUrl" value="http://xinhai.vfing.com:80/api/tourism/get_banner" />
+</feature>
+<!-- 高版本ipone配置此选项 -->
+<preference name="querySchemes" value="mqq,mqqapi"/>
+<!-- qq登录 -->
+ <feature name="QQPlus">
+    <param name="urlScheme" value="tencent101793027" />
+    <param name="apiKey" value="9e066d65862f217380c2e2e87a810f0d" />
+ </feature>
+<!-- 微信登录 -->
+<feature name="wx">
+	<param name="urlScheme" value="wx9c536584bbad448d"/>
+	<param name="apiKey" value="wx9c536584bbad448d"/>
+	<param name="apiSecret" value="746d0485889f4f71da33a7da997532c9"/>
+</feature>
+<!-- 微信支付 -->
+<feature name="wxPay">
+	<param name="urlScheme" value="wx9c536584bbad448d"/>
+	<param name="apiKey" value="wx9c536584bbad448d"/>
+	<param name="apiSecret" value="746d0485889f4f71da33a7da997532c9"/>
+</feature>
+<!-- 支付宝支付 -->
+<feature name="aliPayPlus">
+	<param name="urlScheme" value="AliPayPlusA6012445050426"/>
+</feature>
+</widget>
+

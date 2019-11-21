@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查看更多推荐</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_dqlel4uscwd.css">
+    <style>
+        html,body{
+            height: 100%;
+            background: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .pro-list{
+            width: 100%;
+            padding:  0 .3rem;
+            margin-top: .2rem;
+            -moz-column-count: 2;
+            -webkit-column-count: 2;
+            column-count: 2;
+            -moz-column-gap: .18rem;
+            -webkit-column-gap: .18rem;
+            column-gap: .18rem;
+            display: inline-block;
+        }
+        .pro-list .list{
+            width: 3.36rem;
+            border-radius: .1rem;
+            margin-bottom: .2rem;
+            background: #FFFFFF;
+            padding-bottom: .25rem;
+            float: left;
+            break-inside: avoid;
+        }
+        .pro-list .list img{
+            width: 3.36rem;
+            height: 2.5rem;
+        }
+        .pro-list .list .name{
+            width: 100%;
+            font-size: .28rem;
+            font-weight: bold;
+            line-height: .4rem;
+            padding: .22rem .22rem 0;
+            margin-bottom: .14rem;
+        }
+        .pro-list .list .ongoing{
+            width: .8rem;
+            height: .3rem;
+            margin-bottom: .14rem;
+            border-radius: .04rem;
+            background: rgba(0,134,247,.05);
+            border-radius: .04rem;
+            font-size: .2rem;
+            font-weight: 500;
+            color: #0086F7;
+            line-height: .3rem;
+            text-align: center;
+            margin-left: .22rem;
+        }
+        .pro-list .list .satisfy{
+            font-size: .26rem;
+            color: #999999;
+            margin-left: .22rem;
+        }
+        .pro-list .list .dollar{
+            font-size: .28rem;
+            color: #FE6602;
+            font-weight: bold;
+            margin-left: .22rem;
+        }
+        .pro-list .list .price{
+            font-size: .32rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="top flex space-between align-items">
+        <div class="i">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>相似推荐</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <ul class="pro-list">
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉+玉龙雪山5日4晚跟团游玩跟团游玩</div>
+            <div class="ongoing">进行中</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉+玉龙雪山5日4晚跟团游玩跟团游玩</div>
+            <div class="ongoing">进行中</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+                <img src="../../image/pro11@2x.png" alt="">
+                <div class="name ellipsis2">丽江+香格里拉</div>
+                <div class="satisfy">
+                    <span>97%满意度</span>
+                    <span>23销量</span>
+                </div>
+                <div>
+                    <span class="dollar">￥<span class="price">3001</span></span>
+                </div>
+            </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉+玉龙雪山5日4晚跟团游玩跟团游玩</div>
+            <div class="ongoing">进行中</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+    </ul>
+    <script src="../../js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <link rel="stylesheet" href="../../css/swiper.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+    <title>商城</title>
+    <style>
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            top: 0;
+            padding:0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            border-bottom: 1px solid #eeeeee;
+            background: #fff;
+            z-index: 995;
+        }
+
+        .header i {
+            color: #333333;
+            font-size: .32rem;
+        }
+
+        .header-a {
+            width: auto;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+        .null{
+            width: .32rem;
+            height: .32rem;;
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            padding: .88rem 0 0;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 3.2rem;
+        }
+        .swiper-slide img{
+            width:100%;
+            height:3.2rem;
+        }
+        .nav{
+            width: 100%;
+            height:2rem;
+            background: #fff;
+            padding-top:.29rem;
+        }
+        .item{
+            font-size: .24rem;
+            color: #333333;
+            text-align: center;
+        }
+        .nav .item img{
+            width: .88rem;
+            height:.88rem;
+            border-radius: .1rem;
+            margin-bottom:.15rem;
+        }
+        .like{
+            width:100%;
+            height:auto;
+            padding:.4rem .3rem 0;
+        }
+        .tit{
+            font-size: .34rem;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: .1rem;
+        }
+        .list {
+            width: 100%;
+            padding-bottom: .2rem;
+            position: relative;
+        }
+        .list li {
+            width: 3.36rem;
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            margin-top: .2rem;
+            border-radius: .1rem;
+            position: absolute;
+            /* padding-bottom: .2rem; */
+        }
+
+        .list li img {
+            width: 3.36rem;
+            height: 3.36rem;
+        }
+
+        .food-message {
+            width: 100%;
+            height: auto;
+            padding: .2rem .36rem .2rem .22rem;
+        }
+
+        .food-name {
+            width: 2.8rem;
+            font-size: .28rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .food-message p {
+            font-size: .26rem;
+            color: #999999;
+            margin-top: .1rem;
+        }
+        .price {
+            color: #FE6602;
+            margin-top: .1rem;
+            font-weight: bold;
+        }
+        .food-message .bocus{
+            width: .36rem;
+            height: .32rem;
+            border-radius: .14rem;
+            font-size: .2rem!important;
+            background: #ff0000;
+            font-weight: normal;
+            line-height: normal;
+            margin-left: .2rem;
+        }
+        .food-message .bocus span{
+            color: #fff;
+            font-size: .24rem!important;
+        }
+        .price span:first-child {
+            font-size: .28rem;
+
+        }
+
+        .price span:last-child {
+            font-size: .32rem;
+
+        }
+        .qundao-price span{
+            font-size: .32rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .qundao-price span:last-child{
+            font-size: .24rem;
+            color: #ff0000;
+            font-weight: bold;
+            margin-left: .2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+    <div class="header flex align-items">
+        <div class="null"></div>
+        <span class="header-a">商城</span>
+        <i class="iconfont iconxingzhuang9" @click="openSearch"></i>
+    </div>
+    
+    <div class="main" >
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="item in bannerList" :key="item.id"><img :src="item.pic" alt=""></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="nav flex space-around align-items">
+            <div class="item " v-for="item in menuList" :key="item.id" @click="openClass(item.id)">
+                <img :src="item.img" alt="">
+                <div>{{ item.cat_name }}</div>
+            </div>
+        </div>
+        <div class="like">
+            <div class="tit">猜你喜欢</div>
+            <ul class="list hot-box">
+                <li  class="water-item" v-for="(item,index) in likeList" @click="openDetail(item.goods_id)" :key="index">
+                    <img v-if="index > 4" src="../../image/zhanweiShop.png" class="hui-lazy" :lazySrc="item.goods_img"/>
+                    <img v-else :src="item.goods_img"  />
+                    <!-- <img :src="item.goods_img" alt=""> -->
+                    <div class="food-message">
+                        <div class="food-name">{{ item.goods_name }}</div>
+                        <p><span>{{ item.satisfaction }}%满意度</span>&nbsp;&nbsp;<span>{{ item.sales }}销量</span></p>
+                        <div class="price flex align-items">
+                            <span>￥</span><span>{{ item.shop_price }}</span>
+                            <div class="bocus fn-ctr"  v-if="item.is_youhuiquan == 1"><span >券</span></div> 
+                        </div>
+                        <div class="qundao-price flex align-items" v-if="isQundao == 1">
+                            <span>￥</span><span>{{ item.qudao_price }}</span><span>渠道价</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/swiper.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/hui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   bannerList:[],
+                   menuList:[],
+                   likeList:[],
+                   likeTotal:0,
+                   isTotal:true,
+                   isQundao:0,
+                },
+                methods:{
+                   getBannerList:function(){
+                        var _this = this;
+                        request('/shopping/shop_banner',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.bannerList = res.data;
+                                _this.$nextTick(function(){
+                                    var swiper = new Swiper('.swiper-container', {
+                                        loop: true,
+                                        pagination: {
+                                        el: '.swiper-pagination',
+                                        },
+                                        autoplay: {
+                                        delay: 3000,
+                                        disableOnInteraction: false,
+                                        },
+                                        on: {
+                                            touchStart: function(event) {
+                                                api.setFrameAttr({
+                                                name: api.frameName,
+                                                bounces: false
+                                                });
+                                            },
+                                            touchEnd: function(event) {
+                                                api.setFrameAttr({
+                                                name: api.frameName,
+                                                bounces: true
+                                                });
+                                            },
+                                            click: function(){     //跳转页面
+                                                var item = _this.bannerList[this.activeIndex - 1];
+                                                var bannerParams = getBannerQuery(item.url);
+                                                switch(bannerParams.url){
+                                                    case '../user/travel_card_view.html':
+                                                        api.openWin({
+                                                            name:"travelCardView",
+                                                            url:"../user/travel_card_view.html",
+                                                            pageParam:{
+                                                                gds:JSON.stringify(bannerParams.params),
+                                                            },
+                                                            reload:true,
+                                                        })
+                                                    break
+                                                    case '../mapiaoliang/detail-page.html':
+                                                        api.openWin({
+                                                            name:"detailPage",
+                                                            url:"../mapiaoliang/detail-page.html",
+                                                            pageParam:{
+                                                                gdsId:bannerParams.params.goods_id,
+                                                            },
+                                                            reload:true,
+                                                        })
+                                                    break
+                                                    case '../user/travel_dtl.html':
+                                                        api.openWin({
+                                                            name:"travelDtl",
+                                                            url:"../user/travel_dtl.html",
+                                                            pageParam:{
+                                                                obj:JSON.stringify({attrid:bannerParams.params.attrid,type:bannerParams.params.type})
+                                                            },
+                                                            reload:true,
+                                                        })
+                                                    break
+                                                }
+                                                
+                                            },
+                                        }
+                                    });
+                                })
+                            }
+                        })
+                   },
+                   getMenu:function(){
+                       var _this = this;
+                       request('/shopping/goods_category',{},function(err,res){
+                            api.refreshHeaderLoadDone()
+                            if (!err && res.code == 1) {
+                                _this.menuList = getRandomArr(res.data,4);
+                            }
+                       })
+                   },
+                   getLiskGd:function(){
+                       var _this = this;
+                       if (!_this.isTotal) {
+                           return false
+                       }
+                       _this.isTotal = false;
+                       request('/shopping/recommendForYou',{start:_this.likeList.length},function(err,res){
+                            _this.isTotal = true;
+                            if (!err && res.code == 1) {
+                                _this.likeList = _this.likeList.concat(res.data.data);
+                                _this.likeTotal= res.data.total;   
+                                _this.$nextTick(function(){
+                                    renderWaterFull('water-item',15,0) //生成瀑布流布局
+                                    _this.handerWaterheight();
+                                })
+                            }
+                       })
+                    },
+                    // 处理瀑布流元素的高度
+                    handerWaterheight:function(){
+                        var _this = this;
+                        var hotGdsListLen = _this.likeList.length;
+                        var lastnum = (hotGdsListLen % 2 == 0) ? 2 : 1; //计算数据是单数还是双数
+                        var hotBox = document.querySelector('.hot-box');
+                        if (lastnum  == 2) {   //双的
+                            var lastele = document.getElementsByClassName('water-item')[hotGdsListLen - 1]; //最后一个元素
+                            var prevele = document.getElementsByClassName('water-item')[hotGdsListLen - 2]; //倒数第二个元素
+                            var lasteleHeight = lastele.clientHeight + Number(getEleCss(lastele,'top',2));  //获取最后一个具顶部的高度
+                            var preveleHeight = prevele.clientHeight + Number(getEleCss(prevele,'top',2));  //获取倒数第二个具顶部的高度
+                            hotBox.style.height = Math.max(lasteleHeight,preveleHeight) + 20 + "px";  //求最大值并赋予父元素
+                        } else {        //单的
+                            var waterItem = document.getElementsByClassName('water-item')[hotGdsListLen - 1];
+                            var waterItemHg = waterItem.clientHeight;
+                            var waterItemTop = getEleCss(waterItem,'top',2);
+                            hotBox.style.height = waterItemHg + Number(waterItemTop) + 20 +"px";
+                        }
+                    },
+                    //跳转搜索
+                    openSearch:function(){
+                        api.openWin({
+                            name:"search",
+                            url:"../user/search.html",
+                        })
+                    },
+                    //跳转分类
+                    openClass:function(id){
+                        api.openWin({
+                            name:"food",
+                            url:"../mapiaoliang/food.html",
+                            pageParam:{
+                                cateId:id
+                            }
+                        })
+                    },
+                    //跳转商品详情
+                    openDetail:function(id){
+                        api.openWin({
+                            name:"detailPage",
+                            url:"../mapiaoliang/detail-page.html",
+                            pageParam:{
+                                gdsId:id
+                            },
+                        })
+                    },
+                    refreshPage:function(){
+                        this.getBannerList();
+                        this.getMenu();
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.main');
+                        var header = document.querySelector('.header');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight + safeArea + "px";
+                        header.style.paddingTop = safeArea+"px";
+                        main.style.paddingTop = safeArea + headerHeight + "px";
+                    };
+                    this.getBannerList();
+                    this.getMenu();
+                    this.getLiskGd();
+                    api.addEventListener({name:"refreshShopPage"},function(res,err){
+                        _this.refreshPage()
+                    })
+                    hui.lazyLoad();   //图片懒加载
+                    hui.lazyLoadNow()
+                    // 下拉刷新
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#fff',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新',
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.refreshPage();
+                    });
+                    // 上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.likeList.length == _this.likeTotal) {
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getLiskGd();
+                            },300)
+                        }
+                    });
+                    //监听是否渠道价格
+                    api.addEventListener({name:"refreshQundao"},function(ret){
+                        _this.isQundao = ret.value.isQundao || 0;
+                        if (document.querySelector('.water-item')) {
+                            console.log(11)
+                            _this.$nextTick(function(){
+                                renderWaterFull('water-item',15,0) //运行瀑布流布局
+                                _this.handerWaterheight();
+                            })
+                           
+                        }
+                    })
+                },
+            })
+        }
+               
+    </script>
+</body>
+
+</html>

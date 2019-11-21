@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品类发票</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+
+        .header {
+            width: 7.5rem;
+            height: .93rem;
+            position: fixed;
+            top: 0;
+            z-index: 1300;
+            background-color: #FFFFFF;
+            padding: 0 .3rem;
+            border-bottom: 1px solid #EEEEEE;
+
+        }
+
+        .header .iconfanhui {
+            font-size: .3rem;
+            color: #333333;
+            float: left;
+        }
+
+        .header .order {
+
+            font-size: .36rem;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
+        }
+
+        .header .myhead {
+            width: .3rem;
+            height: .3rem;
+        }
+
+        .middle {
+            width: 7.5rem;
+            overflow: hidden;
+            padding-left: .3rem;
+            padding-right: .3rem;
+            padding-bottom: 1.3rem;
+
+        }
+
+        .middle .first {
+            width: 6.9rem;
+            height: 1.59rem;
+            overflow: hidden;
+            padding-left: .3rem;
+            padding-right: .3rem;
+            background-color: #FFFFFF;
+            margin-top: .2rem;
+            border-radius: .08rem;
+        }
+
+        .middle .first .circle {
+            width: .42rem;
+            height: .42rem;
+            border-radius: 50%;
+            border: 1px solid #DDDDDD;
+            margin-right: .2rem;
+            position: relative;
+        }
+
+        .middle .first .circle .iconjuxing {
+            display: none;
+        }
+
+        .middle .first .active .iconjuxing {
+            display: block !important;
+            position: absolute;
+            left: -2px;
+            top: -2px;
+            font-size: .42rem;
+            color: #0086F7;
+        }
+
+        .middle .first .last {
+            width: 4.3rem;
+            overflow: hidden;
+            float: left;
+        }
+
+        .middle .first .last .title {
+            width: 3.9rem;
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .middle .first .last .guige {
+            font-size: .26rem;
+            color: #999999;
+            text-align: left;
+            margin-top: .2rem;
+            overflow: hidden;
+        }
+
+        .middle .first .money {
+            width: 1.8rem;
+            font-size: .28rem;
+            font-weight: bold;
+            color: #FE6602;
+            text-align: right;
+            margin-left: .25rem;
+            float: right;
+        }
+
+        .middle .first .money span {
+            font-size: .32rem;
+        }
+
+        .footer {
+            width: 7.5rem;
+            height: 1.1rem;
+            border-top: 1px solid #EEEEEE;
+            padding-left: .3rem;
+            position: fixed;
+            bottom: 0;
+            background-color: #FFFFFF;
+        }
+
+        .footer .allcheck {
+            width: 5.38rem;
+            height: 1.1rem;
+            overflow: hidden;
+            float: left;
+        }
+
+        .footer .allcircle {
+            width: .42rem;
+            height: .42rem;
+            border-radius: 50%;
+            border: 1px solid #DDDDDD;
+            float: left;
+            margin-right: .1rem;
+        }
+
+        .footer .allcheck .left {
+            font-size: .28rem;
+            color: #000000;
+            text-align: left;
+        }
+
+        .footer .allcheck .right {
+            font-size: .26rem;
+            color: #666666;
+            text-align: left;
+            margin-right: .2rem;
+        }
+
+        .footer .allcheck .right span {
+            color: #FC595B;
+        }
+
+        .footer .iconjuxing {
+            display: none;
+        }
+        .footer .allcheck .active {
+            position: relative;
+        }
+        .footer .allcheck .active .iconjuxing {
+            display: block;
+            font-size: .42rem;
+            color: #0086F7;
+            position: absolute;
+            left:-1px;
+            top: -1px;
+        }
+
+        .footer .jiesuan {
+            width: 2.12rem;
+            height: 1.1rem;
+            background-color: #ccc;
+            font-size: .32rem;
+            color: #FFFFFF;
+            text-align: center;
+            line-height: 1.1rem;
+            float: left;
+        }
+        .footer .jiesuanactive{
+            background-color: #0086F7;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <no-data v-show="list.length == 0" msg="暂无可以开发票的商品"></no-data>
+        <div class="header flex align-items space-between flex_center">
+            <i class="iconfont iconfanhui" @click="back"></i>
+            <div class="order ">{{title}}</div>
+            <div class="myhead"></div>
+        </div>
+        <div class="middle">
+
+            <div class="first flex align-items " v-for="(item,index) in list" @click="danCheck(index)">
+                <div class="circle" :class="{active:item.status}">
+                    <i class="iconfont iconjuxing"></i>
+                </div>
+                <div class="last">
+                    <div class="title ellipse">{{ item.goods_name }} </div>
+                    <div class="guige">{{ item.add_time }}</div>
+                </div>
+                <div class="money">￥<span class="seven">{{ item.order_amount }}</span></div>
+            </div>
+
+        </div>
+        <div class="footer flex space-between align-items ifooter">
+            <div class="allcheck flex flex_center space-between align-items">
+                <div class="left" @click="duoCheck">
+                    <div class="allcircle" :class="{active:isAllcheck}">
+                        <i class="iconfont iconjuxing"></i>
+                    </div>
+                    <span>全选</span> 
+                </div>
+                <div class="right">合计:<span>￥{{ allPrice }}</span></div>
+            </div>
+            <div class="jiesuan" :class="{jiesuanactive:allcheck}" @click="goInvoice">开发票</div>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    title:"",
+                    type:"",
+                    list:[],
+                    total:0,
+                    isTotal:true,
+                    loading:true,
+                    opt:1,
+                },
+                methods:{
+                    //获得列表
+                    getgdsList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/my/goods_fapiao_list',{
+                            type:_this.type,
+                            start:_this.list.length,
+                        },function(err,res){
+                            _this.isTotal = true;
+                            setTimeout(function(){_this.loading = false},600)
+                            if (!err && res.code == 1) {
+                                var list = res.data.data.map(function(v){
+                                    v.status =  false;
+                                    return v
+                                })
+                                _this.list = _this.list.concat(list);
+                                _this.total= res.data.total;
+                            }
+                        })
+                    },
+                    goInvoice:function(){
+                        var _this = this;
+                        if (!_this.allcheck) {
+                            return false
+                        }
+                        var linarr = _this.list.filter(function(v){return v.status});
+                        linarr = linarr.map(function(v){return v.order_id});
+                        api.openWin({
+                            name:"information",
+                            url:"../mohan/information.html",
+                            pageParam:{
+                                allOrder:linarr,
+                            }
+                        });
+                    },
+                    danCheck:function(index){
+                        this.list[index].status = !this.list[index].status;
+                    },
+                    duoCheck:function(){
+                        var _this = this;
+                        var currentStatus = !_this.isAllcheck;
+                        _this.list = _this.list.map(function(v){
+                            v.status = currentStatus;
+                            return v;
+                        });
+                    },
+                    back:function(){
+                       api.closeWin();
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var middle = document.querySelector('.middle');
+                        var search = document.querySelector('.header');
+                        var searchHeight = search.clientHeight;
+                        search.style.height = searchHeight + safeArea + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        middle.style.paddingTop = searchHeight + safeArea + 'px';
+                        handerIOSX()
+                    };
+                    this.type = api.pageParam.type;
+                    this.type == 2 ? this.title = "旅游类" : this.title = "商品类";
+                    this.getgdsList(); 
+                    // 上拉加载
+                    var _this = this;
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　　　//上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getgdsList();
+                            },300)
+                        }
+                    });
+                },
+                computed:{
+                    isAllcheck:function(){
+                        var _this = this;
+                        var linarr = _this.list.filter(function(v){return v.status});
+                        return linarr.length == _this.list.length && _this.list.length != 0
+                    },
+                    allcheck:function(){
+                        var linarr = this.list.filter(function(v){return v.status});
+                        return linarr.length > 0;
+                    },
+                    allPrice:function(){
+                        var total = this.list.reduce(function(sum,v){
+                           return v.status ? sum+Number(v.order_amount)   : sum
+                        },0)
+                        return total
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

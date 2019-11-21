@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>认证成功</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .img{
+            width: 3.57rem;
+            height: 2.08rem;
+            margin: 3.75rem auto .5rem;
+        }
+        .tip{
+            font-size: .3rem;
+            color: #999999;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+    <div class="top flex space-between align-items">
+        <div class="i back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>审核成功</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <img class="img" src="../../image/rz-succ1231@2x.png" alt="">
+    <div class="tip">恭喜您认证成功</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+         apiready = function(){
+            if (api.statusBarAppearance) {
+                var safeArea = api.safeArea.top;
+                var search = document.querySelector('.top');
+                var top88 = document.querySelector('.top88');
+                var searchHeight = search.clientHeight;
+                var top8H = top88.clientHeight;
+                top88.style.height = top8H+safeArea+"px"
+                search.style.height = searchHeight+safeArea+"px"
+                search.style.paddingTop = safeArea + "px"
+            };
+            var back = document.querySelector('.back');
+            back.onclick = function(){
+                api.closeWin()
+            }
+         }
+    
+    
+    </script>
+</body>
+</html>

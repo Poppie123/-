@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <title>我要回答</title>
+    <style>
+        html,
+        body {
+            background: #fff;
+        }
+
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            top: 0;
+            padding:0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            border-bottom: 1px solid #eeeeee;
+            background: #fff;
+        }
+
+        .header i {
+            font-size: .32rem;
+        }
+
+        .header-a {
+            width: auto;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+        .null{
+            width: 0.32rem;
+            height: 0.32rem;
+        }
+        .main{
+            width:100%;
+            height: auto;
+            padding:.88rem .3rem .3rem;
+        }
+        .ask{
+            width:100%;
+            height:.9rem;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .ask i{
+            font-size: .42rem;
+            color: #0086F7;
+        }
+        .ask p{
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+            margin-left:.2rem;
+        }
+        textarea{
+            width: 100%;
+            height:9rem;
+            padding-top:.4rem;
+            font-size: .3rem;
+        }
+        textarea::-webkit-input-placeholder{
+            font-size:.3rem;
+            color: #999999;
+        }
+        .submit{
+            width: 6.9rem;
+            height: .8rem;
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            background:-webkit-linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            border-radius:.1rem;
+            color: #fff;
+            font-size: .3rem;
+            line-height: .8rem;
+            font-weight: bold;
+            position: fixed;
+            bottom: .4rem;
+            left:.3rem;
+            right:.3rem;
+        }
+
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <v-loading v-show="loading" opt=".65"></v-loading>
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui"></i>
+        <span class="header-a">我要回答</span>
+        <div class="null"></div>
+    </div>
+    <div class="main">
+        <div class="ask flex align-items">
+            <i class="iconfont iconwen"></i>
+            <p>{{ info.question }}</p>
+        </div>
+        <textarea  placeholder="这一刻的想法..." v-model="msg"></textarea>
+    </div>
+    <div class="submit tc" @click="ansQues">发布</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   aid:"",
+                   gid:"",
+                   msg:"",
+                   info:{},
+                   loading:false,
+                },
+                methods:{
+                    ansQues:function(){
+                        var _this = this;
+                        if (_this.msg == "") {
+                            return false
+                        }
+                        _this.loading = true;
+                        request('/shopping/answer_goods_question',{
+                            goods_id:_this.gid,
+                            ques_id:_this.aid,
+                            answer:_this.msg,
+                        },function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                api.toast({msg:"提交成功"})
+                                api.sendEvent({name:"refreshans"})
+                                setTimeout(function(){
+                                    api.closeWin()
+                                },700)
+                            }
+                        })
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main  = document.querySelector(".main");
+                        var search = document.querySelector('.header');
+                        var headerHeight = search.clientHeight;
+                        search.style.height = safeArea + headerHeight + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = safeArea + headerHeight+ 'px'
+                    }
+                    this.aid = api.pageParam.aid;
+                    this.gid = api.pageParam.gid;
+                    this.info = api.pageParam.qsInfo;
+                }
+            })
+        }
+            
+    </script>
+</body>
+</html>

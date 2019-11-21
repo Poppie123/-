@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绑卡成功</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .center{
+            width: 100%;
+            padding: 1.2rem 1.8rem 0;
+        }
+        .center i{
+            font-size: 1.24rem;
+            color: #0086F7;
+            margin-bottom: .34rem;
+        }
+        .center .word{
+            font-size: .34rem;
+            color: #333333;
+            font-weight: bold;
+        }
+        .finished{
+            width: 6.9rem;
+            height: .9rem;
+            margin: 4.5rem auto 0;
+            border-radius: .1rem;
+            background: #0086F7;
+            text-align: center;
+            line-height: .9rem;
+            font-size: .32rem;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>绑卡成功</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="center flex flex_center flex_wrap">
+        <i class=" iconfont iconjuxing"></i>
+        <div class="word">你已添加中国银行储蓄卡</div>
+    </div>
+    <div class="finished" @click="back">完成</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+
+                },
+                methods:{
+                    back:function(){
+                        api.closeToWin({
+                            name:"bankCard",
+                        })
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    api.addEventListener({
+                        name: 'keyback'
+                    }, function(ret, err) {
+                        _this.back();
+                    });
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

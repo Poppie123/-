@@ -1,0 +1,434 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_vgzk7s2d7mp.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <script src="./js/rem.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="wrap">
+     <!-- 导航栏 -->
+     <div class="footer flex ifooter">
+        <div class="footer_o active" >
+			<img class="jihuo" src="./image/page1_active.png" alt="">
+            <!-- <img src="./image/home.png" alt=""> -->
+            <img class="dft" src="./image/page1_img.png" alt="">
+            <p>首页</p>
+        </div>  
+        <div class="footer_o">
+            <img class="jihuo" src="./image/page2_active.png" alt="">
+            <img class="dft" src="./image/page2_img.png" alt="">
+            <p>旅游</p>
+        </div>
+        <div class="footer_o">
+            <img class="jihuo" src="./image/page3_active.png" alt="">
+            <img class="dft" src="./image/page3_img.png" alt="">
+            <p>商城</p>
+        </div>
+        <div class="footer_o">
+            <img class="jihuo" src="./image/page4_active.png" alt="">
+            <img class="dft" src="./image/page4_img.png" alt="">
+            <p>我的</p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./js/api.js"></script>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/common.js"></script>
+<script type="text/javascript">
+    api_init = function() {
+        var dialogBox = api.require('dialogBox');
+		var UIActionProgress = api.require('UIActionProgress');
+		var fh = (document.querySelector('.footer')).clientHeight;
+		var deviceModel = api.deviceModel || "";  // 比如iPhone X的型号： iPhone10,3
+		var deviceId = api.deviceId || "";
+		var userId = $api.getStorage('uid') || "";
+		localStorage.setItem('deviceModel',deviceModel)
+		localStorage.setItem('deviceId',deviceId)
+		localStorage.setItem('userId',userId)
+        /*打开frame组*/
+        api.openFrameGroup ({
+            name: 'index',
+            scrollEnabled: false,
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto',
+                marginBottom: fh,
+            },
+            preload: 4,
+            frames: [{
+                name: 'root',
+                url: 'html/user/index.html',
+                overScrollMode: 'always'
+            },{
+                name: 'cat',
+                url: 'html/mapiaoliang/tour.html',
+                overScrollMode: 'always'
+            },{
+                name: 'car',
+                url: 'html/mapiaoliang/shop.html',
+                overScrollMode: 'always'
+            },{
+                name: 'my',
+                url: 'html/mohan/myuserinfo.html',
+                overScrollMode: 'always'
+            }]
+        }, function(ret, err){
+            var index = ret.index;
+            $('.footer_o').removeClass('active');
+            $('.footer_o').eq(index).addClass('active');
+		});
+		
+    /*点击*/
+    $('.footer').on('click','.footer_o',function () {
+        var $div = $(this);
+        var index = $div.index();
+        if (index == 3) {
+            if (!$api.getStorage('uid')) {
+                api.openWin({
+                    name: 'login',
+                    url: 'html/guoshujie/login.html'
+                });
+                return;     
+            }
+		}
+        $div.addClass('active').siblings().removeClass('active');
+        api.setFrameGroupIndex({
+            name: 'index',
+            index: index,
+            scroll: false
+        });
+    });
+    //检测权限
+	checkhasPermission()
+	function checkhasPermission(){
+		var resultList = api.hasPermission({
+			list:['camera','photos','storage-r','storage-w']
+		});
+		//判断用户没有哪个权限
+		var noPermission = resultList.filter(function(v){
+			return v.granted ? "" :v 
+		})
+		if (noPermission.length != 0) {
+			getPermission(noPermission)
+		}
+	}
+	//申请权限
+	function getPermission(perList){
+		if (perList.length == 0) {
+			return false
+		}
+		var perName = perList.map(function(v){return v.name})
+		api.requestPermission({
+			list:perName,
+			code:1
+		}, function(ret, err){
+			var noPermission = ret.list.filter(function(v){return v.granted ? "" : v})
+			getPermission(noPermission)
+		});
+	}
+	function handerIOSX(){
+		if (api.statusBarAppearance) {
+			var safeArea_bottom = api.safeArea.bottom || 0;
+			var footer = document.getElementsByClassName('ifooter')[0];
+			if(footer == null){
+				return false
+			}
+			var footerHeight = footer.clientHeight;
+			footer.style.height = footerHeight + safeArea_bottom + "px";
+			footer.style.paddingBottom = safeArea_bottom + "px";
+		}
+	}
+	handerIOSX() //处理苹果X底部
+    // /*断网监测*/
+    // api.addEventListener({
+    //     name:'offline'
+    // }, function(ret, err){
+    //     api.openWin({
+    //         name: 'offline',
+    //         url: 'html/page/offline.html'
+    //     });
+    // });
+    // /*来网检测*/
+    // api.addEventListener({
+    //     name:'online'
+    // }, function(ret, err){
+    //     api.sendEvent({
+    //         name: 'network'
+    //     });
+    // });
+    /*退出app*/
+    ExitApp();
+    //检测版本更新
+    function check_banben(){
+		var appVersion = api.appVersion;
+		var systemType = api.systemType;
+		var version_arr=appVersion.split('.');
+		if(systemType == 'android'){
+				api.ajax({
+					url: url + "/my/get_version",
+				},function(ret,err){
+					if (ret.code == 1) {
+						var v1 = ret.data.android;  
+						var android_arr=v1.split('.'); 
+						if(v1 && ret.data.android_url){             
+							if(android_arr[0]>version_arr[0]){
+								change_banben(ret.data.android_url,ret.data.gengxin || "");
+							}else{
+								if(android_arr[1]>version_arr[1]){
+									change_banben(ret.data.android_url,ret.data.gengxin || "");
+								}else{
+									if(android_arr[2]>version_arr[2]){
+										change_banben(ret.data.android_url,ret.data.gengxin || "");
+									}
+								}
+							}
+						}
+					}
+				})
+		}else{
+				api.ajax({
+					url: url + "/my/get_version",
+				},function(ret,err){
+					if (ret.code == 1) {     
+						var v1 = ret.data.ios; 
+						var ios_arr=v1.split('.'); 
+						if(v1 && ret.data.ios_url){
+							if(ios_arr[0]>version_arr[0]){
+								change_banben2(ret.data.ios_url,ret.data.gengxin);
+							}else{
+								if(ios_arr[1]>version_arr[1]){
+									change_banben2(ret.data.ios_url,ret.data.gengxin);
+								}else{
+									if(ios_arr[2]>version_arr[2]){
+										change_banben2(ret.data.ios_url,ret.data.gengxin); 
+									}
+								}
+							}
+						}
+					}
+				})
+		}
+	}
+    function change_banben(url,con){
+		var dialogBox = api.require('dialogBox');
+		dialogBox.tips({
+			rect: {
+				w: 300,
+			},
+			texts: {
+				title: '检测到版本更新',
+				content: con
+			},
+			buttons: [{
+					normal: 'widget://res/no.png',
+					highlight: 'widget://res/no.png',
+			}, {
+					normal: 'widget://res/yes.png',
+				highlight: 'widget://res/yes.png' ,
+
+			}],
+			tapClose:false,
+			styles: {
+				bg: '#FFF',
+				topImage: {
+					path: 'widget://res/gengxin.png',   
+					w: 300,
+					h: 120
+				},
+				title: {
+					color: '#000',
+					size: 16,
+					marginT: 10
+				},
+				content: {
+					color: '#333',
+					size: 12,
+					marginT: 10
+				},
+				border: {
+					color: '#eee',
+					width: 2,
+					marginT: 20
+				},
+				buttons: [{
+						iconSize : 50,
+						textColor:'#000',
+						textSize : 0,
+						marginT  : 10,
+						space    : 100
+						}, {
+						iconSize : 50,
+						textColor:'#000',
+						textSize : 0,
+						marginT  : 10,
+						space    : 100
+					}]
+			}
+		}, function(ret) {
+			if(ret.index == 0){
+			api.closeWidget({id:'A6012445050426',silent:true});
+			dialogBox.close({
+				dialogName: 'tips'
+			})
+			}else{
+			dialogBox.close({
+				dialogName: 'tips'
+			})
+			//下载
+			var UIActionProgress = api.require('UIActionProgress');
+				UIActionProgress.open({
+					maskBg: 'rgba(0,0,0,0.5)',
+					styles: {
+						h: 108,
+						bg: '#fff',
+						title: {
+							size: 16,
+							color: '#000',
+							marginT: 10
+						},
+						msg: {
+							size: 12,
+							color: '#000',
+							marginT: 5
+						},
+						lable: {
+							size: 14,
+							color: '#696969',
+							marginB: 5
+						},
+						progressBar: {
+							size: 3,
+							normal: '#999',
+							active: '#FF0036',
+							marginB: 35,
+							margin: 5
+						}
+					},
+					data: {
+						title: '正在更新',
+						value: 0
+					}
+				},function(ret){
+					if(ret.eventType == 'show'){
+						api.download({
+							url: url,
+							savePath: 'fs://chonger.apk',
+							report: true,
+							cache: false,
+							allowResume: true
+						}, function(ret, err) {
+							if (ret.state == 1) {
+								UIActionProgress.close();
+								api.installApp({
+									appUri: 'fs://chonger.apk'
+								});
+							} else {
+								UIActionProgress.setData({
+									data: {
+										title: '正在更新...',
+										value: ret.percent
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
+	}  
+	function change_banben2(url,con){
+		var dialogBox = api.require('dialogBox');
+		dialogBox.tips({
+			rect: {
+				w: 300,
+			},
+			texts: {
+				title: '检测到版本更新',
+				content: con
+			},
+			buttons: [{
+					normal: 'widget://res/no.png',
+					highlight: 'widget://res/no.png',
+			}, {
+					normal: 'widget://res/yes.png',
+				highlight: 'widget://res/yes.png',
+			}],
+			tapClose:false,
+			styles: {
+				bg: '#FFF',
+				topImage: {
+					path: 'widget://res/gengxin.png',
+					w: 300,
+					h: 120
+				},
+				title: {
+					color: '#000',
+					size: 16,
+					marginT: 10
+				},
+				content: {
+					color: '#333',
+					size: 12,
+					marginT: 10
+				},
+				border: {
+					color: '#eee',
+					width: 2,
+					marginT: 20
+				},
+				buttons: [{
+						iconSize : 50,
+						textColor:'#000',
+						textSize : 0,
+						marginT  : 10,
+						space    : 100
+						}, {
+						iconSize : 50,
+						textColor:'#000',
+						textSize : 0,
+						marginT  : 10,
+						space    : 100
+					}]
+			}
+		}, function(ret) {
+			if(ret.index == 0){
+			api.closeWidget({id:'A6012445050426',silent:true});
+			dialogBox.close({
+				dialogName: 'tips'
+			})
+			}else{
+			dialogBox.close({
+				dialogName: 'tips'
+			})
+			
+			var openAppStore = api.require('openAppStore');
+			openAppStore.inApp({
+				appID: url
+			});
+				
+			}
+		});
+	}
+	setTimeout(function(){
+		check_banben();
+	},2000);
+    };
+
+</script>
+
+</html>

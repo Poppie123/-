@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>评价详情</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <style>
+        body {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            padding-top: .88rem;
+        }
+
+        .goods_content {
+            width: 100%;
+            height: auto;
+            padding: 0 .30rem;
+        }
+
+        /* 订单编号 */
+        .main .order_number {
+            width: 100%;
+            height: .93rem;
+            line-height: .93rem;
+            font-size: .28rem;
+            font-weight: 400;
+            color: #999999;
+        }
+
+        /* 商品开始 */
+        .goods_list {
+            width: 100%;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .goods_item {
+            width: 100%;
+            height: auto;
+            padding-bottom: .37rem;
+            overflow: hidden;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .goods_item img {
+            float: left;
+            width: 2.5rem;
+            height: 1.85rem;
+            border-radius: .1rem;
+        }
+
+        .goods_item .goods_right {
+            float: right;
+            width: 4.20rem;
+            height: 1.85rem;
+        }
+
+        .goods_item .goods_right .goods_name {
+            width: 100%;
+            overflow: hidden;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            line-height: .40rem;
+        }
+
+        .goods_item .goods_right .sub_money {
+            width: 100%;
+            font-size: .32rem;
+            font-weight: 400;
+            color: #FF4242;
+            margin-top: .48rem;
+            font-weight: bold;
+        }
+
+        .goods_item .goods_right .sub_money .a {
+            font-size: .24rem;
+            font-weight: normal;
+        }
+
+        .goods_item .goods_right .sub_money .sub_number {
+            font-size: .20rem;
+            color: #333;
+            padding-top: .15rem;
+        }
+
+        /* 星星 */
+        .evalu_start {
+            width: 100%;
+            height: 1.06rem;
+            line-height: 1.06rem;
+            overflow: hidden;
+            background-color: #fff;
+            /* margin-bottom: .2rem; */
+        }
+
+        .evalu_start .evalu_left {
+            font-size: .28rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            padding: 0 .25rem 0 0;
+        }
+
+        .evalu_start .start img {
+            width: .4rem;
+            height: .4rem;
+            margin-right: .19rem;
+        }
+
+        /* 空背景色 */
+        .main .border {
+            width: 100%;
+            height: .2rem;
+            background: rgba(248, 249, 251, 1);
+        }
+
+        /* 评价内容 */
+        .main .evalu_content {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            padding: 0 .3rem;
+        }
+
+        .main .evalu_content .evalu_t {
+            font-size: .28rem;
+            font-weight: 400;
+            color: #999999;
+            padding: .37rem 0 .25rem 0;
+        }
+
+        .main .evalu_content textarea {
+            width: 100%;
+            height: 1.75rem;
+            outline: none;
+            border: none;
+            font-size: .28rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            background: rgba(247, 247, 247, 1);
+            line-height: .4rem;
+            padding: .25rem .28rem;
+        }
+
+        .main .evalu_content .b {
+            font-size: .28rem;
+            font-weight: 400;
+            color: #999999;
+            padding: .32rem 0 .26rem 0;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .main .evalu_content .b span {
+            color: #0086F7;
+        }
+
+        /* 回复 */
+        .main .reply {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        .main .reply_item {
+            margin-top: .38rem;
+        }
+
+        .main .reply_item .user {
+            width: 100%;
+            height: .60rem;
+            overflow: hidden;
+            line-height: .6rem;
+            font-size: .28rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .main .reply_item img {
+            width: .60rem;
+            height: .60rem;
+            border-radius: 50%;
+            float: left;
+        }
+
+        .main .reply_item .user_name {
+            float: left;
+            margin-left: .17rem;
+        }
+
+        .main .reply_item .reply_to {
+            font-size: .20rem;
+            font-weight: 400;
+            color: #999999;
+            padding-left: .77rem;
+            line-height: .4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top flex space-between align-items">
+        <div class="i">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>评价详情</div>
+        <div class="content"></div>
+    </div>
+    <div class="main">
+        <div class="goods_content">
+            <div class="order_number">订单编号：<span>156236563</span></div>
+            <div class="goods_list">
+                <div class="goods_item">
+                    <img src="../../image/gsj_goods.png" alt="" srcset="">
+                    <div class="goods_right fr flex flex_wrap align-content-stretch">
+                        <div class="goods_name">海自营野山参鑫海自营野山参海自营野山参</div>
+                        <div class="sub_money flex space-between">
+                            <div><span class="a">￥</span>88.00</div>
+                            <span class="sub_number">x1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="evalu_start flex">
+                <div class="evalu_left">星级</div>
+                <div class="start flex align-items">
+                    <img src="../../image/gsj_star.png" alt="">
+                    <img src="../../image/gsj_star.png" alt="">
+                    <img src="../../image/gsj_star.png" alt="">
+                    <img src="../../image/gsj_star.png" alt="">
+                    <img src="../../image/gsj_stark.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div class="evalu_content">
+            <div class="evalu_t">评价内容</div>
+            <textarea name="" id="" cols="" rows="" placeholder="商品太好了！非常棒！非常棒！"></textarea>
+            <div class="b">回复&nbsp;&nbsp;<span>(1)</span></div>
+            <div class="reply">
+                <div class="reply_item">
+                    <div class="user">
+                        <img src="../../image/gsj_touxiang.png" alt="" srcset="">
+                        <div class="user_name">小天鹅旗舰店</div>
+                    </div>
+                    <div class="reply_to">谢谢，谢谢啦</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/common.js"></script>
+</body>
+
+</html>

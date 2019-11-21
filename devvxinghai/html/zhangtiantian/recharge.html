@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>充值</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_nd9qmp4fz3s.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .list{
+            width: 6.94rem;
+            height: auto;
+            margin: .3rem auto 0;
+            padding: 0 .3rem;
+            background: #FFFFFF;
+            border-radius: .1rem;
+        }
+        .list-top{
+            width: 100%;
+            height: 1.88rem;
+            font-size: .32rem;
+            font-weight: bold;
+            padding-top: .3rem;
+            padding-bottom: .2rem;
+            border-bottom:1px solid #EEEEEE; 
+        }
+        .list .dollar{
+            margin-top: .3rem;
+            font-size: .5rem;
+            color: #333333;
+        }
+        .list input{
+            width: 4rem;
+            padding-left: .1rem;
+            font-size: .5rem;
+            color: #333333;
+            font-weight: bold;
+        }
+        .list .pay{
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: .32rem;
+            font-weight: bold;
+        }
+        .list .pay-way{
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: .5rem;
+        }
+        .list .pay-way:last-child{
+            padding-bottom: .5rem;
+        }
+        .list .pay-way img{
+            width: .4rem;
+            height: .4rem;
+        }
+        .list .pay-way i{
+            font-size: .4rem;
+            color: #FD4C4C;
+        }
+        .list .pay-way .list-content{
+            width: 5.1rem;
+            font-size: .3rem;
+            color: #333333;
+        }
+        .list .pay-way .circle{
+            width: .36rem;
+            height: .36rem;
+            border-radius: 50%;
+            border: 1px solid #DDDDDD; 
+        }
+        .list .pay-way .circle i{
+            font-size: .36rem;
+            color: #0086F7;
+            position: relative;
+            left: -0.02rem;
+            top: -0.03rem;
+        }
+        .none{
+            display: none;
+        }
+        .confirm{
+            width: 6.9rem;
+            height: .9rem;
+            margin: 1rem auto 0;
+            border-radius: .1rem;
+            background: #ccc;
+            font-size: .32rem;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
+        .confirmactive{
+            background: #0086F7;
+        }
+        .fix-money{
+            width: 100%;
+            height: 2.3rem;
+            margin-top:.5rem;
+        }
+        .fix-money .item{
+            width: 30%;
+            height: 1rem;
+            border-radius: .1rem;
+            border: 1px solid #0086F7;
+            color: #0086F7;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>充值</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="list">
+        <div class="list-top">
+            <div>充值金额</div>
+            <div>
+                <span class="dollar">￥</span>
+                <input type="number" v-model="money">
+            </div>
+        </div>
+        <div class="fix-money flex flex_wrap  align-content-around space-between">
+            <div class="item fn-ctr zhezao" v-for="item in fixMoneyList" @click="ckFixmoney(item.money)"><span>{{ item.money }}元</span></div>
+        </div>
+        <div class="pay">支付方式</div>
+        <!-- <div class="pay-way flex space-between" @click="changeType(1)">
+            <i class="iconfont iconzhifu"></i>
+            <div class="list-content">银行卡支付</div>
+            <div class="circle">
+                <i :class="[currentType == 1 ? '' : 'none','iconfont iconjuxing']"></i>
+            </div>
+        </div> -->
+        <div class="pay-way flex space-between" @click="changeType(3)">
+            <img src="../../image/zfb@2x.png" alt="">
+            <div class="list-content">支付宝支付</div>
+            <div class="circle">
+                <i :class="[currentType == 3 ? '' : 'none','iconfont iconjuxing']"></i>
+            </div>
+        </div>
+        <div class="pay-way flex space-between" @click="changeType(2)">
+            <img src="../../image/weixin@2x.png" alt="">
+            <div class="list-content">微信支付</div>
+            <div class="circle">
+                <i :class="[currentType == 2 ? '' : 'none','iconfont iconjuxing']"></i>
+            </div>
+        </div>
+    </div>
+    <div class="confirm fn-ctr" :class="{confirmactive : money}" @click="btnSure">
+        <span>确认充值</span> 
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   currentType:3,
+                   money:"",
+                   loading:false,
+                   opt:'.65',
+                   orderId:"",
+                   fixMoneyList:[{money:"10"},{money:"20"},{money:"30"},{money:"50"},{money:"70"},{money:"100"}]
+                },
+                methods:{
+                    changeType:function(type){
+                       this.currentType = type;
+                    },
+                    // 点击固定充值
+                    ckFixmoney:function(money){
+                        var _this = this;
+                        _this.money = money;
+                        _this.btnSure()
+                    },
+                    //开始充值
+                    btnSure:function(){
+                        var _this = this;
+                        if (_this.money == "") {
+                            return false
+                        }
+                        _this.loading = true;
+                        request('/my/chongzhi',{
+                            money:_this.money,
+                            payway:_this.currentType,
+                        },function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                console.log(JSON.stringify(res))
+                                if(_this.currentType == 1){  //银行卡
+                                    _this.orderId = res.data.order_id;
+                                }else if(_this.currentType == 3){  //支付宝
+                                    _this.orderId = res.data.order_id;
+                                    _this.aliPay()
+                                }else if(_this.currentType == 2){  //微信
+                                    _this.orderId = res.data.order_id;
+                                    _this.weixinPay()
+                                }
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:"支付失败"})
+                            }
+                        })
+                    },
+                     //微信支付
+                     weixinPay:function(){
+                        var _this = this;
+                        var wxPay = api.require('wxPay');
+                        _this.loading = true;
+                        /*微信*/
+                        api.ajax({
+                            url: url+'/pay/wxpay_before',
+                            method: 'post',
+                            data: {
+                                values: {
+                                    order_id: _this.orderId,
+                                }
+                            }
+                        },function (ret,err) {
+                            _this.loading = false;
+                            if (ret) {
+                                if (ret.code) {
+                                    wxPay.payOrder({
+                                        apiKey: ret.data.appid,
+                                        orderId: ret.data.prepayid,
+                                        mchId: ret.data.partnerid,
+                                        nonceStr: ret.data.noncestr,
+                                        timeStamp: ret.data.timestamp,
+                                        package: ret.data.package,
+                                        sign: ret.data.sign,
+                                    },function(ret, err) {
+                                        if (ret.status) {
+                                            api.sendEvent({name:"refreshUserAccount"}); //刷新用户信息
+                                            api.toast({msg:"支付成功"})
+                                            setTimeout(function(){
+                                                api.closeWin()
+                                            },700)
+                                        }else{
+                                            api.toast({msg:"支付失败"})
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: ret.msg
+                                    });
+                                }
+                            }
+                        });
+                    },
+                    //支付宝支付
+                    aliPay:function(){
+                        var aliPayPlus = api.require('aliPayPlus');
+                        var _this = this;
+                        _this.loading = true;
+                        
+                        /*支付宝*/
+                        api.ajax({
+                        url: url+'/pay/alipay_before',
+                        method: 'post',
+                        data: {
+                            values: {
+                                order_id: _this.orderId,
+                            }
+                        }
+                        },function (ret,err) {
+                            _this.loading = false;
+                            if (ret) {
+                                if (ret.code) {
+                                    aliPayPlus.payOrder({
+                                        orderInfo: ret.data,
+                                    }, function(ret, err) {
+                                        if (ret.code == '9000') {
+                                            api.sendEvent({name:"refreshUserAccount"}); //刷新用户信息
+                                            api.toast({msg:"支付成功"})
+                                            setTimeout(function(){
+                                                api.closeWin()
+                                            },700)
+                                        }else{
+                                            api.toast({msg:"支付失败"});
+                                            err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(ret));
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: ret.msg
+                                    });
+                                }
+                            }else{
+                                console.log(JSON.stringify(err))
+                            }
+                        });
+                    },
+                    back:function(){
+                       api.closeWin()
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

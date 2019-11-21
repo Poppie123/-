@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的地址</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F4F4F4;
+}
+.header {
+    width: 7.5rem;
+    height: .88rem;
+    line-height: .88rem;
+    background-color: #FFFFFF;
+    padding: 0 .3rem;
+    border-bottom: 1px solid #EEEEEE;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 1300;
+}
+
+.header .iconfanhui {
+    line-height: .88rem;
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    height: .88rem;
+    line-height: .88rem;
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+}
+.header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+.middle{
+    width: 7.5rem;
+    /* height:100%;  */
+    /* overflow: hidden; */
+    padding-top: .88rem;
+    padding-bottom: 1.2rem;
+    /* position: relative; */
+}
+
+.middle .first{
+    width: 7.5rem;
+    /* height: 2.19rem; */
+    background-color: #FFFFFF;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    overflow: hidden;
+    margin-bottom: .2rem;
+}
+.middle .first:last-child{
+    margin-bottom: .2rem;
+}
+.middle .first .up{
+    height: auto;
+    padding-bottom: .05rem;
+    border-bottom: 1px solid #EEEEEE;
+}
+.middle .first .up .userinfo{
+    font-size: .3rem;
+    color: #333333;
+    font-weight: bold;
+    margin-top: .3rem;
+    text-align: left;
+}
+.middle .first .up .userinfo span{
+    margin-left: .8rem;
+}
+.middle .first .up  .address{
+    font-size: .3rem;
+    color: #333333;
+    text-align: left;
+    margin-top: .25rem;
+}
+.middle .first .foot{
+    height: .7rem;
+    overflow: hidden;
+}
+.middle .first .foot .default_address{
+    font-size: .22rem;
+    color: #333333;
+    text-align: left;
+    overflow: hidden;
+}
+.middle .first .foot .default_address .circle{
+    width: .32rem;
+    height: .32rem;
+    border-radius: 50%;
+    border:1px solid #DDDDDD;
+    float: left;
+    margin-right: .12rem;
+    overflow: hidden;
+    position: relative;
+}
+.middle .first .foot .default_address .circle .iconjuxing{
+    display: none;
+}
+.middle .first .foot .default_address .active .iconjuxing{
+    display: block;
+    font-size: .34rem;
+    color: #0086F7;
+    position: absolute;
+    left: -2px;
+    top: -2px;
+}
+.middle .first .foot .btns{
+    overflow: hidden;
+}
+.middle .first .foot .btns .edit{
+    font-size: .22rem;
+    color: #333333;
+    text-align: left;
+    float: left;
+}
+.middle .first .foot .btns .del{
+    font-size: .22rem;
+    color: #333333;
+    text-align: left;
+    float: left;
+    margin-left: .4rem;
+}
+.middle .first .foot .btns .iconjuxing3{
+    font-size: .26rem;
+    color: #333333;
+    margin-right: .1rem;
+}
+.middle .first .foot .btns  .iconjuxing2{
+    font-size: .26rem;
+    color: #333333;
+    margin-right: .1rem;
+}
+.add{
+    width: 6.9rem;
+    height: .9rem;
+    overflow: hidden;
+    position: fixed;
+    bottom: .3rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index:1000;
+    background-color: #0086F7;
+    border-radius: .08rem;
+    font-size: .32rem;
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: .9rem;
+    text-align: center;
+}
+.add-address{
+    width: 6.9rem;
+    height: .9rem;
+    background: #0086F7;
+}
+</style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <no-data v-show="addressList.length == 0"></no-data>
+    <div class="header flex align-items space-between">
+        <i class="iconfont iconfanhui" @click="back"></i>
+        <div class="order ">我的地址</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+
+        <div class="first" v-for="(item,index) in addressList" :key="item.address_id" @click="jumpOrder(item)"> 
+            <div class="up">
+                <div class="userinfo">{{ item.name }}<span>{{ item.phone }}</span></div>
+                <div class="address">{{ item.province }} {{ item.city }} {{ item.district }} {{ item.address }}</div>
+            </div>
+            <div class="foot flex align-items  space-between">
+                <div class="default_address " @click.stop="setMoren(index)">
+                    <div class="circle" :class="{ active : item.status}">
+                        <i class="iconfont iconjuxing"></i></div>
+                    默认送货地址
+                </div>
+                <div class="btns">
+                    <div class="edit"  @click="editAddress(item)"><i class="iconfont iconjuxing3"></i>编辑</div>
+                    <div class="del "  @click="deleteAddress(item.address_id)"><i class="iconfont iconjuxing2"></i>删除</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+        <div class="add zhezao" @click="addAddress">添加地址</div>
+        <v-loading v-if="loading"><v-loading>
+        
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+         apiready = function(){
+            //  加载组件
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+             var root = new Vue({
+                 el:"#root",
+                 data:{
+                    addressList:[],
+                    loading:true,
+                    source:0,        //1是从订单也过来的  0是默认
+                    noData:false,
+                 },
+                 methods:{
+                    getAddressList:function(){
+                        var _this = this;
+                        request('/my/my_address',{start:0},function(err,res){
+                            setTimeout(function(){
+                                _this.loading = false;
+                            },700);
+                            api.refreshHeaderLoadDone()
+                            if (!err && res.code == 1) {
+                                var dt = res.data.data || [];
+                                _this.addressList = dt.map(function(v,i){
+                                     v.status = v.is_moren == 0 ? false : true
+                                     return v
+                                })
+                            }else{
+                                console.log('没有数据')
+                            }
+                        })
+                    },
+                    //增加收货地址
+                    addAddress:function(){
+                        var _this = this;
+                        api.openWin({
+                            name:"adddizhi",
+                            url:"./adddizhi.html",
+                            pageParam:{
+                                is_moren:_this.addressList.length > 0 ? 0 : 1
+                            }
+                        })
+                    },
+                    //设置默认地址
+                    setMoren:function(index){
+                        var _this = this;
+                        var addressList = _this.addressList;
+                        request('/my/set_default_address',{address_id:_this.addressList[index].address_id},function(err,res){
+                            if (!err && res.code == 1) {
+                                api.toast({msg:"设置成功"})
+                                _this.addressList = addressList.map(function(v,i){
+                                    var ele = v;
+                                    i == index ? ele.status = true : ele.status = false;
+                                    i == index ? ele.is_moren = 1  : ele.is_moren = 0;
+                                    return ele
+                                });
+                                api.sendEvent({name:"refreshAddress", extra: {
+                                    address: _this.addressList[index],
+                                }})
+                            } else {
+                                api.toast({msg:"设置成功"})
+                            }
+                        })
+                    },
+                    //删除收货地址
+                    deleteAddress:function(id){
+                        var _this = this;
+                        var dialogBox = api.require('dialogBox');
+                        dialogBox.alert({
+                            texts: {
+                                title: '提示',
+                                content: '是否确认删除',
+                                leftBtnTitle: '取消',
+                                rightBtnTitle: '确认'
+                            },
+                            styles: {
+                                bg: '#fff',
+                                w: 300,
+                                corner:5,
+                                title: {
+                                    marginT: 20,
+                                    icon: 'widget://res/gou.png',
+                                    iconSize: 40,
+                                    titleSize: 14,
+                                    titleColor: '#000'
+                                },
+                                content: {
+                                    color: '#000',
+                                    size: 14
+                                },
+                                left: {
+                                    marginB: 7,
+                                    marginL: 20,
+                                    w: 130,
+                                    h: 35,
+                                    corner: 5,
+                                    bg: '#ccc',
+                                    color:'#fff',
+                                    size: 12
+                                },
+                                right: {
+                                    marginB: 7,
+                                    marginL: 10,
+                                    w: 130,
+                                    h: 35,
+                                    corner: 5,
+                                    bg: '#0086F7',
+                                    color:'#fff',
+                                    size: 12
+                                }
+                            }
+                        }, function(ret) {
+                            if (ret.eventType == 'right') {
+                                request('/my/del_address',{address_id:id},function(err,res){
+                                    if (!err && res.code == 1) {
+                                        _this.addressList.splice(0)
+                                        _this.getAddressList();
+                                        api.toast({msg:"删除成功"})
+                                    }else{
+                                        api.toast({msg:"删除失败"})
+                                    }
+                                })
+                            }
+                            dialogBox.close({
+                                dialogName: 'alert'
+                            });
+                        });
+                    },
+                    //修改收货地址
+                    editAddress:function(item){
+                        api.openWin({
+                            name:"editAddress",
+                            url:"./editAddress.html",
+                            pageParam:{
+                                address:JSON.stringify(item),
+                            }
+                        });
+                    },
+                    //跳转回订单
+                    jumpOrder:function(item){
+                        if (this.source == 0) {
+                            return false
+                        }
+                        api.sendEvent({name:"refreshAddress", extra: {
+                            address: item,
+                        }})
+                        setTimeout(function(){
+                            api.closeWin()
+                        },200)
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                 },
+                 mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.header');
+                        var searchHeight = search.clientHeight;
+                        var middle = document.querySelector('.middle');
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px";
+                        middle.style.paddingTop = 0.88 + ((safeArea * 2) /100) + "rem";
+                        var safeArea_bottom = api.safeArea.bottom || 0;
+                        var ft = document.querySelector('.add');
+                        ft.style.bottom = safeArea_bottom+ 16   + "px";
+                    };
+                    _this.getAddressList();
+                    _this.source = api.pageParam.source || 0;
+                    //监听刷新列表
+                    api.addEventListener({name:"refreshAddressList"},function(){
+                        _this.getAddressList()
+                    });
+                    //刷新页面
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#fff',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新'
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.addressList.splice(0);
+                        _this.getAddressList();
+                    });
+                 },
+             })
+         }
+             
+    
+    </script>
+</body>
+</html>

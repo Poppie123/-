@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_vgzk7s2d7mp.css">
+    <script src="../../js/rem.js"></script>
+    <title>旅局卡列表</title>
+    <style>
+    html,body{
+        background: #fff;
+    }
+    /* .container{
+        padding-top: .88rem;
+    } */
+    /* 主要内容 */
+    .main{
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        padding:0 .3rem;
+        margin-top: 0;
+    }
+    .main li{
+        width: 100%;
+        height: 2.27rem;
+        overflow: hidden;
+        border-bottom: 1px solid #EEEEEE;
+        display: flex;
+        padding: .3rem 0;
+        margin-top: 0;
+        
+    }
+    .main li img{
+        width: 2.24rem;
+        height:1.66rem;
+        margin-right: .25rem;
+    }
+    .main_cen{
+        width: 98%;
+        height: 100%;
+    }
+    .card_name{
+        width: 100%;
+        height: .31rem;
+        font-size: .32rem;
+        font-weight: bold;
+        line-height: .31rem;
+        margin-bottom: .28rem;
+        margin-top:.1rem;
+    }
+    .card_suit{
+        width: 4.2rem;
+        padding-right: .2rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: .26rem;
+        color: #666;
+        margin-bottom: .49rem;
+    }
+    .card_much{
+        width: 100%;
+        height: .32rem;
+        line-height: .32rem;
+        margin-top: -0.14rem;
+    }
+    .card_much span{
+        font-size: .34rem;
+        font-weight: bold;
+        color: #FE6602;
+    }
+    .card_sell{
+        width: auto;
+        height: .32rem;
+        line-height: .32rem;
+        font-size: .26rem;
+        color: #666;
+    }
+    .card_sell span{
+        color: #0086F7;
+        font-weight: 400;
+        font-size: .26rem;
+    }
+    </style>
+</head>
+<body>
+    <div class="container" id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+        <div class="common_header flex space-between align-items">
+            <i class="iconfont iconfanhui" @click="back"></i>
+            <span>旅居卡</span>
+            <div></div>
+        </div>
+        <!-- 主要内容 -->
+        <div class="main">
+            <ul>
+
+                <li v-for="item in lvList" @click="openDetail(item)">
+                   <img src="../../image/li_18.png">
+                   <div class="main_cen">
+                       <div class="card_name">{{ item.name }}</div>
+                       <div class="card_suit ellipse">{{ item.content }}</div>
+                       <div class="card_much flex space-between">
+                           <span>￥{{ item.price }}</span>
+                           <div class="card_sell">已售<span>{{ item.sales }}</span>人</div>
+                       </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    lvList:[],
+                    total:0,
+                    isTotal:true,
+                    loading:true,
+                },
+                methods:{
+                    getLvList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal  = false;
+                        request('/tourism/tourism_card_list',{start:_this.lvList.length},function(err,res){
+                            _this.isTotal = true;
+                            setTimeout(function(){
+                             _this.loading = false;
+                            },700)
+                            if (!err && res.code == 1) {
+                                _this.lvList = _this.lvList.concat(res.data.data);
+                                _this.total = res.data.all;
+                            }else{
+
+                            }
+                        },'get')
+                    },
+                    back:function(){
+                        api.closeWin()
+                    },
+                    openDetail:function(item){
+                        api.openWin({
+                            name:"travelCardView",
+                            url:"../user/travel_card_view.html",
+                            pageParam:{
+                                gds:JSON.stringify(item),
+                            }
+                        })
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('.common_header');
+                        var headHeight = header.clientHeight;
+                        var main = document.querySelector('.main');
+                        main.style.paddingTop = headHeight + safeArea+ "px"
+                        header.style.height = headHeight + safeArea + "px";
+                        header.style.paddingTop = safeArea + "px";
+                    }
+                    this.getLvList()
+                    // 上拉加载
+                    var _this = this;
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　　　//上拉加载时需要加载的数据
+                        if (_this.lvList.length == _this.total) {
+                            console.log(11)
+                            if (_this.total < 7) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getLvList();
+                            },300)
+                        }
+                    });
+                }
+            })
+        }
+            
+    
+    
+    </script>
+</body>
+</html>

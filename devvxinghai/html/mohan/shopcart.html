@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #f5f5f5;
+    }
+ 
+    .header {
+        width: 7.5rem;
+        height: .88rem;
+        background-color: #fff;
+        position: fixed;
+        top: 0;
+        z-index: 1300;
+        border-bottom: 1px solid #EEEEEE;
+        padding:0 .28rem;
+        overflow: hidden;
+    }
+
+    .header .iconfanhui {
+        font-size: .3rem;
+        color: #333333;
+    }
+
+    .header .footprint {
+        font-size: .36rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: left;
+    }
+    .header .back{
+        width: .8rem;
+    }
+    .header .edit {
+        width: .8rem;
+        font-family: 'PingFang-SC-Medium';
+        font-size: .3rem;
+        font-weight: Medium;
+        color: #666666;
+        text-align: right;
+    }
+    
+    .middle {
+        width: 7.5rem;
+        height: 100%;
+        padding-bottom: 1.1rem;
+        overflow: hidden;
+      
+    }
+    .middle .main {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .middle .main .first {
+        height: 2.51rem;
+        border-bottom: 1px solid #EEEEEE;
+        overflow: hidden;
+        padding-left: .3rem;
+        padding-right: .3rem;
+    }
+    .middle .main .first:last-child{
+        border-bottom: 0;
+    }
+    .middle .main .first .circle {
+        width: .42rem;
+        height: .42rem;
+        border-radius: 50%;
+        border: 1px solid #DDDDDD;
+        margin-right: .2rem;
+        position:relative;
+    }
+
+    .middle .main .first .circle .iconjuxing {
+        display: none;
+    }
+
+    .middle .main .first .active .iconjuxing {
+        display: block !important;
+        font-size: .42rem;
+        color: #0086F7;
+        position: absolute;
+        left: -1px;
+        top:-1px;
+
+    }
+
+    /* .scactive {
+        transform: translateX(.2rem);
+        transition: .6s;
+    }
+
+    .scactive .right {
+        left: -0.03rem !important;
+    } */
+
+    .middle .main .first .right {
+        overflow: hidden;
+    }
+
+    .middle .main .first .right img {
+        width: 1.9rem;
+        height: 1.9rem;
+        border-radius: .05rem;
+    }
+
+    .middle .main .first .right .con {
+        margin-left: .2rem;
+        overflow: hidden;
+    }
+
+    .middle .main .first .right .con .title {
+        width: 3.84rem;
+        font-size: .26rem;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .middle .main .first .right .con .guige {
+        font-size: .26rem;
+        color: #999999;
+        text-align: left;
+        margin-top: .1rem;
+        overflow: hidden;
+    }
+.middle .main .first .right .con .down{
+    margin-top: .2rem;
+}
+    .middle .main .first .right .con .money {
+        font-size: .26rem;
+        font-weight: bold;
+        color: #FE6602;
+        text-align: left;
+        float: left;
+    }
+
+    .middle .main .first .right .con .money .seven {
+        font-size: .34rem;
+        font-weight: bold;
+        color: #FE6602;
+    }
+    .middle .main .first .right .con .money .seven span{
+        font-size: .22rem;
+        font-weight: bold;
+        color: #FE6602;
+    }
+    .middle .main .first .right .con .down .calculation{
+        width: 1.66rem;
+        height: .42rem;
+        border: 1px solid #DDDDDD;
+        float: right;
+        margin-top: .04rem;
+    }
+    .middle .main .first .right .con .down .calculation .sub {
+        height: .42rem;
+        width: .16rem;
+        font-size: .24rem;
+        color: #AAAAAA;
+        line-height: .42rem;
+        padding-left: .04rem;
+        text-align: center;
+    }
+    .middle .main .first .right .con .down .calculation .num {
+        width: .76rem;
+        height: .42rem;
+        font-size: .24rem;
+        color: #333333;
+        line-height: .42rem;
+        border-left: 1px solid #DDDDDD;
+        border-right: 1px solid #DDDDDD;
+        text-align: center;
+    }
+    .middle .main .first .right .con .down .calculation .add {
+        height: .42rem;
+        font-size: .24rem;
+        color: #AAAAAA;
+        padding-right: .04rem;
+        line-height: .42rem;
+        text-align: center;
+    }
+    .footer {
+        width: 7.5rem;
+        height: 1.1rem;
+        border-top: 1px solid #EEEEEE;
+        padding-left: .3rem;
+        position: fixed;
+        bottom: 0;
+    }
+    .footer .allcheck{
+        width: 5.38rem;
+        height: 1.1rem;
+       overflow: hidden; 
+       float: left;
+    }
+
+    .footer .allcircle {
+        width: .42rem;
+        height: .42rem;
+        border-radius: 50%;
+        border: 1px solid #DDDDDD;
+        float: left;
+        margin-right: .1rem;
+        position: relative;
+    }
+
+    .footer .allcheck .left{
+        font-size: .28rem;
+        color: #000000;
+        text-align: left;
+    }
+    .footer .allcheck .right{
+        font-size: .26rem;
+        color: #666666;
+        text-align: left;
+        margin-right: .2rem;
+    }
+    .footer .allcheck .right span{
+        color: #FC595B;
+    }
+    .footer .iconjuxing {
+        display: none;
+    }
+    .footer .allcheck .active .iconjuxing {
+        display: block;
+        font-size: .42rem;
+        color: #0086F7;
+        position: absolute;
+        left: -1px;
+        top: -1px;
+    }
+    .footer .jiesuan{
+        width: 2.12rem;
+        height: 1.1rem;
+        background-color: #0086F7;
+        font-size: .32rem;
+        color: #FFFFFF;
+        text-align: center;
+        line-height: 1.1rem;
+        float: left;;
+    } 
+    .footer .del {
+        width: .96rem;
+        height: .62rem;
+        border: 1px solid #0086F7;
+        border-radius: .5rem;
+        font-size: .26rem;
+        color: #0086F7;
+        text-align: center;
+        line-height: .6rem;
+        margin-right: .3rem;
+    }
+    /* 店铺相关 */
+    .shop-list{
+        width: 6.9rem;
+        height: auto;
+        margin: 0 auto;
+        padding-top: .15rem;
+    }
+    .shop-list .shop-item{
+        width: 100%;
+        height: auto;
+        border-radius: .2rem;
+        margin-bottom: .15rem;
+        background: #fff;
+        box-shadow: 0px 4px 12px 0px rgba(192,192,192,0.3);
+    }
+    .shop-list .shop-item .shop-name{
+        width: 100%;
+        height: .92rem;
+        border-bottom: 1px solid #ddd;
+    }
+    .shop-list .shop-item .shop-name .circle{
+        margin: 0 .15rem;
+        width: .38rem;
+        height: .38rem;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        position: relative;
+    }
+    .shop-list .shop-item .shop-name .circle .iconjuxing{
+        display: none;
+    }
+    .shop-list .shop-item .shop-name .ciractive{
+        border: 0;
+    }
+    .shop-list .shop-item .shop-name .ciractive .iconjuxing{
+        display: inline;
+        font-size: .4rem;
+        color:#0086F7;
+        position: absolute;
+        left: -2px;
+        top: -2px;
+    }
+    .shop-list .shop-item .shop-name .iconxingzhuang4{
+        font-size: .3rem;
+        margin-right: .1rem;
+    }
+    .shop-list .shop-item .shop-name span{
+        font-size: .28rem;
+        color: #333;
+    }
+    .shop-list .shop-item .shop-name .icongengduo{
+        font-size: .28rem;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <no-data v-show="carList.length == 0" msg="购物车里没有商品是件忧伤的事情赶紧去逛逛~"></no-data>
+    <div class="header flex flex_center align-items space-between">
+        <div class="back" @click="back">
+            <i class="iconfont iconfanhui " ></i>
+        </div>
+        <div class="footprint">购物车</div>
+        <div class="edit" v-show="!edit" @click="changeEdit">管理</div>
+        <div class="edit" v-show="edit" @click="changeEdit">完成</div>
+    </div>
+    <div class="middle">
+        <div class="shop-list">
+            <div class="shop-item" v-for="(shopitem,idx) in carList" :key="idx">
+                <div class="shop-name flex align-items flex flex-start" @click="openShopPage(shopitem.shopid)">
+                    <div class="circle" :class="{ciractive:shopitem.status}"  @click.stop="shopCheck(idx)">
+                        <i class="iconfont iconjuxing"></i>
+                    </div>
+                    <i class="iconfont iconxingzhuang4"></i>
+                    <span>{{ shopitem.shop_name }}</span>
+                    <i class="iconfont icongengduo"></i>
+                </div>
+                <div class="main">
+                    <div class="first flex align-items " v-for="(item,index) in shopitem.goods">
+                        <div class="circle " :class="{active:item.status}" @click.stop="dancheck(idx,index)">
+                            <i class="iconfont iconjuxing"></i>
+                        </div>
+                        <div class="right flex" @click="openGdsPage(item.goods_id)">
+                            <img v-if="index > 4" src="../../image/zhanweiShop.png" class="hui-lazy" :lazySrc="item.img"/>
+                            <img v-else :src="item.img"  />
+                            <!-- <img :src="item.img"> -->
+                            <div class="con">
+                                <div class="title">{{ item.goods_name }}</div>
+                                <div class="guige">{{ item.attr_name }}</div>
+                                <div class="down">
+                                    <div class="money">￥<span class="seven">{{ item.shop_price }}</span></div>
+                                    <div class="calculation flex align-items flex_center space-around">
+                                        <div class="sub" @click.stop="reduce(idx,index)">-</div>
+                                        <div class="num">{{ item.goods_number }}</div>
+                                        <div class="add" @click.stop="add(idx,index)">+</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+   
+    <div class="footer ifooter flex space-between align-items">
+        <div class="allcheck flex flex_center space-between align-items">
+            <div class="left" @click="duocheck">
+                <div class="allcircle " :class="{active : isAllCheck}">
+                    <i class="iconfont iconjuxing"></i>
+                </div>
+                全选
+            </div>
+            <div class="right" v-show="!edit">合计:<span>￥{{allprice}}</span></div>
+        </div>
+        <div class="jiesuan" v-show="!edit" @click="goOrder">结算</div>
+        <div class="del" v-show="edit" @click="deleteGds">
+            删除
+        </div> 
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/hui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+         apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            // 无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var timp = null; //控制倒计时
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   carList:[],
+                   total:0,
+                   isTotal:true,
+                   edit:false,   //true 开启管理模式（可以删除）false 普通模式
+                   loading:true,
+                   opt:1,
+                },
+                methods:{
+                    changeEdit:function(){
+                        this.edit = !this.edit;
+                    },
+                    getCarList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        };
+                        _this.isTotal = false;
+                        request('/my/my_cart',{start:_this.carList.length},function(err,res){
+                            _this.isTotal = true;
+                            api.refreshHeaderLoadDone()
+                            setTimeout(function(){
+                               _this.loading = false;
+                            },700)
+                            if (!err && res.code == 1) {
+                                var list = res.data.data.map(function(v){
+                                    if (v.goods.length > 0) {
+                                        v.goods = v.goods.map(function(v1){
+                                            v1.status = false;
+                                            return v1
+                                        })
+                                    }
+                                    v.status = false;
+                                    return v
+                                })
+                                _this.carList = list;
+                                _this.total = res.data.total;
+                            }else{
+
+                            }
+                        });
+                    },
+                    //单选
+                    dancheck:function(idx,index){
+                        this.carList[idx].goods[index].status = !this.carList[idx].goods[index].status
+                        this.checkParent(idx,index)
+                    },
+                    // 单选后判断父级是否该选
+                    checkParent:function(idx,index){
+                        var alreayLen = this.carList[idx].goods.filter(function(v){return v.status});
+                        this.carList[idx].status = alreayLen.length == this.carList[idx].goods.length;
+                    },
+                    //多选
+                    duocheck:function(){
+                        var _this = this;
+                        var curAllcheck = !_this.isAllCheck;
+                        _this.carList.map(function(v,i){
+                            v.status = curAllcheck;
+                            if (v.goods.length > 0) {
+                                v.goods.map(function(v1){
+                                    v1.status = curAllcheck;
+                                })
+                            }
+                        })
+                        _this.carList.push();
+                    },
+                    //删除商品
+                    deleteGds:function(){
+                        var _this = this;
+                        var ids = [];
+                        _this.carList.map(function(v){
+                            if (v.goods.length > 0) {
+                                v.goods.map(function(v1){
+                                    v1.status ? ids.push(v1.cart_id) : ""
+                                })
+                            }
+                        });
+                        if(ids.length == 0) {
+                            api.toast({msg:"至少选择一个哦"});
+                            return false
+                        };
+                        _this.opt = ".65";
+                        _this.loading = true;
+                        request('/my/delete_cart',{cart_id:JSON.stringify(ids)},function(err,res){
+                            if (!err && res.code == 1) {
+                                api.sendEvent({name:"refreshUserInfo"})
+                                api.toast({msg:"删除成功"})
+                                _this.carList.splice(0)
+                                _this.getCarList();
+                            }else{
+                                api.toast({msg:"删除失败"})
+                            }
+                        })
+                    },
+                    add:function(idx,index){
+                        this.carList[idx].goods[index].goods_number++; 
+                        var _this = this;
+                        timp = setTimeout(function(){
+                            clearTimeout(timp)
+                            request('/my/change_cart_goods_num',{cart_id:_this.carList[idx].goods[index].cart_id,goods_number:_this.carList[idx].goods[index].goods_number},function(err,res){
+                                if (!err && res.code == 1) {  }
+                            })
+                        },700)
+                    },
+                    reduce:function(idx,index){
+                        if (this.carList[idx].goods[index].goods_number == 1) {
+                            return false
+                        }
+                        this.carList[idx].goods[index].goods_number--; 
+                        var _this = this;
+                        timp = setTimeout(function(){
+                            clearTimeout(timp)
+                            request('/my/change_cart_goods_num',{cart_id:_this.carList[idx].goods[index].cart_id,goods_number:_this.carList[idx].goods[index].goods_number},function(err,res){
+                                if (!err && res.code == 1) {
+                                      
+                                }else{
+
+                                }
+                            })
+                        },700)
+                    },
+                    //下单
+                    goOrder:function(){
+                        var _this = this;
+                        var ids = [];
+                        _this.carList.map(function(v){
+                            if (v.goods.length > 0) {
+                                v.goods.map(function(v1){
+                                    if (v1.status) {
+                                        v1.shopid = v.shopid;
+                                        ids.push(v1);
+                                    }
+                                })
+                            }
+                        });
+                        if (ids.length == 0) {
+                            api.toast({msg:"请选择商品"})
+                            return false;
+                        }
+                        this.loading = true;
+                        this.opt = '.65';
+                        request('/shopping/get_default_address',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.startOrder(res.data,ids)
+                            }else{
+                                this.loading = false;
+                                err ? api.toast({msg:"网络超时"}) : api.openWin({name:"address",url:"../mohan/address.html"})
+                            }
+                        });
+                    },
+                    startOrder:function(address,list){
+                        var _this = this;
+                        var config = {
+                            goods_id:[],
+                            goods_attr_id:[],
+                            goods_num:[],
+                        };
+                        var goods_idArr = [],goods_attr_idArr = [],goods_numArr = [];
+                        list.map(function(v){
+                            goods_idArr.push(v.goods_id);
+                            goods_attr_idArr.push(v.attr_id);
+                            goods_numArr.push(v.goods_number);
+                        })
+                        config.goods_id = JSON.stringify(goods_idArr);
+                        config.goods_attr_id = JSON.stringify(goods_attr_idArr);
+                        config.goods_num = JSON.stringify(goods_numArr)
+                        request('/shopping/create_order',config,function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code ==1) {
+                                res.data.address = address;   //提交订单页需要的地址信息
+                                res.data.source = 3;          //标记源  收银台返回直接返回此页面
+                                api.openWin({
+                                    name:"submitOrder",
+                                    url:"../mapiaoliang/submit-order.html",
+                                    pageParam:res.data,
+                                })
+                            }else{
+                                console.log(JSON.stringify(err))
+                                console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                    // 店铺选择
+                    shopCheck:function(idx){
+                        var _this = this;
+                        var yCheck = !_this.carList[idx].status;  //店铺下方商品是否全部选择
+                        _this.carList[idx].status = yCheck;
+                        _this.carList[idx].goods.map(function(v,i){
+                            _this.carList[idx].goods[i].status = yCheck;
+                        })
+                        _this.carList.push()
+                    },
+                    // 店铺跳转
+                    openShopPage:function(id){
+                        api.openWin({
+                            name:"gdsShop",
+                            url:"../view/gds_shop.html",
+                            pageParam:{
+                                shopid:id,
+                            }
+                        })
+                    },
+                    // 商品跳转详情
+                    openGdsPage:function(id){
+                        api.openWin({
+                            name:"detailPage",
+                            url:"../mapiaoliang/detail-page.html",
+                            pageParam:{
+                                gdsId:id
+                            },
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var middle = document.querySelector('.middle')
+                        var header = document.querySelector('.header');
+                        var headHeight = header.clientHeight;
+                        header.style.height = headHeight + safeArea  + "px";
+                        header.style.paddingTop = safeArea + "px";
+                        middle.style.paddingTop = headHeight + safeArea + "px";
+                        handerIOSX();
+                    };
+                    _this.getCarList();
+                    // 下拉刷新
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#fff',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新'
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.getCarList()
+                    });
+                    hui.lazyLoad();   //图片懒加载
+                    hui.lazyLoadNow()
+                    // 上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    },function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.carList.length == _this.total) {
+                            if (_this.total <= 4) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getCarList();
+                            },300)
+                        }
+                    });
+                    api.addEventListener({
+                        name: 'refreshCar'
+                    }, function(ret, err){
+                        _this.carList.splice(0);
+                        _this.getCarList();
+                    });
+
+                },
+                computed:{
+                    // 全选
+                    isAllCheck:function(){
+                        var _this = this;
+                        var status = true;
+                        for (var i = 0; i < _this.carList.length; i++) {
+                            if (!_this.carList[i].status) {
+                                status = false;
+                                break;                            
+                            }
+                        }
+                        if (_this.carList.length == 0) {
+                            status = false; 
+                        };
+                        return status;
+                    },
+                    //总价
+                    allprice:function(){
+                        var _this = this;
+                        var price = 0;
+                        _this.carList.map(function(v1){
+                            var currentPrice = v1.goods.reduce(function(lastVal,v){
+                                if (v.status) {
+                                    return lastVal + (Number(v.shop_price) * Number(v.goods_number)); 
+                                } else {
+                                    return lastVal
+                                }
+                            },0);
+                            price+=currentPrice;
+                        })
+                        return price
+                    }
+                }
+            })
+         }
+             
+    
+    
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>店铺主页</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_tblkllgieb9.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .storeinfo{
+            width: 100%;
+            height: 1.51rem;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .storeinfo .touxiang{
+            width: .88rem;
+            height: .88rem;
+            background: rgba(255, 255, 255, 1);
+            border: 1px solid #EEEEEE;
+            border-radius: .04rem; 
+            padding: .06rem .08rem;
+        }
+        .storeinfo .touxiang img{
+            width: .7rem;
+            height: .74rem;
+            border-radius: .04rem;
+        }
+        .storeinfo .center{
+            width: 4.4rem;
+        }
+        .storeinfo .center .name{
+            font-size: .3rem;
+            font-weight: bold;
+            line-height: .42rem;
+        }
+        .storeinfo .center .num{
+            font-size: .26rem;
+            font-weight: bold;
+        }
+        .storeinfo .center .people{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .storeinfo .guanzhu{
+            width: 1.2rem;
+            height: .5rem;
+            /* background: #0086F7; */
+            border-radius: .06rem;
+            line-height: .5rem;
+            text-align: center;
+            font-size: .24rem;
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+        /* .storeinfo .active{
+            background: #0086F7;
+            border: 0;
+        } */
+        .store{
+            width: 100%;
+            background: #FFFFFF;
+            margin-top: .2rem;
+            padding: .1rem .3rem .78rem;
+        }
+        .store .list{
+            width: 100%;
+            font-size: .28rem;
+            margin-top: .3rem;
+        }
+        .store .list .left{
+            width: 1.78rem;
+        }
+        .store .list .left i{
+            font-size: .28rem;
+            color: #333333;
+            margin-right: .1rem;
+        }
+        .store .list .right{
+            width: 5.1rem;
+            line-height: .42rem;
+        }
+        .store .list .right i{
+            font-size: .24rem;
+            color: #999999;
+        }
+        .store .list .right .active{
+            color: #FE6602;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>店铺详情</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="storeinfo flex space-between align-items">
+        <div class="touxiang">
+            <img :src="info.shop_img" alt="">
+        </div>
+        <div class="center">
+            <div class="name">{{ info.shop_name }}</div>
+            <span class="num">{{ info.focus }}</span><span class="people">人关注</span>   
+        </div>
+        <div class="guanzhu"></div>
+        <!--<div class="guanzhu" v-show="info.is_focus == 0">关注</div> -->
+    </div>
+    <div class="store">
+        <div class="list flex space-between align-items">
+            <div class="left">
+                <i class="iconfont iconxingzhuang4"></i><span>综合体验：</span>
+            </div>
+            <div class="right">
+                <i class="iconfont iconpingjia" :class="{active:info.stars >= 1}"></i>
+                <i class="iconfont iconpingjia" :class="{active:info.stars >= 2}"></i>
+                <i class="iconfont iconpingjia" :class="{active:info.stars >= 3}"></i>
+                <i class="iconfont iconpingjia" :class="{active:info.stars >= 4}"></i>
+                <i class="iconfont iconpingjia" :class="{active:info.stars >= 5}"></i>
+            </div>
+        </div>
+        <div class="list flex space-between align-items">
+            <div class="left">
+                <i class="iconfont iconlocation"></i><span>店铺位置：</span>
+            </div>
+            <div class="right">
+                {{ info.address }}
+            </div>
+        </div>
+        <div class="list flex space-between">
+            <div class="left">
+                <i class="iconfont iconxingzhuang2"></i><span>店铺简介：</span>
+            </div>
+            <div class="right">
+                {{ info.content }}
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    info:{},
+                },
+                methods:{
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    this.info = api.pageParam.obj;
+                    console.log(JSON.stringify(this.info))
+                }
+            })
+        }
+            
+    
+    
+    </script>
+</body>
+</html>

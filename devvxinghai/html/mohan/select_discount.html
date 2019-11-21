@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>优惠券</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v69sqgksnke.css">
+<link rel="stylesheet" href="../../css/common.css">
+<script src="../../js/rem.js"></script>
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #F8F9FB;
+    }
+
+    .header {
+        width: 7.5rem;
+        height: .88rem;
+        position: fixed;
+        top: 0;
+        z-index: 1200;
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #EEEEEE;
+        padding: 0 .3rem;
+    }
+
+    .header .iconfanhui {
+        font-size: .3rem;
+        color: #333333;
+        float: left;
+    }
+
+    .header .order {
+        font-size: .36rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: center;
+        position: relative;
+    }
+    .header .myhead{
+        width: .3rem;
+        height: .3rem;
+    }
+
+    .header .order .iconsanjiaoxing-copy {
+        position: absolute;
+        top: 0;
+        font-size: .5rem;
+        color: #333333;
+
+    }
+   
+    .middle .titlehead{
+        width: 7.5rem;
+        height: .9rem;
+        position: fixed;
+        top: .88rem;
+        z-index: 1200;
+        padding-left:.3rem;
+        padding-right: .3rem;
+        background-color: #FFFFFF;
+    }
+    .middle .titlehead .headleft {
+        width: 1.2rem;
+    }
+    .middle .titlehead .tourism{
+        font-size: .3rem;
+        color: #999999;
+        text-align: left;
+    }
+    .middle .active .tourism{
+        font-size: .3rem;
+        font-weight: bold;
+        color: #4589FF;
+        text-align: left;
+    }
+    .middle .titlehead .active .line{
+        width: 1.2rem;
+        height: .04rem;
+        position: absolute;
+        bottom: 0;
+        background-color: #0086F7;
+        border-radius: .5rem;
+    }
+    .middle .btns{
+        width: 100%;
+        height: 0;
+        background-color: #fff;
+        position: fixed;
+        top: .88rem;
+        z-index: 1200;
+        padding: 0 .34rem;
+        overflow: hidden;
+        transition: .4s;
+    }
+    .middle .btnsactive{
+        height: 2.67rem;
+    }
+    .middle .btns .chosebtns{
+        width: 2.1rem;
+        height: .8rem;
+        font-size: .26rem;
+        color: #333333;
+        text-align: center;
+        line-height: .8rem;
+        border: 1px solid #DDDDDD;
+        margin-top: .25rem;
+        border-radius: .1rem;
+    }
+    .middle .btns .active{
+        color: #0086F7;
+        border: 1px solid #0086F7;
+    }
+    .main{
+            width: 7.5rem;
+           overflow: hidden;
+           padding-left: .3rem;
+           padding-right: .3rem;
+           padding-top:1.78rem;
+        }
+        .main .first{
+            width: 6.9rem;
+            height: 1.8rem;
+            background-image: url('../../image/m_youhui.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-top: .2rem;
+        }
+        .main .first .left{
+            width: 2.55rem;
+            height: 1.8rem;
+            overflow: hidden;
+            float: left;
+        }
+        .main .first .left .money{
+            font-size: .34rem;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+            margin: 0 auto;
+            margin-top: .3rem;
+            overflow: hidden;
+        }
+        .main .first .left .money span{
+            font-size: .6rem;
+            font-weight: bold;
+        }
+        .main .first .left .xianjin{
+            font-size: .24rem;
+            text-align: center;
+            color: #FFFFFF;
+            margin: 0 auto;
+            margin-top: .1rem;
+            overflow: hidden;
+        }
+        .main .first .right{
+            float: left;
+            margin-left: .2rem;
+            overflow: hidden;
+        }
+        .main .first .right .title{
+            width: 4rem;
+            font-size: .3rem;
+            text-align: left;
+            margin: 0 auto;
+            color: #333333;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin-top: .5rem;
+            overflow: hidden;
+        }
+        .main .first .right .time{
+            width: 4rem;
+            font-size: .2rem;
+            text-align: left;
+            margin: 0 auto;
+            color: #333333;
+            margin-top: .2rem;
+            overflow: hidden;
+        }
+        .loading{
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <no-data v-show="list.length == 0" msg="您还没有此类型优惠券，可以点击下方按钮查看其他类型优惠券"></no-data>
+        <div class="header flex align-items space-between flex_center">
+            <i class="iconfont iconfanhui " @click="back"></i>
+            <div class="order " @click="changeBocus">优惠券<i class="iconfont iconsanjiaoxing-copy"></i></div>
+            <div class="myhead"></div>
+        </div>
+        <div class="middle">
+            <div class="titlehead flex align-items flex_center space-around">
+                <div class="headleft flex flex_center" :class="{active: currentStatus == 1}" @click="changeStatus(1)">
+                    <div class="tourism">未使用</div>
+                    <div class="line"></div>
+                </div>
+                <div class="headleft  flex flex_center " :class="{active: currentStatus == 2}" @click="changeStatus(2)"> 
+                    <div class="tourism">已使用</div>
+                    <div class="line"></div>
+                </div>
+                <div class="headleft  flex flex_center " :class="{active: currentStatus == 3}" @click="changeStatus(3)">
+                    <div class="tourism">已失效</div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="btns flex flex_wrap space-between" :class="{btnsactive:bocusBox}">
+                <div class="chosebtns" :class="{active:currentBocus == 1}" @click="changecb(1)">现金劵</div>
+                <div class="chosebtns" :class="{active:currentBocus == 2}" @click="changecb(2)">体验券</div>
+                <div class="chosebtns" :class="{active:currentBocus == 3}" @click="changecb(3)">礼品券</div>
+                <div class="chosebtns" :class="{active:currentBocus == 4}" @click="changecb(4)">折扣券</div>
+                <div class="chosebtns" :class="{active:currentBocus == 5}" @click="changecb(5)">特价券</div>
+                <div class="chosebtns" :class="{active:currentBocus == 6}" @click="changecb(6)">换购券</div>
+            </div>
+        </div>
+        <div class="main">
+            <v-loading v-show="loading"></v-loading>
+
+            <div class="first" v-for="item in list">
+                <div class="left">
+                    <div class="money" v-if="item.bonus_type == 1">￥<span>{{ item.type_money }}</span></div>
+                    <div class="money" v-if="item.bonus_type == 2" ><span style="font-size: .34rem;margin-top:.2rem;">免费体验</span></div>
+                    <div class="money" v-if="item.bonus_type == 3">￥<span>{{ item.type_money }}</span></div>
+                    <div class="money" v-if="item.bonus_type == 4">￥<span>{{ item.type_money }}</span></div>
+                    <div class="money" v-if="item.bonus_type == 5">￥<span>{{ item.type_money }}</span></div>
+                    <div class="money" v-if="item.bonus_type == 6"><span>换购</span></div>
+                    <div class="xianjin">{{ item.bonus_cat }}</div>
+                </div>
+                <div class="right">
+                    <div class="title">全平台通用</div>
+                    <div class="time">{{ item.use_start_date }}----{{ item.use_end_date }}</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mask" v-show="bocusBox" @click="closeBox"></div>
+</div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+     apiready = function(){
+        Vue.component('v-loading',{
+            template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+        });
+        //  无数据组件
+        Vue.component('no-data',{
+            template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>查看</span></div></div></div>',
+            data:function(){
+                return {
+                    
+                }
+            },
+            methods:{
+                pageBack:function(){
+                    this.$parent.changeBocus();
+                }
+            },
+            props:{
+                msg:{type:String,default:'暂无数据'}
+            }
+        })
+         var root = new Vue({
+             el:"#root",
+             data:{
+                list:[],
+                total:"",
+                isTotal:true,
+                currentStatus:1,
+                loading:true,
+                bocusBox:false,
+                currentBocus:0,
+             },
+             methods:{
+                changeBocus:function(){
+                    this.bocusBox = !this.bocusBox;
+               
+                },
+                closeBox:function(){
+                    this.bocusBox = false;
+                },
+                changecb:function(type){
+                    this.currentBocus = type;
+                    this.list.splice(0);
+                    this.getList();
+                    this.closeBox();
+                },
+                changeStatus:function(index){
+                    this.currentStatus = index;
+                    this.list.splice(0);
+                    this.getList();
+                },
+                getList:function(){
+                    var _this = this;
+                    if (!_this.isTotal) {
+                        alert(222)
+                        return false
+                    }
+                    _this.isTotal = false;
+                    request('/my/bonus',{
+                        start:_this.list.length,
+                        status:_this.currentStatus,
+                        type:_this.currentBocus,
+                    },function(err,res){
+                        _this.isTotal = true;
+                        api.refreshHeaderLoadDone() 
+                        setTimeout(function(){_this.loading = false},700)
+                        if (!err && res.code == 1) {
+                            _this.list = _this.list.concat(res.data.data);
+                            _this.total= res.data.total;
+                        }else{
+                            err ? console.log(JSON.stringify(err)) : "";
+                        }
+                    })
+                },
+                back:function(){
+                    api.closeWin()
+                }
+             },
+             mounted:function(){
+                if (api.statusBarAppearance) {
+                    var safeArea = api.safeArea.top;
+                    var middle = document.querySelector('.main');
+                    var search = document.querySelector('.header');
+                    var titleHead = document.querySelector('.titlehead');
+                    var btns = document.querySelector('.btns');
+                    var searchHeight = search.clientHeight;
+                    var titleheadHeight = titleHead.clientHeight;
+                    search.style.height = searchHeight+safeArea+"px";
+                    search.style.paddingTop = safeArea + "px";
+                    middle.style.paddingTop = searchHeight + safeArea + titleheadHeight + 'px';
+                    titleHead.style.top = searchHeight + safeArea + "px";
+                    btns.style.top = searchHeight + safeArea + "px";
+                };
+                this.getList();
+                var _this = this;
+                // 下拉刷新
+                api.setCustomRefreshHeaderInfo({
+                    bgColor : '#fff',
+                    images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                    tips : {
+                        pull : '下拉刷新',
+                        threshold : '松开立即刷新',
+                        load : '正在刷新'
+                    }
+                }, function() {
+                    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                    _this.list.splice(0);
+                    _this.getList()
+                });
+                //上拉加载
+                var timp = "";
+                api.addEventListener({
+                　　name:'scrolltobottom',
+                    extra:{threshold:20}
+                }, function(ret, err){
+            　　　　　　//上拉加载时需要加载的数据
+                    if (_this.list.length == _this.total) {
+                        api.toast({msg:"到底了"})
+                    }else{
+                        clearTimeout(timp)
+                        timp = setTimeout(function(){
+                            _this.getList();
+                        },300)
+                    }
+                });
+             },
+         })
+     }
+    </script>
+</body>
+
+</html>

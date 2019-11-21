@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的评价</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        body {
+            background: rgba(248, 249, 251, 1);
+        }
+
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 1300;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        /* 商品开始 */
+        .goods_content {
+            width: 100%;
+            height: auto;
+            padding-top: .88rem;
+        }
+
+        .goods_list {
+            width: 100%;
+            overflow: hidden;
+            background-color: #fff;
+            padding: .41rem .30rem 0 .31rem;
+        }
+
+        .goods_item {
+            width: 100%;
+            height: auto;
+            padding-bottom: .37rem;
+            overflow: hidden;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .goods_item img {
+            float: left;
+            width: 2.5rem;
+            height: 1.85rem;
+            border-radius: .1rem;
+        }
+
+        .goods_item .goods_right {
+            float: right;
+            width: 4.20rem;
+            height: 1.85rem;
+        }
+
+        .goods_item .goods_right .goods_name {
+            width: 100%;
+            overflow: hidden;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            line-height: .44rem;
+        }
+
+        .goods_item .goods_right .sub_money {
+            width: 100%;
+            font-size: .32rem;
+            font-weight: 400;
+            color: #FF4242;
+            margin-top: .48rem;
+        }
+        .goods_item .goods_right .sub_money > div{
+            font-weight: bold;
+        }
+        .goods_item .goods_right .sub_money .a {
+            font-size: .24rem;
+            font-weight: normal;
+        }
+
+        .goods_item .goods_right .sub_money .sub_number {
+            font-size: .20rem;
+            color: #333;
+            padding-top: .15rem;
+        }
+
+        /* 星星 */
+        .evalu_start {
+            width: 100%;
+            height: 1.06rem;
+            line-height: 1.06rem;
+            overflow: hidden;
+            background-color: #fff;
+            margin-bottom: .2rem;
+        }
+
+        .evalu_start .evalu_left {
+            font-size: .28rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            padding: 0 .25rem 0 .29rem;
+        }
+
+        .evalu_start .start img {
+            width: .4rem;
+            height: .4rem;
+            margin-right: .19rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+        <no-data v-show="list.length == 0" msg="您还没有评价，赶紧评价一个试试"></no-data>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>我的评价</div>
+        <div class="content"></div>
+    </div>
+    <div class="goods_content">
+        <ul>
+            <li v-for="(item,index) in list" :key="index">
+                <div class="goods_list">
+                    <div class="goods_item">
+                        <img v-if="index > 4" src="../../image/zhanweiShop.png" class="hui-lazy" :lazySrc="item.goods.img"/>
+                        <img v-else :src="item.goods.img"  />
+                        <!-- <img :src="item.goods.img" alt="" srcset=""> -->
+                        <div class="goods_right fr flex flex_wrap align-content-stretch">
+                            <div class="goods_name ellipsis2">{{ item.goods.goods_name }}</div>
+                            <div class="sub_money flex space-between">
+                                <div><span class="a">￥</span>{{ item.goods.shop_price }}</div>
+                                <span class="sub_number">x{{ item.goods_number }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="evalu_start flex">
+                    <div class="evalu_left">星级</div>
+                    <div class="start flex align-items">
+                        <img :src="[item.comment_rank >= 1 ? '../../image/gsj_star.png' : '../../image/gsj_stark.png' ]" alt="">
+                        <img :src="[item.comment_rank >= 2 ? '../../image/gsj_star.png' : '../../image/gsj_stark.png' ]" alt="">
+                        <img :src="[item.comment_rank >= 3 ? '../../image/gsj_star.png' : '../../image/gsj_stark.png' ]" alt="">
+                        <img :src="[item.comment_rank >= 4 ? '../../image/gsj_star.png' : '../../image/gsj_stark.png' ]" alt="">
+                        <img :src="[item.comment_rank >= 5 ? '../../image/gsj_star.png' : '../../image/gsj_stark.png' ]" alt="">
+                    </div>
+                </div>
+            </li>
+            <!-- <li>
+                <div class="goods_list">
+                    <div class="goods_item">
+                        <img src="../../image/gsj_goods.png" alt="" srcset="">
+                        <div class="goods_right fr flex flex_wrap align-content-stretch">
+                            <div class="goods_name">鑫海自营野山参鑫海自营野山参鑫海自营野山参</div>
+                            <div class="sub_money flex space-between">
+                                <div><span class="a">￥</span>88.00</div>
+                                <span class="sub_number">x1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="evalu_start flex">
+                    <div class="evalu_left">星级</div>
+                    <div class="start flex align-items">
+                        <img src="../../image/gsj_star.png" alt="">
+                        <img src="../../image/gsj_star.png" alt="">
+                        <img src="../../image/gsj_star.png" alt="">
+                        <img src="../../image/gsj_star.png" alt="">
+                        <img src="../../image/gsj_stark.png" alt="">
+                    </div>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/hui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            });
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {}
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                },
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    list:[],
+                    total:0,
+                    isTotal:true,
+                    loading:true,
+                },
+                methods:{
+                    getList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                           return false 
+                        }
+                        _this.isTotal = false;
+                        request('/my/my_evaluate',{start:_this.list.length},function(err,res){
+                            _this.isTotal = true;
+                            setTimeout(function(){_this.loading = false},700)
+                            if (!err && res.code == 1) {
+                                _this.list = _this.list.concat(res.data.data);
+                                _this.total = res.data.total;
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main  = document.querySelector(".goods_content");
+                        var search = document.querySelector('.top');
+                        var headerHeight = search.clientHeight;
+                        search.style.height = safeArea + headerHeight + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = safeArea + headerHeight+ 'px'
+                    };
+                    this.getList();
+                    var _this = this;
+                    hui.lazyLoad();   //图片懒加载
+                    hui.lazyLoadNow()
+                    //上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　　　//上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.total <=6) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getList();
+                            },300)
+                        }
+                    });
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+
+</html>

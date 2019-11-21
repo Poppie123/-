@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>收藏</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #FFFFFF;
+    }
+
+    .header {
+        width: 7.5rem;
+        height: .88rem;
+        line-height: .88rem;
+        border-bottom: 1px solid #EEEEEE;
+        padding: 0 .28rem;
+        position: fixed;
+        overflow: hidden;
+        z-index: 1300;
+        background-color: #fff;
+    }
+
+    .header .iconfanhui {
+        width: 1rem;
+        font-size: .3rem;
+        color: #333333;
+    }
+
+    .header .footprint {
+        line-height: .88rem;
+        font-size: .36rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: left;
+    }
+
+    .header .edit {
+        width: 1rem;
+        font-family: 'PingFang-SC-Medium';
+        font-size: .3rem;
+        font-weight: Medium;
+        color: #666666;
+        text-align: right;
+    }
+    
+    .middle {
+        width: 7.5rem;
+        overflow: hidden;
+        padding-top: .88rem;
+      
+    }
+    .middle .titlehead{
+        width: 100%;
+        height: .92rem;
+        padding-left:.3rem;
+        padding-right: .3rem;
+        border-bottom: 1px solid #EEEEEE;
+        background-color: #fff;
+        position: fixed;
+        left: 0;
+        top: .88rem;
+        z-index: 999;
+    }
+    .middle .titlehead .tourism{
+        font-size: .3rem;
+        color: #999999;
+        text-align: left;
+    }
+    .middle .active .tourism{
+        font-size: .3rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: left;
+    }
+    /* .middle .active .line{
+        width: .54rem;
+        height: .06rem;
+        position: absolute;
+        bottom: 0;
+        background-color: #0086F7;
+        border-radius: .5rem;
+    } */
+
+    .middle .main {
+        width: 7.9rem;
+        overflow: hidden;
+        transform: translateX(-0.4rem);
+        transition: .4s linear;
+    }
+
+    .middle .main .first {
+        /* width: 7.5rem; */
+        height: 2.51rem;
+        border-bottom: 1px solid #EEEEEE;
+        overflow: hidden;
+        padding-left: .3rem;
+        padding-right: .3rem;
+    }
+
+    .middle .main .first .circle {
+        width: .42rem;
+        height: .42rem;
+        border-radius: 50%;
+        border: 1px solid #DDDDDD;
+        margin-right: .2rem;
+        transform: translateX(-0.35rem);
+        transition: .4s linear;
+        position: relative;
+    }
+
+    .middle .main .first .circle .iconjuxing {
+        display: none;
+    }
+  
+    .show {
+        display: block !important;
+    }
+
+    .middle .main .first .active .iconjuxing {
+        display: block !important;
+        font-size: .42rem;
+        color: #0086F7;
+        position:absolute;
+        left: -1px;
+        top:-2px;
+    }
+    .middle .scactive .first .circle{
+        transform: translateX(-0.1rem);
+    }
+    .middle .scactive {
+        transform: translateX(0)
+    }
+    .scactive .first .right {
+        left: -0.03rem !important;
+    }
+    .middle .main .first .right {
+        overflow: hidden;
+        /* transform: translateX(-0.6rem) */
+    }
+
+    .middle .main .first .right img {
+        width: 1.9rem;
+        height: 1.9rem;
+        border-radius: .05rem;
+    }
+
+    .middle .main .first .right .con {
+        margin-left: .2rem;
+        overflow: hidden;
+    }
+
+    .middle .main .first .right .con .title {
+        width: 4.04rem;
+        font-size: .26rem;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .middle .main .first .right .con .guige {
+        font-size: .26rem;
+        color: #999999;
+        text-align: left;
+        margin-top: .1rem;
+        overflow: hidden;
+    }
+
+    .middle .main .first .right .con .money {
+        font-size: .26rem;
+        font-weight: bold;
+        color: #FE6602;
+        text-align: left;
+        margin-top: .2rem;
+    }
+
+    .middle .main .first .right .con .money span {
+        font-size: .34rem;
+        font-weight: bold;
+        color: #FE6602;
+    }
+
+    .footer {
+        width: 7.5rem;
+        height: 1.1rem;
+        border-top: 1px solid #EEEEEE;
+        padding-left: .3rem;
+        padding-right: .3rem;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .footer .allcircle {
+        width: .42rem;
+        height: .42rem;
+        border-radius: 50%;
+        border: 1px solid #DDDDDD;
+        float: left;
+        margin-right: .1rem;
+        position: relative;
+    }
+
+    .footer .allcheck {
+        font-size: .28rem;
+        color: #000000;
+        text-align: left;
+    }
+
+    .footer .iconjuxing {
+        display: none;
+    }
+
+    .footer .allcheck .active .iconjuxing {
+        display: block;
+        font-size: .42rem;
+        color: #0086F7;
+        position: absolute;
+        left: -1px;
+        top:-2px;
+    }
+
+    .footer .del {
+        width: .96rem;
+        height: .62rem;
+        border: 1px solid #0086F7;
+        border-radius: .5rem;
+        font-size: .26rem;
+        color: #0086F7;
+        text-align: center;
+        line-height: .6rem;
+    }
+    .titlehead .line{
+        width: .54rem;
+        height: .06rem;
+        position: absolute;
+        bottom: 0;
+        left: 1.68rem;
+        background-color: #0086F7;
+        border-radius: .5rem;
+        transition: .4s;
+        -webkit-transition: .4s;
+    }
+    /* .main .gds-active{
+        transform: translateX(50px)
+    } */
+    .wrapper{
+        width: 100%;;
+        background-color: #8b90b1;
+        padding-top: 44px;
+        transition: .4s;
+        position: relative;
+        z-index: 90;
+    }
+</style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+        <no-data v-show="listDt.length == 0" msg="暂无收藏数据，快去商品中心看看吧"></no-data>
+    <div class="header flex  align-items space-between">
+        <i class="iconfont iconfanhui " @click="back"></i>
+        <div class="footprint">收藏</div>
+        <div v-show="edit" class="edit" @click="changeEdit">完成</div>
+        <div v-show="!edit" class="edit" @click="changeEdit">编辑</div>
+    </div>
+    <div class="middle" :style="{paddingBottom:edit ? '1.08rem' : '0'}">
+        <div class="titlehead flex align-items flex_center space-around ">
+            <div class="headleft flex flex_center" :class="{active : collectStatus}" @click="changeStatus">
+                <div class="tourism">旅游</div>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div class="headleft  flex flex_center " :class="{active : !collectStatus}" @click="changeStatus">
+                <div class="tourism">健康类</div>
+                <!-- <div class="line"></div> -->
+            </div>
+            <div ref="line" class="line"></div>
+        </div>
+        <div class="wrapper" ref="wrapper"></div>
+        <div class="main" :class="{scactive: edit}" ref="list">
+
+            <div class="first flex align-items" v-for="(item,index) in listDt" >
+                <div class="circle" :class="{active:item.status}" @click="dancheck(index)">
+                    <i class="iconfont iconjuxing"></i>
+                </div>
+                <div class="right flex " @click="jumpGds(item)">
+                    <img v-if="index > 6" src="../../image/zhanweiShop.png" class="hui-lazy" :lazySrc="item.goods.img"/>
+                    <img v-else :src="item.goods.img"  />
+                    <!-- <img :src="item.goods.img"> -->
+                    <div class="con">
+                        <div class="title">{{ item.goods.goods_name }}</div>
+                        <div class="money">￥<span>{{ item.goods.shop_price }}</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="footer ifooter flex flex_center space-between align-items" v-show="edit">
+        <div class="allcheck">
+            <div :class="[allCheck ? 'allcircle active' : 'allcircle']" @click="allcheckClick">
+                <i class="iconfont iconjuxing"></i>
+            </div>
+            全选
+        </div>
+        <div class="del" @click="deleteGds">
+            删除
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/hui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            //  加载组件
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {}
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+        var root = new Vue({
+            el:"#root",
+            data:{
+                listDt:[],
+                total:0,
+                isTotal:true,
+                collectStatus:true, //true 旅游  false 健康类 
+                edit:true,         //true 开启编辑状态  false 关闭编辑状态
+                docTop:0,
+                loading:true,
+            },
+            methods:{
+                getLvData:function(){
+                    var _this = this;
+                    var type = _this.collectStatus ? 1 : 2;
+                    if (!_this.isTotal) {
+                        return false
+                    }
+                    _this.isTotal = false;
+                    request('/my/my_collect',{start:_this.listDt.length,type:type},function(err,res){
+                        _this.isTotal = true;
+                        api.refreshHeaderLoadDone()
+                        setTimeout(function(){_this.loading = false},700)
+                        if (!err && res.code == 1) {
+                            var list= res.data.data.map(function(v){
+                                v.status = false;
+                                return v
+                            })
+                            _this.listDt = _this.listDt.concat(list);
+                            _this.total = res.data.total;
+                        }else{
+                            
+                        }
+                    })
+                },
+                //单选
+                dancheck:function(index){
+                    if (this.edit) {
+                        this.listDt[index].status = !this.listDt[index].status;
+                    } else {
+                        
+                    }
+                }, 
+                //多选
+                allcheckClick:function(){
+                    var _this = this;
+                    var currentStatus = !_this.allCheck
+                    this.listDt = this.listDt.map(function(v){
+                        v.status = currentStatus;
+                        return v
+                    })
+                    this.listDt.push()
+                },
+                deleteGds:function(){
+                    var _this = this;
+                    var collect_id = [];
+                    _this.listDt.map(function(v){
+                        v.status ? collect_id.push(v.collectid) : ""
+                    })
+                    collect_id = JSON.stringify(collect_id)
+                    request('/my/del_collect',{collect_id:collect_id},function(err,res){
+                        if (!err && res.code == 1) {
+                            _this.loading = true;
+                            _this.listDt.splice(0);
+                            _this.getLvData();
+                            api.sendEvent({name:"refreshUserInfo"})
+                        }else{
+                            api.toast({msg:"删除失败"})
+                        }
+                    })
+                },
+                changeStatus:function(){
+                    var eleLine = this.$refs.line;
+                    this.collectStatus ? eleLine.style.left = "5.15rem" : eleLine.style.left = "1.68rem";
+                    this.collectStatus = !this.collectStatus;
+                    var _this = this;
+                    this.listDt = this.listDt.map(function(v){
+                        v.status = false;
+                        return v
+                    });
+                    this.listDt.push();
+                    this.listDt.splice(0);
+                    this.getLvData();
+                },
+                changeEdit:function(){
+                    if (this.edit) {
+                        this.listDt = this.listDt.map(function(v){
+                            v.status = false;
+                            return v
+                        })
+                    }
+                    this.edit = !this.edit;
+                },
+                //点击跳转商品
+                jumpGds:function(item){
+                    api.openWin({
+                        name:"travelDtl",
+                        url:"../user/travel_dtl.html",
+                        pageParam:{
+                            obj:JSON.stringify({attrid:item.goods.attrid,type:1})
+                        },
+                        reload:true,
+                    })
+                },
+                back:function(){
+                    api.closeWin()
+                },
+            },
+            mounted:function(){
+                var _this = this;
+                if (api.statusBarAppearance) {
+                    var safeArea = api.safeArea.top;
+                    var middle = document.querySelector('.middle');
+                    var search = document.querySelector('.header');
+                    var titleHead = document.querySelector('.titlehead');
+                    var searchHeight = search.clientHeight;
+                    search.style.height = searchHeight+safeArea+"px";
+                    search.style.paddingTop = safeArea + "px";
+                    middle.style.paddingTop = searchHeight + safeArea + 'px';
+                    titleHead.style.top = searchHeight + safeArea + "px";
+                    handerIOSX();
+                };
+                _this.getLvData();
+                api.setCustomRefreshHeaderInfo({
+                    bgColor : '#fff',
+                    images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                    tips : {
+                        pull : '下拉刷新',
+                        threshold : '松开立即刷新',
+                        load : '正在刷新'
+                    }
+                }, function() {
+                    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                    _this.getLvData()
+                });
+                hui.lazyLoad();    //图片懒加载
+                hui.lazyLoadNow();
+                // 上拉加载
+                var timp = "";
+                api.addEventListener({
+                　　name:'scrolltobottom',
+                    extra:{threshold:20}
+                }, function(ret, err){
+            　　　　　　//上拉加载时需要加载的数据
+                    if (_this.listDt.length == _this.total) {
+                        if (_this.total <= 4) {
+                            return false
+                        }
+                        api.toast({msg:"到底了"})
+                    }else{
+                        clearTimeout(timp)
+                        timp = setTimeout(function(){
+                            _this.getLvData();
+                        },300)
+                    }
+                });
+            },
+            computed:{
+                allCheck:function(){
+                    var _this = this;
+                    var status = true;
+                    for (var i = 0; i < _this.listDt.length; i++) {
+                        if (!_this.listDt[i].status) {
+                            status = false;
+                            break;                            
+                        }
+                    }
+                    if (_this.listDt.length == 0) {
+                        status = false; 
+                    }
+                    return status;
+                }
+            }
+         })
+        }
+    </script>
+</body>
+
+</html>

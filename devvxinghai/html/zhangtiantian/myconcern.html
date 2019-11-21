@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的关注</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 1300;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top .record{
+            font-size: .3rem;
+            font-weight: normal;
+            color: #0086F7;
+            text-align: right;
+            padding-right: .04rem;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .list{
+            width: 100%;
+            height: 1.52rem;
+            background: #FFFFFF;
+            border-bottom:1px solid #EEEEEE; 
+        }
+        .list .img{
+            width: .88rem;
+            height: .88rem;
+            background: #FFFFFF;
+            border: 1px solid #EEEEEE;
+            border-radius: .04rem;
+        }
+        .list .img img{
+            width: .7rem;
+            height: .74rem;
+            margin: .07rem auto ;
+            border-radius: .04rem;
+        }
+        
+        .list .container{
+            width: 4.42rem;
+            height: .88rem;
+            font-weight: normal;
+            font-size: .3rem;
+        }
+        .list .container .title{
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+            line-height: .46rem;
+        }
+        .list .container .number{
+            font-size: .26rem;
+            font-weight: bold;
+        }
+        .list .container .word{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .border0{
+            border: 0;
+        }
+        .list .btn{
+            width: 1.2rem;
+            height: .5rem;
+            background: #0086F7;
+            line-height: .5rem;
+            text-align: center;
+            font-size: .24rem;
+            color: #FFFFFF;
+            font-weight: 500;
+            border-radius: .06rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <no-data v-show="shopList.length == 0" msg="您还没有关注的店铺赶快关注一个试试吧"></no-data>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>我的关注</div>
+        <div class="content record" @click="clearGuan">清空</div>
+    </div>
+    <div class="top88"></div>
+    <ul class="wrapper">
+        <li class="list  flex space-between align-items" v-for="(item,index) in shopList" :key="index">
+            <div class="img"><img :src="item.shop_img" alt=""></div>
+            <div class="container">
+                <div class="title">{{ item.shop_name }}</div>
+                <div><span class="number">{{ item.shop_focus }}</span><span class="word">人关注</span></div>
+            </div>
+            <div class="btn" @click="cancleGuan(item.shop_id,index)">取消关注</div>
+        </li>
+    </ul>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            // loading组件
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    shopList:[],
+                    total:"",
+                    isTotal:true,
+                    loading:true,
+                    opt:1,
+                },
+                methods:{
+                    clearGuan:function(){
+                        if (this.shopList.length == 0) {
+                            api.toast({msg:"您还没有关注的店铺",location:"middle"})
+                            return false
+                        }
+                        var _this = this;
+                        var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '确认全部清除吗,在考虑考虑',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '清空'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									}
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+                                    request('/my/del_all_concern',{},function(err,res){
+                                        if (!err && res.code == 1) {
+                                            api.toast({msg:"清除成功"})
+                                            _this.shopList.splice(0);
+                                        }else{
+                                            err ? console.log(JSON.stringify(res)) : api.toast({msg:res.msg})
+                                        }
+                                    })
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+								});
+							});
+                        
+                    },
+                    cancleGuan:function(id,index){
+                        var _this = this;
+                        request('/my/del_one_concern',{shop_id:id},function(err,res){
+                            // api.toast({msg:'取消成功'})
+                            if (!err && res.code == 1) {
+                                api.toast({msg:'取消成功'})
+                                _this.shopList.splice(index,1)
+                                _this.getGuanZhu()
+                            }else{
+                               err ? console.log(JSON.stringify(err)) :   api.toast({msg:'取消失败'})
+                            }
+                        })
+                    },
+                    //获取店铺列表
+                    getGuanZhu:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/my/my_concern',{start:_this.shopList.length},function(err,res){
+                            _this.isTotal = true;
+                            setTimeout(function(){_this.loading = false},700)
+                            api.refreshHeaderLoadDone()
+                            if (!err &&res.code == 1) {
+                                _this.shopList = _this.shopList.concat(res.data.data);
+                                _this.total = res.data.total;
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin();
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    this.getGuanZhu();
+                    var _this = this;
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#fff',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新'
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.getGuanZhu()
+                    });
+                    // 上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　　　//上拉加载时需要加载的数据
+                        if (_this.shopList.length == _this.total) {
+                            if (_this.total < 6) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getGuanZhu();
+                            },300)
+                        }
+                    });
+
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

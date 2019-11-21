@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/wei.css">
+    <link rel="stylesheet" href="../../css/animate.min.css">
+    <script src="../../js/rem.js"></script>
+    <title>登录</title>
+    <style>
+        body {
+            background: #FFFFFF;
+        }
+
+        .header {
+            padding-top: .35rem;
+            text-align: right;
+            margin-right: .33rem;
+            font-size: .30rem;
+            font-weight: bold;
+            color: rgba(0, 134, 247, 1);
+        }
+
+        .main {
+            width: 6rem;
+            height: auto;
+            overflow: hidden;
+            margin: 1.05rem auto 0;
+        }
+
+        .title {
+            font-size: .50rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 1);
+            margin-bottom: .1rem;
+        }
+
+        .main .box> span {
+            font-size: .30rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 1);
+            margin-top: .4rem;
+        }
+
+        .main .login_border {
+            width: 100%;
+            height: .6rem;
+            overflow: hidden;
+            margin-top: .22rem;
+            border-bottom: 1px solid rgba(221, 221, 221, 1);
+        }
+
+        .main input {
+            outline: none;
+            border: none;
+            width: 4.2rem;
+            height: .5rem;
+            font-size: .32rem;
+        }
+
+        input::-webkit-input-placeholder {
+            font-size: .32rem;
+            font-weight: 500;
+            color: #CCCCCC;
+        }
+
+        .btn_login {
+            width: 6rem;
+            height: .92rem;
+            line-height: .92rem;
+            margin: 1.2rem auto .3rem;
+            background: #ccc;
+            border-radius: .10rem;
+            font-size: .32rem;
+            font-weight: bold;
+            text-align: center;
+            color: rgba(255, 255, 255, 1);
+            transition: .3s;
+        }
+        .btnactive{
+            background: linear-gradient(90deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+            background: -webkit-linear-gradient(90deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+        }
+        .btn_login img{
+            display: none;
+        }
+        .wei-btn span{
+            animation: fangda .4s;
+            -webkit-animation: fangda .4s;
+        }
+        .wei-c-y{
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+        .wei-c-y .rotate{
+            display: block;
+            width: 30px;
+            height: 30px;
+            animation: 2s rotate linear infinite;
+            -webkit-animation: rotate 2s linear infinite;
+        }
+        .wei-c-y span{
+            display: none;
+        }
+        .login_to {
+            font-size: .30rem;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            padding: 0 .75rem;
+        }
+
+        /* 第三方账号 */
+        .login_form {
+            width: 100%;
+            height: auto;
+            position: fixed;
+            bottom: 1.4rem;
+            overflow: hidden;
+            margin-top: 2.16rem;
+            /* position: fixed; */
+            /* bottom: .71rem; */
+        }
+
+        .line_txt {
+            height: .6rem;
+            line-height: .6rem;
+            text-align: center;
+            margin-bottom: .73rem;
+        }
+
+        .line_txt .line {
+            display: inline-block;
+            width: 1.16rem;
+            height: .02rem;
+            background: linear-gradient(90deg, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%);
+            background: -webkit-linear-gradient(90deg, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .line_txt .txt {
+            font-size: .26rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            vertical-align: -.08rem;
+        }
+
+        .into {
+            width: 3.9rem;
+            margin: 0 auto;
+        }
+        .into img:first-child{
+            width: .42rem;
+        }
+        .into img {
+            width: .48rem;
+            height: auto;
+        }
+        #getcode{
+            font-size: .32rem;
+            color: #0086F7;
+        }
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        .slide-fade-enter, .slide-fade-leave-to {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+    <div class="header" @click="openZhuce">注册</div>
+    <div class="main">
+        <div class="title">欢迎来到鑫海</div>
+        <div v-show="currentStatus == 1" class="box login-pwd" :class="[ currentStatus == 1 ? 'animated  flipInY' : 'animated  flipOutY' ]">
+            <span>账号</span>
+            <div class="login_border">
+                <input type="tel" placeholder="请输入手机号码" maxlength="11" v-model="loginPwd.phone">
+            </div>
+            <span>密码</span>
+            <div class="login_border">
+                <input type="password" placeholder="请输入密码" v-model="loginPwd.pwd">
+            </div>
+        </div>
+        <div v-show="currentStatus == 2" class="box login-sms" :class="[ currentStatus == 2 ? 'animated  flipInY' : 'animated  flipOutY' ]">
+            <span>手机</span>
+            <div class="login_border">
+                <input type="tel" placeholder="请输入手机号码" v-model="loginSms.phone">
+            </div>
+            <span>验证码</span>
+            <div class="login_border">
+                <input type="number" class="code" placeholder="请输入验证码" v-model="loginSms.code">
+                <span class="fr" id="getcode" @click="getCode">{{ timeOut }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="btn_login fn-ctr" :class="{'wei-c-y':loginLoading,btnactive:isAllowLogin}" @click="login">
+        <img class="rotate" src="../../image/bailoading.png" alt="">
+        <span>{{ loginMsg }}</span>
+    </div>
+    <div class="login_to flex space-between">
+        <div class="login_yzm" @click="changeStatus">{{ changeMsg }}</div>
+        <div class="forget_pwd" @click="openWangmima">忘记密码</div>
+    </div>
+    <div class="login_form ifooter" v-show="btLogin">
+        <div class="line_txt">
+            <span class="line"></span>
+            <span class="txt">第三方账户登录</span>
+            <span class="line"></span>
+        </div>
+        <div class="into flex space-between align-items" >
+            <img src="../../image/gsjqq.png" alt="" @click="otherType(0)">
+            <img src="../../image/gsjwx.png" alt="" @click="otherType(1)">
+            <img src="../../image/gsjwb.png" alt="" @click="otherType(2)">
+        </div>   
+    </div> 
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/monitor.js"></script>
+    <script type="text/javascript">
+        apiready = function(){
+            var root = new Vue({
+                el:"#app",
+                data:{
+                    currentStatus:1, //1 账号密码登录  2 手机验证码登录,
+                    changeMsg:"验证码登录",
+                    loginLoading:false,
+                    loginMsg:"登录",
+                    loginPwd:{
+                        phone:"",
+                        pwd:"",
+                    },
+                    loginSms:{
+                        phone:"",
+                        code:""
+                    },
+                    timeOut:'获取验证码',
+                    codeAl:true,
+                    btLogin:true,  //第三方登录
+                },
+                methods:{
+                    changeStatus:function(){
+                        if (this.currentStatus == 1) {
+                            this.currentStatus = 2;
+                            this.changeMsg = "密码登录";
+                        }else {
+                            this.currentStatus = 1;
+                            this.changeMsg = "验证码登录";
+                        }
+                    },
+                    getCode:function(){
+                        var _this = this;
+                        if(_this.loginSms.phone == "" || _this.timeOut != "获取验证码"){
+                            return false
+                        }
+                        _this.timeOut = "60S";
+                        _this.getTimeOut()
+                        request('/login/get_captcha',{phone:_this.loginSms.phone},function(err,res){
+                            _this.codeAl = true;
+                            if (!err && res.code == 1) {
+                                api.toast({msg:res.msg})
+                                //api.toast({msg:res.data.captcha})
+                            }else{
+                                console.log('失败')
+                            }
+                        })
+                    },
+                    //点击登录
+                    login:function(){
+                        var _this = this;
+                        if (!_this.isAllowLogin) {
+                            return false
+                        }
+                        if (!this.loginLoading) {
+                            this.loginLoading = true;
+                            // 模拟请求结束
+                            setTimeout(function(){
+                                if (_this.currentStatus == 1) { //密码登录
+                                    request('/login/account_login',{account:_this.loginPwd.phone,password:_this.loginPwd.pwd},function(err,res){
+                                        if (!err && res.code == 1) {
+                                            _this.loginEnd('登录成功');
+                                            monAjax('密码登录成功')  //埋点代码
+                                            $api.setStorage('uid',res.data.user_id);
+                                            api.sendEvent({name:"refreshUserInfo"});
+                                            api.sendEvent({name:"refershBocus"});
+                                            api.sendEvent({name:"refreshGdsDtl"});
+                                            api.sendEvent({name:"refreshtravDtl"});
+                                            api.sendEvent({name:"refreshAnswer"})  //刷新专家页面跳转登录逻辑
+                                            api.sendEvent({name:"refreshLvjuka"}) //刷新旅居卡信息
+                                            setTimeout(function(){
+                                                api.closeWin()
+                                            },700)
+                                        } else {
+                                            res ? _this.loginEnd(res.msg) : _this.loginEnd()
+                                        }
+                                    })
+                                } else {  //验证码登录
+                                    request('/login/captcha_login',{phone:_this.loginSms.phone,captcha:_this.loginSms.code},function(err,res){
+                                        if (!err && res.code == 1) {
+                                            monAjax('验证码登录成功') //埋点代码
+                                            _this.loginEnd('登录成功');
+                                            $api.setStorage('uid',res.data.user_id);
+                                            api.sendEvent({name:"refreshUserInfo"});
+                                            api.sendEvent({name:"refershBocus"});
+                                            api.sendEvent({name:"refreshGdsDtl"});
+                                            api.sendEvent({name:"refreshtravDtl"});
+                                            api.sendEvent({name:"refreshAnswer"}) //刷新专家页面跳转登录逻辑
+                                            api.sendEvent({name:"refreshLvjuka"}) //刷新旅居卡信息
+                                            setTimeout(function(){
+                                                api.closeWin()
+                                            },700)
+                                        } else {
+                                            res ? _this.loginEnd(res.msg) : _this.loginEnd()
+                                        }
+                                    })
+                                }
+                            },800)
+                        }
+                    },
+                    // 结束登录状态
+                    loginEnd:function(msg){
+                        this.loginLoading = false; 
+                        this.loginMsg = msg || "登录失败,再次登录";
+                    },
+                    //倒计时
+                    getTimeOut:function(){
+                        var _this = this;
+                        var t = 60;
+                        var timp = setInterval(function(){
+                            if (t <= 0) {
+                                clearInterval(timp);
+                                _this.timeOut = "获取验证码"
+                            }else{
+                                t--;
+                                _this.timeOut = t+"S"
+                            }
+                        },1000);
+                    },
+                    //打开注册
+                    openZhuce:function(){
+                        if (!this.loginLoading) {
+                            api.openWin({
+                                name:"registered",
+                                url:"./registered.html",
+                            })
+                        }
+                    },
+                    //忘记密码
+                    openWangmima:function(){
+                        if (!this.loginLoading) {
+                            api.openWin({
+                                name:"forget_pwd",
+                                url:"./forget_pwd.html",
+                            })
+                        }
+                    },
+                    otherType:function(type){
+                        if (type == 1) { //微信登录
+                            var wx = api.require('wx');
+                            wx.isInstalled(function(ret, err) {
+                                if (ret.installed) {
+                                    var wx = api.require('wx');
+                                    wx.auth({
+                                        apiKey: 'wx9c536584bbad448d'
+                                    }, function(ret, err) {
+                                        if (ret.status) {
+                                            var wx = api.require('wx');
+                                            wx.getToken({
+                                                apiKey: 'wx9c536584bbad448d',
+                                                apiSecret: '746d0485889f4f71da33a7da997532c9',
+                                                code: ret.code
+                                            }, function(ret, err) {
+                                                if (ret.status) {
+                                                    var ress = ret;
+                                                    var wx = api.require('wx');
+                                                    wx.getUserInfo({
+                                                        accessToken: ress.accessToken,
+                                                        openId: ress.openId,
+                                                    }, function(ret, err) {
+                                                        if (ret.status) {
+                                                            // {
+                                                            //     status: true,      //布尔型；true||false
+                                                            //     openid: '',        //字符串类型；普通用户的标识，对当前开发者帐号唯一
+                                                            //     nickname: '',      //字符串类型；普通用户昵称
+                                                            //     sex: 1,            //数字类型；普通用户性别，1为男性，2为女性
+                                                            //     headimgurl: '',    //字符串类型；用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空
+                                                            //     privilege: [],     //数组类型；用户特权信息，如微信沃卡用户为（chinaunicom）
+                                                            //     unionid: ''        //字符串类型；用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
+                                                            // }
+                                                            //检测用户是否存在
+                                                            request('/login/check_weixin',{openid:ret.openid},function(err,res){
+                                                                if (!err && res.code == 1) {
+                                                                    monAjax('微信老用户登录成功')  //埋点代码
+                                                                    $api.setStorage('uid',res.data.user_id);
+                                                                    api.sendEvent({name:"refreshUserInfo"});
+                                                                    api.sendEvent({name:"refershBocus"});
+                                                                    api.sendEvent({name:"refreshGdsDtl"});
+                                                                    api.sendEvent({name:"refreshtravDtl"});
+                                                                    api.sendEvent({name:"refreshAnswer"})  //刷新专家页面跳转登录逻辑
+                                                                    api.sendEvent({name:"refreshLvjuka"}) //刷新旅居卡信息
+                                                                    api.toast({msg:"登录成功"});
+                                                                    setTimeout(function(){api.closeWin()},700);
+                                                                }else{
+                                                                    monAjax('微信新用户登录成功')  //埋点代码
+                                                                    err ? console.log(JSON.stringify(err)) : api.openWin({name:"bindPhone",url:"../guoshujie/bind_phone.html",pageParam:ret})
+                                                                }
+                                                            })
+                                                        } else {
+                                                            alert('getUserInfo失败')
+                                                        }
+                                                    });
+                                                } else {
+                                                    alert('gettoken失败')
+                                                }
+                                            });
+
+                                        } else {
+                                            alert('授权失败')
+                                        }
+                                    });
+                                } else {
+                                    api.toast({msg:"当前设备未安装微信客户端"})
+                                }
+                            });
+                        }else if(type == 0){ //qq登录 
+                            api.toast({msg:"暂未开放"})
+                            return false
+                            var qq = api.require('QQPlus');
+                            qq.installed(function(ret, err) {
+                                if (ret.status) {
+                                    qq.login(function(ret, err) {
+                                        // {
+                                        //     status: true,  //布尔类型；操作成功状态值
+                                        //     accessToken:'',//字符串类型；返回token
+                                        //     openId:''      //字符串类型；返回openID
+                                        //     unionid:''     //字符串类型；QQ用户的统一标示，对当前开发者账号唯一 
+                                        //                    //必须先通过邮件向腾讯官方申请，获取权限，否则unionID无法获取，申请邮箱：connect@qq.com
+                                        // }
+                                        if (ret.status) {
+                                            qq.getUserInfo(function(ret, err) {
+                                                if (ret.status) {
+                                                    console.log(ret.info)
+                                                } else {
+                                                    
+                                                }
+                                            });
+                                        }else{
+                                            
+                                        }
+                                    });
+                                } else {
+                                    api.toast({msg:"您还没有安装QQ"})
+                                }
+                            });
+                        }else if(type == 2){  //微博登录
+                            api.toast({msg:"暂未开放"})
+                            return false
+                            var weiboPlus= api.require('weiboPlus');
+                            weiboPlus.auth(function(ret, err) {   //授权
+                                if (ret.status) {
+                                    // {
+                                    //     status: true,  //布尔型；true||false
+                                    //     token: '',     //字符串类型；从新浪微博服务器获取的 accessToken，接口调用凭证，传给 getUserInfo 接口获取用户信息
+                                    //     expire: '',    //字符串类型：token 有效期（时间戳）
+                                    //     userId: ''     //字符串类型；从新浪微博服务器获取的 userId，新浪微博分配的用户id，传给 getUserInfo 接口获取用户信息
+                                    // }
+                                    weiboPlus.getUserInfo({
+                                        token: ret.token,
+                                        userId: ret.userId,
+                                    }, function(ret, err) {
+                                        if (ret.status) {
+                                            console.log(ret.userInfo)
+
+                                        }
+                                    });
+                                }else{
+                                    console.log(msg)
+                                }
+                            });
+                        }
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('#app');
+                        search.style.paddingTop = safeArea + "px";
+                        handerIOSX()
+                    }
+                    // input输入键盘顶起定位元素代码
+                    var _this = this;
+                    var win_h = document.documentElement.scrollHeight;	// 关键代码
+                    window.addEventListener('resize', function() {
+                        if(document.documentElement.scrollHeight < win_h) {
+                            _this.btLogin = false;
+                        } else {
+                            _this.btLogin = true;
+                        }
+                    });
+                    window.onkeydown = function(e){
+                        if (e && e.keyCode==13) {
+                            _this.login()
+                        }
+                    };
+                },
+                computed:{
+                    isAllowLogin:function(){
+                        var status = false;
+                        if (this.currentStatus == 1 && this.loginPwd.phone !="" && this.loginPwd.pwd != "") {
+                            status = true;
+                        }else if(this.currentStatus == 2 && this.loginSms.phone != "" && this.loginSms.code != ""){
+                            status = true;
+                        }
+                        return status;
+                    }
+                }
+            })
+        }
+            
+        
+    
+    
+    </script>
+</body>
+
+</html>

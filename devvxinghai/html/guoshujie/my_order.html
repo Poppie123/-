@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的订单</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        body {
+            background: rgba(248, 249, 251, 1);
+        }
+
+        /* 头部 */
+        .header {
+            position: fixed;
+            z-index: 996;
+            top: 0;
+            width: 100%;
+            background: #fff;
+            height: .88rem;
+            padding: 0 .3rem;
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .header .iconfanhui {
+            font-size: 0.3rem;
+            color: #333333;
+            padding-top: 0.32rem;
+        }
+
+        .header .head_title {
+            font-size: 0.36rem;
+            line-height: 0.44rem;
+            color: #333333;
+            font-weight: bold;
+            line-height: .93rem;
+            margin: 0 auto;
+        }
+
+        .header .iconsanjiaoxing-copy {
+            position: relative;
+            font-size: 0.88rem;
+            color: #333333;
+            left: -2.4rem;
+        }
+
+        /* 弹窗选项 */
+        .header_list {
+            position: fixed;
+            z-index: 996;
+            margin-top: .89rem;
+            width: 100%;
+            background: #fff;
+            padding: .47rem 1.14rem .12rem 1.07rem;
+        }
+
+        .header_list .header_nav {
+            overflow: hidden;
+        }
+
+        .header_list .header_item {
+            width: 2rem;
+            height: .72rem;
+            font-size: .32rem;
+            font-weight: 400;
+            color: #333;
+            background: rgba(248, 249, 251, 1);
+            border-radius: .10rem;
+            text-align: center;
+            line-height: .72rem;
+            margin-bottom: .39rem;
+        }
+
+        /* 激活 */
+        .header_list .active {
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
+            background: rgba(0, 134, 247, 1);
+        }
+
+        /* 导航栏 */
+        .nav {
+            top: .88rem;
+            position: fixed;
+            width: 100%;
+            height: .88rem;
+            padding: 0 .31rem;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .nav .item {
+            width: auto;
+            height: .88rem;
+            line-height: .88rem;
+            font-size: .32rem;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            position: relative;
+            display: inline-block;
+            margin-right: .37rem;
+        }
+
+        .nav .active {
+            color: rgba(0, 134, 247, 1);
+        }
+
+        .null {
+            width: 100%;
+            height: 1.81rem;
+        }
+
+        /* 商品开始 */
+        .goods {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            padding-top: .2rem;
+        }
+
+        .goods_content {
+            width: 6.90rem;
+            height: auto;
+            border-radius: .10rem;
+            background-color: #fff;
+            padding: 0 .30rem;
+            margin: 0 auto;
+        }
+
+        /* 时间、状态 */
+        .goods .title {
+            width: 100%;
+            height: .85rem;
+            font-size: .28rem;
+            font-weight: 400;
+        }
+
+        .goods .title .date {
+            color: rgba(153, 153, 153, 1);
+        }
+
+        .goods .title .order_status {
+            color: rgba(0, 134, 247, 1);
+        }
+
+        /* 物品 */
+        .goods .goods_list {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .goods .goods_item {
+            width: 100%;
+            height: auto;
+            padding-bottom: .37rem;
+            overflow: hidden;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .goods .goods_item img {
+            float: left;
+            width: 2.5rem;
+            height: 1.85rem;
+            border-radius: .1rem;
+        }
+
+        .goods .goods_item .goods_right {
+            float: right;
+            width: 3.65rem;
+            height: 1.85rem;
+        }
+
+        .goods .goods_item .goods_right .goods_name {
+            width: 100%;
+            overflow: hidden;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            line-height: .40rem;
+        }
+
+        .goods .goods_item .goods_right .sub_time {
+            width: 100%;
+            font-size: .24rem;
+            font-weight: 400;
+            color: #999;
+            margin-top: .48rem;
+        }
+
+        .goods_item .goods_right .sub_time .sub_number {
+            font-size: .20rem;
+            color: #333;
+        }
+
+        .goods .total_price {
+            width: 100%;
+            height: .84rem;
+            font-size: .28rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .goods .total_price .money {
+            color: #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mask"></div>
+    <div class="header">
+        <div class="header_content flex">
+            <i class="iconfont iconfanhui"></i>
+            <h1 class="head_title">我的订单</h1>
+            <i class="iconfont iconsanjiaoxing-copy"></i>
+        </div>
+    </div>
+    <div class="header_list">
+        <div class="header_nav">
+            <div class="header_item active fl">旅居卡</div>
+            <div class="header_item fr">旅游服务</div>
+            <div class="header_item fl">健康服务</div>
+            <div class="header_item fr">其它</div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="item">全部</div>
+        <div class="item">待付款</div>
+        <div class="item">待发货</div>
+        <div class="item">待收货</div>
+        <div class="item active">待评价</div>
+        <div class="item">退款</div>
+    </div>
+    <div class="null"></div>
+    <div class="goods">
+        <div class="goods_content">
+            <div class="title flex align-items space-between">
+                <div class="date">2019-07-08</div>
+                <div class="order_status">待评价</div>
+            </div>
+            <div class="goods_list">
+                <div class="goods_item">
+                    <img src="../../image/gsj_goods.png" alt="" srcset="">
+                    <div class="goods_right fr flex flex_wrap align-content-stretch">
+                        <div class="goods_name">海自营野山参鑫海自营野山参海自营野山参</div>
+                        <div class="sub_time flex space-between">
+                            <span>发货时间：鑫海承诺5天</span>
+                            <span class="sub_number">x3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="total_price flex align-items flex_end">
+                共<span class="number">3</span>件商品&nbsp;&nbsp;&nbsp;合计<span class="money">￥1500</span>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        $('.header_item').click(function () {
+            $(this).addClass('active').siblings().removeClass('active')
+        })
+
+        //打开编辑
+        function openEdit() {
+            
+        }
+        function closeEdit() {
+           
+        }
+    </script>
+</body>
+
+</html>

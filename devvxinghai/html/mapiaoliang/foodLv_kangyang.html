@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v8eoxklephb.css">
+    <script src="../../js/rem.js"></script>
+    <title>健康食品</title>
+    <style>
+        .header {
+            width: 100%;
+            height: .88rem;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            z-index: 1300;
+            padding: 0 .3rem;
+        }
+
+        .header i {
+            font-size: .3rem;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .search {
+            width: 5.56rem;
+            height: .6rem;
+            border-radius: .3rem;
+            margin-left: .5rem;
+            position: relative;
+        }
+        .search i{
+            position: absolute;
+            font-size: .28rem;
+            color: #ccc;
+            left: .31rem;
+        }
+        .search input{
+            width: 100%;
+            height: .58rem;
+            border: 1px solid #cccccc;
+            border-radius: .29rem;
+            line-height: .55rem;
+            padding-left: .68rem;
+        }
+        input::-webkit-input-placeholder {
+            font-size: .28rem;
+            color: #999999;
+        }
+
+        .main {
+            padding-top: .88rem;
+        }
+
+        .nav {
+            width: 100%;
+            height: .88rem;
+            background: #fff;
+            position: fixed;
+            top: .88rem;
+            z-index: 1200;
+        }
+
+        .nav .item {
+            width: 25%;
+            height: .88rem;
+            /* border:1px solid black; */
+            position: relative;
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .right {
+            width: .5rem;
+            position: absolute;
+            left: 1.25rem;
+            /* display: none; */
+        }
+
+        .right i {
+            font-size: .5rem;
+            color: #999999;
+        }
+
+        .iconsanjiaoxing-copy1 {
+            position: relative;
+            top: .24rem;
+        }
+
+        .iconsanjiaoxing-copy {
+            position: relative;
+            top: -.21rem;
+        }
+
+        .active {
+            color: #0086F7 !important;
+        }
+        .iconxingzhuang5 {
+            font-size: .32rem;
+            position: relative;
+            top: .05rem;
+        }
+        .list {
+            width: 100%;
+            height: auto;
+            padding: .1rem .3rem;
+            overflow: hidden;
+            display: block;
+        }
+
+        .list ul {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        .list li {
+            width: 3.36rem;
+            height: auto;
+            background: #fff;
+            overflow: hidden;
+            margin-top: .2rem;
+            /* padding-bottom: .2rem; */
+        }
+
+        .list li img {
+            width: 3.36rem;
+            height: 3.36rem;
+            border-radius: .1rem;
+            overflow: hidden;
+        }
+        .food-message {
+            width: 100%;
+            height: auto;
+            padding: .2rem .1rem .2rem .12rem;
+            overflow: hidden;
+        }
+        .food-name {
+            width: 2.8rem;
+            max-height: .74rem;
+            font-size: .28rem;
+            color: #333333;
+            font-weight: bold;
+        }
+        .food-message p {
+            font-size: .26rem;
+            color: #999999;
+            margin-top: .1rem;
+        }
+        .food-message p span:first-child {
+            margin-right: .1rem;
+        }
+        .price {
+            color: #FE6602;
+            margin-top: .1rem;
+            font-weight: bold;
+        }
+        .price span:first-child {
+            font-size: .28rem;
+
+        }
+
+        .price span:last-child {
+            font-size: .32rem;
+        }
+        .no-data{
+            z-index: 1000;
+        }
+        .main_much{
+            width: auto;
+            height: .3rem;
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .main_much .bocus{
+            width: .36rem;
+            height: .32rem;
+            border-radius: .14rem;
+            font-size: .2rem!important;
+            background: #ff0000;
+            font-weight: normal;
+            line-height: normal;
+            margin-left: .2rem;
+        }
+        .main_much .bocus span{
+            color: #fff;
+            font-size: .24rem!important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <no-data v-show="list.length == 0"></no-data>
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui" @click="back" ></i>
+        <div class="search flex align-items">
+            <i class="iconfont iconxingzhuang9"></i>
+            <input type="search" placeholder="搜索">
+        </div>
+    </div>
+    <div class="main">
+        <div class="nav flex space-between align-items">
+            <div :class="[sortCurrent == 0 ? 'active' : '','item flex fn-ctr']" @click="changeCate(0)">
+                <span>综合</span>
+            </div>
+            <div :class="[sortCurrent == 1 || sortCurrent == 2 ? 'active' : ' ','item flex fn-ctr']" @click="changeCate('x')">
+                <span>销量</span>
+                <div :class="[sortCurrent == 1 || sortCurrent == 2 ? 'active' : ' ','right']">
+                    <i :class="[sortCurrent == 1 ? 'active' : '' ,'iconfont iconsanjiaoxing-copy1']"></i>
+                    <i :class="[sortCurrent == 2 ? 'active' : '' ,'iconfont iconsanjiaoxing-copy']"></i>
+                </div>
+            </div>
+            <div :class="[sortCurrent == 3 || sortCurrent == 4 ? 'active' : '','item flex fn-ctr']" @click="changeCate('p')">
+                <span>好评率</span>
+                <div :class="[sortCurrent == 3 || sortCurrent == 4 ? 'active' : '','right']">
+                    <i :class="[sortCurrent == 3 ? 'active' : '' , 'iconfont iconsanjiaoxing-copy1']"></i>
+                    <i :class="[sortCurrent == 4 ? 'active' : '','iconfont iconsanjiaoxing-copy']"></i>
+                </div>
+            </div>
+            <!-- <div class="item flex fn-ctr">
+                <span>筛选</span>
+                <i class="iconfont iconxingzhuang5"></i>
+            </div> -->
+        </div>
+        <div class="list">
+            <ul class="flex space-between flex_wrap">
+                <li v-for="item in list" @click="openDetail(item)">
+                    <img :src="item.attr_img" alt="">
+                    <div class="food-message">
+                        <div class="food-name ellipse">{{ item.attrname }}</div>
+                        <p><span>{{ item.rate }}%满意度</span>&nbsp;&nbsp;<span>{{ item.sales }}销量</span></p>
+                        <div class="main_much flex align-items price">
+                            <span>￥{{ item.price}}</span>
+                            <div class="bocus fn-ctr"  v-if="item.is_youhuiquan == 1"><span >券</span></div> 
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            //  加载组件
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    },
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    cateId:"",
+                    start:0,
+                    sort:"listorder asc",
+                    sortCurrent:0,
+                    list:[],
+                    total:0,
+                    isTotal:true,
+                    loading:true,
+                    opt:1,
+                    jingxuan:0,
+                },
+                methods:{
+                    getList:function(){
+                        var _this = this;
+                        console.log(JSON.stringify({
+                            start:_this.start,
+                            catid:_this.cateId,
+                            lableid:0,
+                            order:_this.sort,
+                            is_good:_this.jingxuan,
+                        }))
+                        if (!_this.isTotal) {
+                            return false;
+                        }
+                        _this.isTotal = false;
+                        request('/tourism/tourism_cat_list',{
+                            start:_this.list.length,
+                            catid:_this.cateId,
+                            lableid:0,
+                            order:_this.sort,
+                            is_good:_this.jingxuan,
+                        },function(err,res){
+                            _this.isTotal = true;
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                _this.list  = _this.list.concat(res.data.data);
+                                _this.total = res.data.all;
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                    openDetail:function(item){
+                        var _this = this;
+                        api.openWin({
+                            name:"travelDtl",
+                            url:"../user/travel_dtl.html",
+                            pageParam:{
+                               obj:JSON.stringify({attrid:item.attrid,type:item.type})
+                            },
+                            reload:true,
+                        });
+                    },
+                    changeCate:function(soc){
+                        var _this = this;
+                        if (soc == 0) {
+                            this.sortCurrent = soc;
+                            this.sort = 'listorder asc';
+                        }else{
+                            if (soc == 'x') {
+                                switch(_this.sortCurrent){
+                                    case 1:
+                                    _this.sortCurrent =  2;
+                                    _this.sort = 'sales asc'
+                                    break;
+                                    case 2:
+                                    _this.sortCurrent = 1;
+                                    _this.sort = 'sales desc'
+                                    break;
+                                    default:
+                                    _this.sortCurrent = 1;
+                                    _this.sort = 'sales asc'
+                                } 
+                            } else {
+                                switch(_this.sortCurrent){
+                                    case 3:
+                                    _this.sortCurrent =  4;
+                                    _this.sort = 'rate asc'
+                                    break;
+                                    case 4:
+                                    _this.sortCurrent = 3;
+                                    _this.sort = 'rate desc'
+                                    break;
+                                    default:
+                                    _this.sortCurrent = 3;
+                                    _this.sort = 'rate asc'
+                                }
+                            }
+                        }
+                        _this.list.splice(0);
+                        _this.opt = '0.98'
+                        _this.loading = true;
+                        _this.getList();
+                    },
+                    back:function(){
+                        api.closeWin();
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.main');
+                        var header = document.querySelector('.header');
+                        var nav   = document.querySelector('.nav');
+                        var navHeight = nav.clientHeight;
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight + safeArea + "px";
+                        header.style.paddingTop = safeArea+"px";
+                        nav.style.top = headerHeight + safeArea + "px";
+                        main.style.paddingTop = safeArea + headerHeight + navHeight  + "px";
+                    };
+                    this.cateId = api.pageParam.id;
+                    this.jingxuan = api.pageParam.id == 12 ? 1 : 0;
+                    this.getList();
+                    var _this = this;
+                    window.onkeydown = function(e){
+                        if (e && e.keyCode==13) {
+                            _this.getList()
+                            _this.list.splice(0)
+                        }
+                    };
+                    // 上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.total < 7) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getList();
+                            },300)
+                        }
+                    });
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

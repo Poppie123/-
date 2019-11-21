@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>反馈记录</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 1300;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .list{
+            width: 100%;
+            height: 1.65rem;
+            background: #FFFFFF;
+            padding-top: .3rem;
+            border-bottom:1px solid #EEEEEE; 
+        }
+        .list:last-child{
+            border-bottom: 1px solid #fff;
+        }
+        .list .title{
+            font-size: .3rem;
+            font-weight: bold;
+            margin-bottom: .2rem;
+        }
+        .list .data{
+            font-size: .26rem;
+            font-weight: #999999;
+        }
+        .list .reply{
+            width:1.2rem;
+            height:.5rem;
+            background:#F6F6F6;
+            border-radius:.06rem;
+            font-size: .24rem;
+            line-height: .5rem;
+            text-align: center;
+        }
+        .list .active{
+            color: #0086F7;
+        }
+        .border0{
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>反馈记录</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="wrapper">
+
+        <div class="list" v-for="item in suggestList" @click="jumpDetail(item.id)">
+            <div class="title ellipse">{{ item.content }}</div>
+            <div class="flex space-between align-items">
+                <div class="data">{{ item.add_time }}</div>
+                <div class="reply" v-if="item.is_reply == 1">有回复</div>
+                <div class="reply" v-else>无回复</div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+         apiready = function(){
+            // loading组件
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    suggestList:[],
+                    totalCout:0,
+                    downLoading:true,
+                    loading:true,
+                },
+                methods:{
+                    //获取反馈记录
+                    getSuggestList:function(){
+                        var _this = this;
+                        if (!_this.downLoading) {
+                            return false
+                        }
+                        _this.downLoading = false;
+                        request('/my/feedback_list',{start:_this.suggestList.length},function(err,res){
+                            _this.downLoading = true;
+                            setTimeout(function(){
+                                _this.loading = false;
+                            },600)
+                            if (!err && res.code == 1) {
+                                _this.suggestList = _this.suggestList.concat(res.data.data);
+                                _this.totalCout = res.data.total; 
+                            }
+                        })
+                    },
+                    jumpDetail:function(id){
+                        api.openWin({
+                            name:"feedbackDetail",
+                            url:"./feedback-detail.html",
+                            reload:true,
+                            pageParam:{
+                                id:id
+                            }
+                        })
+                    }, 
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top8   = document.querySelector('.top88');
+                        searchHeight = search.clientHeight;
+                        top8Height = top8.clientHeight;
+                        search.style.height = safeArea + searchHeight + "px";
+                        top8.style.height  = safeArea + top8Height + "px";
+                        search.style.paddingTop = safeArea + "px";
+                    };
+                    this.getSuggestList();
+                    var _this = this;
+                    // 上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　　　//上拉加载时需要加载的数据
+                        if (_this.suggestList.length == _this.totalCout) {
+                            if (_this.totalCout <7) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getSuggestList();
+                            },300)
+                        }
+                    });
+                },
+                computed:{
+                    isAll:function(){
+                        return this.totalCout != this.suggestList.length;
+                    }
+                }
+            })
+         }
+             
+    
+    
+    </script>
+</body>
+</html>

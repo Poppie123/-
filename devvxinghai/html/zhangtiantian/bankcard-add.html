@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加银行卡</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .tip{
+            height: .99rem;
+            padding: 0 .3rem;
+            line-height: .99rem;
+            font-size: .3rem;
+            color: #999999;
+        }
+        .bankcard{
+            width: 6.9rem;
+            height: 1.67rem;
+            background: #FFFFFF;
+            border-radius: .1rem;
+            margin: .2rem auto 0;
+            padding: .4rem .3rem;
+        }
+        .wrapper{
+            width: 100%;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .list{
+            width: 6.94rem;
+            height: 1.11rem;
+            line-height: 1.11rem;
+            margin: 0 auto 0;
+            padding: 0 .3rem;
+            font-size: .3rem;
+            font-weight: bold;
+            border-bottom:  1px solid #EEEEEE;
+        }
+        .border0{
+            border: 0;
+        }
+        /* .list .left{
+            font-size: .3rem;
+            font-weight: bold; 
+        } */
+        .list input{
+            width: 4.8rem;
+            height: 1.08rem;
+            line-height: 1.08rem;
+            font-weight: normal;
+            font-size: .3rem;
+            color: #333333;
+            border:0;
+        }
+        /* 谷歌浏览器 blink v8引擎*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 苹果公司 safari*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 火狐内核 */
+        input::-moz-placeholder{ 
+            color: #CCCCCC;
+
+        }
+        /* 由于我的IE刚好是IE9及以下不支持， */
+        input:-ms-input-placeholder{ 
+            color: #CCCCCC;    
+        }
+        .confirm{
+            width: 6.9rem;
+            height: .9rem;
+            margin: 1rem auto 0;
+            border-radius: .1rem;
+            background: #ccc;
+            text-align: center;
+            line-height: .9rem;
+            font-size: .32rem;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
+        .confirmactive{
+            background: #0086F7;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>添加银行卡</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="tip">请绑定持卡人本人的银行卡</div>
+    <div class="wrapper">
+        <div class="list flex space-between align-items">
+            <span>持卡人</span> 
+            <input type="text" placeholder="请输入" v-model="name">
+        </div>
+        <div class="list border0 flex space-between align-items" >
+            <span>银行卡号</span> 
+            <input type="number" placeholder="请输入" v-model="bankNumber">
+        </div>
+    </div>
+    <div class="confirm fn-ctr" :class="{confirmactive : isNext}" @click='next'>
+        <span>下一步</span>
+        
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    name:"",
+                    bankNumber:"",
+                },
+                methods:{
+                    next:function(){
+                       if (this.isNext) {
+                            var obj = {
+                               bank_card_name:this.name,         //持卡人
+                               bank_card_account:this.bankNumber,//银行卡号
+                            }
+                           api.openWin({
+                               name:"banktelLeave",
+                               url:"../zhangtiantian/banktel-leave.html",
+                               pageParam:obj
+                           })
+                       }
+                    },
+                    back:function(){
+                        api.closeWin()
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                },
+                computed:{
+                    isNext:function(){
+                        return this.name != "" && this.bankNumber != "";
+                    }
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

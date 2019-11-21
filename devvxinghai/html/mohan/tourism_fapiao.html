@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旅游类发票</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F8F9FB;
+}
+.header {
+width: 7.5rem;
+height: .93rem;
+background-color: #FFFFFF;
+padding: .3rem;
+border-bottom: 1px solid #EEEEEE;
+
+}
+
+.header .iconfanhui {
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+ 
+}
+.header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+
+
+    .middle {
+        width: 7.5rem;
+        overflow: hidden;
+        padding-left: .3rem;
+        padding-right: .3rem;
+      
+    }
+    .middle  .first {
+        width: 6.9rem;
+        height: 1.59rem;
+        overflow: hidden;
+        padding-left: .3rem;
+        padding-right: .3rem;
+        background-color: #FFFFFF;
+        margin-top: .2rem;
+        border-radius: .08rem;
+    }
+
+    .middle  .first .circle {
+        width: .42rem;
+        height: .42rem;
+        border-radius: 50%;
+        border: 1px solid #DDDDDD;
+        margin-right: .2rem;
+        position: relative;
+    }
+
+    .middle  .first .circle .iconjuxing {
+        display: none;
+    }
+    .middle  .first .active .iconjuxing {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: -0.02rem;
+        font-size: .4rem;
+        color: #0086F7;
+    }
+    .middle  .first .last{
+        width: 4.3rem;
+        overflow: hidden;
+        float: left;
+    }
+
+    .middle  .first  .last .title {
+        font-size: .32rem;
+        color: #333333;
+        font-weight: bold;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .middle  .first   .last .guige {
+        font-size: .26rem;
+        color: #999999;
+        text-align: left;
+        margin-top: .2rem;
+        overflow: hidden;
+    }
+    .middle  .first   .money {
+        font-size: .28rem;
+        font-weight: bold;
+        color: #FE6602;
+        text-align: left;
+       margin-left: .25rem;
+        float: right;
+    }
+    .middle  .first   .money span {
+        font-size: .32rem;
+    }
+    
+    .footer {
+        width: 7.5rem;
+        height: 1.1rem;
+        border-top: 1px solid #EEEEEE;
+        padding-left: .3rem;
+        position: fixed;
+        bottom: 0;
+        background-color: #FFFFFF;
+    }
+    .footer .allcheck{
+        width: 5.38rem;
+        height: 1.1rem;
+       overflow: hidden; 
+       float: left;
+    }
+
+    .footer .allcircle {
+        width: .42rem;
+        height: .42rem;
+        border-radius: 50%;
+        border: 1px solid #DDDDDD;
+        float: left;
+        margin-right: .1rem;
+    }
+
+    .footer .allcheck .left{
+        font-size: .28rem;
+        color: #000000;
+        text-align: left;
+    }
+    .footer .allcheck .right{
+        font-size: .26rem;
+        color: #666666;
+        text-align: left;
+        margin-right: .2rem;
+    }
+    .footer .allcheck .right span{
+        color: #FC595B;
+    }
+    .footer .iconjuxing {
+        display: none;
+    }
+    .footer .allcheck .active .iconjuxing {
+        display: block;
+        font-size: .4rem;
+        color: #0086F7;
+    }
+    .footer .jiesuan{
+        width: 2.12rem;
+        height: 1.1rem;
+        background-color: #0086F7;
+        font-size: .32rem;
+        color: #FFFFFF;
+        text-align: center;
+        line-height: 1.1rem;
+        float: left;;
+    } 
+</style>
+</head>
+
+<body>
+    <div class="header flex align-items space-between flex_center">
+        <i class="iconfont iconfanhui"></i>
+        <div class="order ">旅游类</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+        <div class="first flex align-items ">
+            <div class="circle active">
+                <i class="iconfont iconjuxing"></i>
+            </div>
+            <div class="last">
+                <div class="title">海南天涯海角A套餐 </div>
+                <div class="guige">2019-02-02 周一 12:09</div>
+            </div>
+            <div class="money">￥<span class="seven">3001</span></div>
+        </div>
+        <div class="first flex align-items ">
+            <div class="circle ">
+                <i class="iconfont iconjuxing"></i>
+            </div>
+            <div class="last">
+                <div class="title">海南天涯海角A套餐 </div>
+                <div class="guige">2019-02-02 周一 12:09</div>
+            </div>
+            <div class="money">￥<span class="seven">3001</span></div>
+        </div>
+        <div class="first flex align-items ">
+            <div class="circle">
+                <i class="iconfont iconjuxing"></i>
+            </div>
+            <div class="last">
+                <div class="title">海南天涯海角A套餐 </div>
+                <div class="guige">2019-02-02 周一 12:09</div>
+            </div>
+            <div class="money">￥<span class="seven">3001</span></div>
+        </div>
+        <div class="first flex align-items ">
+            <div class="circle ">
+                <i class="iconfont iconjuxing"></i>
+            </div>
+            <div class="last">
+                <div class="title">海南天涯海角A套餐 </div>
+                <div class="guige">2019-02-02 周一 12:09</div>
+            </div>
+            <div class="money">￥<span class="seven">3001</span></div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="footer flex space-between align-items">
+        <div class="allcheck flex flex_center space-between align-items">
+            <div class="left">
+                <div class="allcircle">
+                    <i class="iconfont iconjuxing"></i>
+                </div>
+                全选
+            </div>
+            <div class="right">合计:<span>￥100</span></div>
+        </div>
+        <div class="jiesuan">开发票</div>
+    </div>
+    <script src="../../js/common.js"></script>
+ 
+</body>
+
+</html>

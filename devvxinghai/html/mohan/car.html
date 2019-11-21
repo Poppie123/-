@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../css/mui.min.css">
+	<link rel="stylesheet" href="../../icon/iconfont.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<script src="../../js/rem.js"></script>
+	<style>
+		.iconyuancircle46,.icon30xuanzhongyuanxingfill {
+			font-size: .23rem;
+		}
+		header {
+			padding: 0 .15rem;
+			border-bottom: 1px solid #F4F4F4;
+		}
+		header .header-l {
+			width: .3rem;
+			text-align: center;
+		}
+		header .header-l i {
+			font-size: .17rem;
+		}
+		header .header-c {
+			font-size: .17rem;
+		}
+		header .header-r {
+			width: .3rem;
+			text-align: center;
+		}
+		section {
+			margin-bottom: .6rem;
+		}
+		.list {
+			padding: 0 .15rem;
+			padding-top: .15rem;
+		}
+		.list-item {
+			background:rgba(255,255,255,1);
+			box-shadow:0px 4px 12px 0px rgba(192,192,192,0.3);
+			border-radius: .1rem;
+			margin-bottom: .15rem;
+		}
+		.item-t {
+			border-bottom: 1px solid #DDDDDD;
+			padding: .1rem;
+		}
+		.item-t .you {
+			margin-left: .1rem;
+		}
+		.item-t .you-l i {
+			margin-right: .03rem;
+		}
+		.item-t .you-r {
+			margin-left: .02rem;
+		}
+		.item-b {
+			padding: 0 .1rem;
+		}
+		.item-bh .bh-r {
+			width: 90%;
+		}
+		.item-bh .zuo {
+			width: 1rem;
+			height: 1rem;
+		}
+		.item-bh .bh-r {
+			border-bottom: 1px solid #F2F2F2;
+			padding: .15rem 0;
+		}
+		.item-bh .bh-r .you {
+			width: 61%;
+		}
+		.item-bh .bh-r .you-m {
+			font-size: .12rem;
+			color: #999999;
+			margin-top: .1rem;
+		}
+		.item-bh .bh-r .you-b {
+			margin-top: .1rem;
+		}
+		.item-bh .bh-r .you-bl {
+			font-size: .17rem;
+			color: #FF3F4E;
+		}
+		.item-bh .bh-r .you-br span {
+			border-radius: .3rem;
+			padding: .02rem .05rem;
+			padding-top: .03rem;
+		}
+		.item-bh .bh-r .you-br span.reduce {
+			background: #DDDDDD;
+			color: #fff;
+		}
+		.item-bh .bh-r .you-br span.num {
+			margin: 0 .1rem;
+		}
+		.item-bh .bh-r .you-br span.add {
+			background: #FF3555;
+			color: #fff;
+		}
+		.dibu {
+			background: #FAFAFA;
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			height: .5rem;
+			padding-left: .15rem;
+		}
+		.dibu .dibu-l i {
+			position: relative;
+			top: .01rem;
+		}
+		.dibu .dibu-l span {
+			color: #999999;
+			margin-left: .05rem;
+		}
+		.dibu .dibu-r .jiesuan .zuo {
+			font-size: .12rem;
+		}
+		.dibu .dibu-r .jiesuan .zuo span {
+			font-size: .17rem;
+			color: #FF3F4E;
+		}
+		.dibu .dibu-r .jiesuan .you {
+			background: #FF3555;
+			color: #fff;
+			width: 1.1rem;
+			height: .5rem;
+			text-align: center;
+			line-height: .5rem;
+			font-size: .16rem;
+			margin-left: .15rem;
+		}
+		.dibu .dibu-r .del {
+			background: #FF3555;
+			color: #fff;
+			width: 1.1rem;
+			height: .5rem;
+			text-align: center;
+			line-height: .5rem;
+			font-size: .16rem;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<header class="flex space-between align-center">
+			<span class="header-l">
+				<i class="iconfont iconyuanjiaojuxing"></i>
+			</span>
+			<span class="header-c">购物车</span>
+			<span id="compile" class="header-r">编辑</span>
+		</header>
+		<section>
+			<div class="list">
+				<div class="list-item">
+					<div class="item-t flex align-center">
+						<div class="zuo">
+							<i class="iconfont iconyuancircle46"></i>
+						</div>
+						<div class="you flex align-center">
+							<div class="you-l flex align-center">
+								<i class="iconfont icondianpu"></i>
+								<span>兰芝旗舰店</span>
+							</div>
+							<div class="you-r">
+								<i class="iconfont iconyoujiantou"></i>
+							</div>
+						</div>
+					</div>
+					<div class="item-b">
+						<div class="item-bh flex space-between align-center">
+							<div class="bh-l">
+								<i class="iconfont iconyuancircle46"></i>
+							</div>
+							<div class="bh-r flex space-between align-center">
+								<div class="zuo">
+									<img src="../../image/xiezi.png">
+								</div>
+								<div class="you">
+									<div class="you-t mui-ellipsis-2">佰草百丽蜂蜜牛奶手蜡手膜嫩 白保湿补水手部护理套去死皮</div>
+									<div class="you-m">规格：200ML</div>
+									<div class="you-b flex space-between align-center">
+										<div class="you-bl">￥99.00</div>
+										<div class="you-br flex align-center">
+											<span class="reduce">
+												<i class="iconfont iconjianhao"></i>
+											</span>
+											<span class="num">1</span>
+											<span class="add">
+												<i class="iconfont iconjia"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="item-bh flex space-between align-center">
+							<div class="bh-l">
+								<i class="iconfont iconyuancircle46"></i>
+							</div>
+							<div class="bh-r flex space-between align-center">
+								<div class="zuo">
+									<img src="../../image/xiezi.png">
+								</div>
+								<div class="you">
+									<div class="you-t mui-ellipsis-2">佰草百丽蜂蜜牛奶手蜡手膜嫩 白保湿补水手部护理套去死皮</div>
+									<div class="you-m">规格：200ML</div>
+									<div class="you-b flex space-between align-center">
+										<div class="you-bl">￥99.00</div>
+										<div class="you-br flex align-center">
+											<span class="reduce">
+												<i class="iconfont iconjianhao"></i>
+											</span>
+											<span class="num">1</span>
+											<span class="add">
+												<i class="iconfont iconjia"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="list-item">
+					<div class="item-t flex align-center">
+						<div class="zuo">
+							<i class="iconfont iconyuancircle46"></i>
+						</div>
+						<div class="you flex align-center">
+							<div class="you-l flex align-center">
+								<i class="iconfont icondianpu"></i>
+								<span>兰芝旗舰店</span>
+							</div>
+							<div class="you-r">
+								<i class="iconfont iconyoujiantou"></i>
+							</div>
+						</div>
+					</div>
+					<div class="item-b">
+						<div class="item-bh flex space-between align-center">
+							<div class="bh-l">
+								<i class="iconfont iconyuancircle46"></i>
+							</div>
+							<div class="bh-r flex space-between align-center">
+								<div class="zuo">
+									<img src="../../image/xiezi.png">
+								</div>
+								<div class="you">
+									<div class="you-t mui-ellipsis-2">佰草百丽蜂蜜牛奶手蜡手膜嫩 白保湿补水手部护理套去死皮</div>
+									<div class="you-m">规格：200ML</div>
+									<div class="you-b flex space-between align-center">
+										<div class="you-bl">￥99.00</div>
+										<div class="you-br flex align-center">
+											<span class="reduce">
+												<i class="iconfont iconjianhao"></i>
+											</span>
+											<span class="num">1</span>
+											<span class="add">
+												<i class="iconfont iconjia"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="item-bh flex space-between align-center">
+							<div class="bh-l">
+								<i class="iconfont iconyuancircle46"></i>
+							</div>
+							<div class="bh-r flex space-between align-center">
+								<div class="zuo">
+									<img src="../../image/xiezi.png">
+								</div>
+								<div class="you">
+									<div class="you-t mui-ellipsis-2">佰草百丽蜂蜜牛奶手蜡手膜嫩 白保湿补水手部护理套去死皮</div>
+									<div class="you-m">规格：200ML</div>
+									<div class="you-b flex space-between align-center">
+										<div class="you-bl">￥99.00</div>
+										<div class="you-br flex align-center">
+											<span class="reduce">
+												<i class="iconfont iconjianhao"></i>
+											</span>
+											<span class="num">1</span>
+											<span class="add">
+												<i class="iconfont iconjia"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="dibu flex space-between align-center">
+				<div class="dibu-l flex align-center">
+					<i class="iconfont iconyuancircle46"></i>
+					<span>全选</span>
+				</div>
+				<div class="dibu-r">
+					<div id="settlement" class="jiesuan flex align-center">
+						<div class="zuo">总计：￥<span>98.00</span></div>
+						<div class="you">结算(1)</div>
+					</div>
+					<div id="del" class="del" style="display: none;">删除</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script src="../../js/api.js"></script>
+	<script src="../../js/common.js"></script>
+	<script>
+		apiready = function(){
+			
+		}
+			
+		// api_init = function () {
+		// 	/*编辑*/
+		// 	$('#compile').click(function () {
+		// 		var $span = $(this);
+		// 		if ($span.html() == '编辑') {
+		// 			$span.html('完成');
+		// 			$('#del').show().siblings().hide();
+		// 		} else {
+		// 			$span.html('编辑');
+		// 			$('#settlement').show().siblings().hide();
+		// 		}
+		// 	});
+		// }
+	</script>
+</body>
+</html>

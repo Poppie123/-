@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>开具发票</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+<link rel="stylesheet" href="../../css/common.css">
+<script src="../../js/rem.js"></script>
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F8F9FB;
+}
+.header {
+    width: 7.5rem;
+    height: .88rem;
+    position: fixed;
+    top: 0;
+    background-color: #FFFFFF;
+    padding: 0 .3rem;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.header .iconfanhui {
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+}
+.header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+.middle{
+    padding-top: .88rem;
+}
+.tourism{
+    width:7.5rem;
+    height: 1.11rem;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #EEEEEE;
+}
+.tourism .name{
+    font-size: .3rem;
+    color: #333333;
+    text-align: left;
+}
+.tourism .icongengduo{
+    font-size: .15rem;
+    color: #CCCCCC;
+}
+</style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="header flex align-items space-between">
+        <i class="iconfont iconfanhui " @click="back"></i>
+        <div class="order ">开具发票</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+    <div class="tourism flex align-items space-between " @click="openLvOrGds(2)">
+        <div class="name">旅游类</div>
+        <i class="iconfont icongengduo"></i>
+    </div>
+    <div class="tourism flex align-items space-between " @click="openLvOrGds(4)">
+        <div class="name">商品类</div>
+        <i class="iconfont icongengduo"></i>
+    </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    
+                },
+                methods: {
+                    openLvOrGds:function(type){  //2 旅游  4 商品
+                        api.openWin({
+                            name:"goodsFapiao",
+                            url:"../mohan/goods_fapiao.html",
+                            pageParam:{
+                                type:type
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var middle = document.querySelector('.middle');
+                        var search = document.querySelector('.header');
+                        var searchHeight = search.clientHeight;
+                        search.style.height = searchHeight + safeArea + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        middle.style.paddingTop = searchHeight + safeArea + 'px';
+                    };
+                },
+            })
+        }
+    
+    
+    
+    </script>
+</body>
+</html>

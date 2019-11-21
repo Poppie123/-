@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>反馈详情</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .list{
+            width: 100%;
+            height: 1.11rem;
+            background: #FFFFFF;
+            font-size: .3rem;
+            font-weight: bold;
+            border-bottom:1px solid #EEEEEE; 
+        }
+        
+        .list .input{
+            width: 4.8rem;
+            height: .36rem;
+            font-weight: normal;
+            font-size: .3rem;
+        }
+        .list-detail{
+            width: 100%;
+            background: #FFFFFF;
+            padding: .4rem 0 .5rem;
+            font-size: .3rem;
+            font-weight: bold;
+            /* border-bottom:1px solid #EEEEEE;  */
+        }
+        .list-detail .content{
+            width: 4.8rem;
+            font-weight: normal;
+            line-height: .42rem;
+        }
+        .list-detail .content .picture{
+            width: 100%;
+            overflow-x: scroll;
+            overflow-y:hidden;
+        }
+        .list-detail .content .picture img{
+            width: 1.4rem;
+            height: 1.4rem;
+            margin-top: .15rem;
+            margin-right: .1rem;
+            border-radius: .06rem;
+        }
+        .border0{
+            border: 0;
+        }
+        .advice{
+            width: 100%;
+            height: 4.65rem;
+            margin-top: .2rem;
+            padding: .4rem .3rem;
+            background: #FFFFFF;
+            font-size: .3rem;
+            font-weight: bold;
+        }
+        .advice .content{
+            margin-top: .29rem;
+            width: 100%;
+            font-size: .28rem;
+            font-weight: normal;
+            line-height: .42rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>反馈详情</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="wrapper">
+        <div class="list  flex space-between align-items">
+            <div>姓名</div>
+            <div class="input">{{ suggestDetail.name }}</div>
+        </div>
+        <div class="list  flex space-between align-items">
+                <div>联系电话</div>
+                <div class="input">{{ suggestDetail.phone }}</div>
+            </div>
+        <div class="list-detail  flex space-between">
+            <div>反馈详情</div>
+            <div class="content">
+                <div>{{ suggestDetail.content }}</div> 
+                <div class="picture flex flex_start flex_nwrap">
+                    <img v-for="item in suggestDetail.images" :src="item.image" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="advice" v-if="suggestDetail.reply_content">
+        <div>客服反馈</div>
+        <div class="content">{{ suggestDetail.reply_content }}</div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+         apiready = function(){
+             var root = new Vue({
+                 el:"#root",
+                 data:{
+                    id:"",
+                    suggestDetail:{},
+                 },
+                 methods:{
+                    getSuggestDetail:function(){
+                        var _this = this;
+                        request('/my/feedback_detail',{feedback_id:_this.id},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.suggestDetail = res.data;
+                                console.log(JSON.stringify(res.data))
+                            }else{
+                                console.log('请求失败')
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin();
+                    }
+                 },
+                 mounted:function(){
+                    if (api.statusBarAppearance) {    //判断手机是否支持沉浸式
+                        var safeArea = api.safeArea.top;   //获取手机状态栏高度
+                        var search = document.querySelector('.top'); //获取顶部元素
+                        var top8   = document.querySelector('.top88');
+                        searchHeight = search.clientHeight; 
+                        top8Height = top8.clientHeight;
+                        search.style.height = safeArea + searchHeight + "px";
+                        top8.style.height  = safeArea + top8Height + "px";
+                        search.style.paddingTop = safeArea + "px";
+                    };
+                    this.id = api.pageParam.id;
+                    console.log(api.pageParam.id)
+                    this.getSuggestDetail()
+                 }
+             })
+         }
+             
+    
+    
+    
+    </script>
+</body>
+</html>

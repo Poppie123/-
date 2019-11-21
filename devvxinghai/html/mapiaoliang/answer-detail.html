@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <title>问题详情</title>
+    <style>
+        html,body{
+            background: #fff;
+        }
+         .header{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            top:0;
+            padding: 0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            border-bottom:1px solid #eeeeee;
+            background: #fff;
+        }
+        .header i{
+            font-size: .32rem;
+        }
+        .header-a{
+            width:auto;
+            margin:0 auto;
+            font-weight: bold;
+        }
+        .null{
+            width:.32rem;
+            height: .32rem;
+        }
+        .main{
+            width:100%;
+            height:auto;
+            padding-top:.88rem;
+      
+        }
+        .gds{
+            width:100%;
+            height:1.6rem;
+            background: #ffffff;
+            padding:.2rem .3rem;
+        }
+        .gds img{
+            width:1.1rem;
+            height:1.1rem;
+
+        }
+        .gds-name{
+            width:5.58rem;
+            height:.86rem;
+            margin-top:.1rem;
+            font-size: .3rem;
+            color:#333333;
+            font-weight: bold;
+        }
+        .box{
+            width:100%;
+            height:.2rem;
+            background: #F8F9FB;
+        }
+        .ask-s{
+            width:100%;
+            padding:0 .3rem;
+            background: #ffffff;
+        }
+        .ask{
+            width: 100%;
+            height:2.26rem;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .wen{
+            width:100%;
+            height:.96rem;
+        }
+        .wen i{
+            color:#0086F7;
+            font-size: .4rem;
+        }
+        .wenti{
+            width:6rem;
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+            margin-left:.2rem;
+        }
+        .time{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .much{
+            width:100%;
+            height:1rem;
+            font-size: .24rem;
+            color:#999999;
+        }
+        .use{
+            width:auto;
+            margin-right:.16rem;
+        }
+        .use-a img{
+            width:0.46rem;
+            height:0.46rem;
+            border-radius: .5rem;
+        }
+        .more{
+            width: .46rem;
+            height:.46rem;
+            background: #dddddd;
+            border-radius: .5rem;
+        }
+        .dian{
+            width:.08rem;
+            height:.08rem;
+            background: #ffffff;
+            border-radius: .5rem;
+        }
+        .list{
+            background: #fff;
+            padding:0 .3rem .3rem;
+            overflow: hidden;
+        }
+        
+        .item{
+            width:100%;
+            height:1.85rem;
+            border-bottom:1px solid #eeeeee;
+            padding:.3rem;
+
+        }
+        .item img{
+            width:.72rem;
+            height:.72rem;
+            border-radius: .5rem;
+        }
+        .right{
+            width:100%;
+            height:1.5rem;
+            font-size: .24rem;
+            color:#aaaaaa;
+            margin-left: .2rem;
+        }
+        .right p{
+            font-size: .28rem;
+            color:#333333;
+        }
+        .right-use{
+            margin-bottom:0.03rem;
+        }
+        .use-answer{
+            margin-top:.2rem;
+        }
+        .go-answer{
+            width:1.76rem;
+            height:.8rem;
+            border-radius: .4rem;
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            background:-webkit-linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            position: fixed;
+            bottom:.4rem;
+            left:0;
+            right: 0;
+            margin: auto;
+            font-size: .3rem;
+            color:#fff;
+            font-weight: bold;
+            line-height: .8rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui"></i>
+        <span class="header-a">问题详情</span>
+        <div class="null"></div>
+    </div>
+    <div class="main">
+        <div class="gds flex space-between ">
+            <img :src="gsInfo.goods_img" alt="">
+            <div class="gds-name ellipsis2">{{gsInfo.goods_name}}</div>
+        </div>
+        <div class="box"></div>
+        <div class="ask-s">
+        <div class="ask">
+            <div class="wen flex align-items">
+                <i class="iconfont iconwen"></i>
+                <span class="wenti ellipse">{{ info.question }}</span>
+            </div>
+            <div class="time">提问于{{ info.add_time }}</div>
+            <div class="much flex align-items" v-if="info.answer_nums != 0">
+                <div class="use flex space-between">
+                    <div class="use-a" v-for="v in info.answer_user_headimg"><img :src="v" alt=""></div>
+                    <!-- <div class="more flex align-items space-around">
+                        <div class="dian"></div>
+                        <div class="dian"></div>
+                        <div class="dian"></div>
+                    </div> -->
+                </div>
+                <div>等{{ info.answer_nums }}个人回答</div>
+            </div>
+        </div>
+    </div>
+        <ul class="list">
+
+            <li class="item flex" v-for="item in info.answer_data">
+                <img :src="item.headimg" alt="">
+                <div class="right">
+                    <p class="right-use">{{ item.username }}</p>
+                    <span>{{ item.add_time }}</span>
+                    <p class="use-answer">{{ item.answer }}</p>
+                </div>
+            </li>
+
+        </ul>
+        <div class="go-answer tc" @click="huida">我要回答</div>
+    </div>
+</div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+         apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    gid:"",
+                    aid:"",
+                    info:{},
+                    gsInfo:{},
+                },
+                methods:{
+                    getGdDtl:function(){
+                        var _this = this;
+                        request('/shopping/goods_question_data',{
+                            goods_id:_this.gid,
+                        },function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.gsInfo = res.data;
+                            }
+                        })
+                    },
+                   getDtl:function(){
+                       var _this = this;
+                       console.log(JSON.stringify({
+                           goods_id:_this.gid,
+                           ques_id:_this.aid,
+                           start:0,
+                       }))
+                       request('/shopping/goods_question_list_detail',{
+                           goods_id:_this.gid,
+                           ques_id:_this.aid,
+                           start:0,
+                       },function(err,res){
+                            console.log(JSON.stringify(res))
+                            if (!err && res.code == 1) {
+                                _this.info = res.data;
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                       })
+                   },
+                   huida:function(){
+                        var _this = this;
+                        api.openWin({
+                            name:"goAnswer",
+                            url:"../mapiaoliang/go-answer.html",
+                            pageParam:{
+                                aid:_this.aid,
+                                gid:_this.gid,
+                                qsInfo:_this.info,
+                            }
+                        })
+                   },
+                    back:function(){
+                        api.closeWin();
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main  = document.querySelector(".main");
+                        var search = document.querySelector('.header');
+                        var headerHeight = search.clientHeight;
+                        search.style.height = safeArea + headerHeight + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = safeArea + headerHeight+ 'px'
+                    }
+                    this.aid = api.pageParam.aid;
+                    this.gid = api.pageParam.gid;
+                    this.getDtl();
+                    this.getGdDtl()
+                    var _this = this;
+                    api.addEventListener({
+                        name: 'refreshans'
+                    }, function(ret, err){
+                        _this.getDtl()
+                    });
+
+                }
+            })
+         }
+             
+    </script>
+</body>
+</html>

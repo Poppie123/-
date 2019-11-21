@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <title>提交订单</title>
+    <style>
+         .header{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            top:0;
+            z-index: 1300;
+            padding:0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            border-bottom:1px solid #eeeeee;
+            background: #fff;
+        }
+        .header i{
+            font-size: .32rem;
+        }
+        .header-a{
+            width:auto;
+            margin:0 auto;
+            font-weight: bold;
+        }
+        .null{
+            width: .32rem;
+            height: .32rem;
+        }
+        .main{
+            padding-top:.88rem;
+        }
+        .address{
+            width:100%;
+            height:1.54rem;
+            background: #fff;
+        }
+        .add{
+            width:100%;
+            height:1.52rem;
+            padding:0 .3rem;
+        }
+        .bgimg{
+            width:100%;
+            height: .02rem;
+            background-image: url('../../image/zu.png');
+            background-repeat: repeat;
+            background-size: 100% 100%;
+        }
+        .name{
+            width:100%;
+            font-size: .3rem;
+            color:#333333;
+            height:.84rem;
+            overflow: hidden;
+            font-weight: bold;
+        }
+        .name span:first-child{
+            margin-right: .2rem;
+        }
+        .addr{
+            width:6rem;
+            height:.32rem;
+            font-size: .26rem;
+            color:#333333;
+        }
+        .gds{
+            width:100%;
+            height: auto;
+            /* background: #fff; */
+            margin-top:.2rem;
+            padding:.3rem .3rem 0;
+            padding-bottom: 1.3rem;
+        }
+        .gds-detail{
+            margin-bottom:.2rem;
+        }
+        .gds-detail img{
+            width:1.9rem;
+            height:1.9rem;
+            border-radius: .1rem;
+        }
+        .gdsname {
+            width:4.28rem;
+            height:1.9rem;
+          
+        }
+        .gdsname p{
+            width:4.58rem;
+            font-size: .26rem;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: .05rem;
+
+
+        }
+        .weight{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .price {
+            color: #FC595B;
+            margin-top:.2rem;
+        }
+       
+        .p{
+            font-size: .3rem;
+        }
+        .shop-price{
+            font-size: .4rem;
+        }
+        .n{
+            font-size: .26rem;
+        }
+        .num{
+            font-size: .26rem;
+            color: #333333;
+        }
+        .fee{
+            font-size: .28rem;
+            color: #333333;
+            margin-top:.39rem;
+        }
+        .discount{
+            width: 100%;
+            height: .4rem;
+            margin-bottom: .2rem;
+        }
+        .discount .iconfont{
+            font-size: .28rem;
+        }
+
+        .total{
+            width:100%;
+            height:1rem;
+            border-top:1px solid #eeeeee;
+            margin-top:.4rem;
+            font-size: .28rem ;
+            color:#333333;
+        }
+        .shop-money{
+            font-size: .34rem;
+            color:#FC595B;
+        }
+        .remarks{
+            width:100%;
+            height:1.1rem;
+            font-size: .28rem;
+            color: #333;
+            margin-bottom: .2rem;
+        }
+        .remarks input{
+            width: 5.5rem;
+            margin-left:.18rem;
+        }
+        input::-webkit-input-placeholder{
+            color:#dddddd;
+            font-size: .26rem;
+        }
+        .bottom {
+            width: 100%;
+            height: 1.1rem;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .bot-left {
+            width: 5.38rem;
+            height: 1.1rem;
+            padding: .3rem .23rem;
+        }
+
+        .bot-right {
+            width: 2.2rem;
+            height: 1.1rem;
+            background: #0086F7;
+            font-size: .32rem;
+            color: #ffffff;
+            line-height: 1.1rem;
+        }
+        .tot{
+            font-size: .28rem;
+            color: #333333;
+        }
+        .tot-price{
+            font-size: .42rem;
+            color: #FC595B;
+            font-weight: bold;
+        }
+        /* 优惠弹窗 */
+        .mask{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1400;
+        }
+        .all-discount{
+            width: 100vw;
+            height: 7.5rem;
+            background-color: #fff;
+            position: fixed;
+            z-index: 1500;
+            bottom: -7.5rem;
+            transition: .3s;
+        }
+        .disactive{
+            bottom: 0;
+        }
+        .all-discount .title{
+            width: 100vw;
+            height:1rem;
+        }
+        .all-discount .title .left{
+            width: 20vw;
+            height: 1rem;
+        }
+        .all-discount .title .middle{
+            width: 60vw;
+            font-size: .32rem;
+            color: #333;
+            text-align: center;
+        }
+        .all-discount .title .right{
+            width: 20vw;
+            padding-left: .15rem;
+            text-align: center;
+            color: #ccc;
+        }
+        .all-discount .dis-main{
+            width: 100%;
+            max-height: 5.2rem;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            padding: 0 .3rem;
+        }
+        .all-discount .dis-main .item{
+            width: 100%;
+            height: .8rem;
+        }
+        .all-discount .dis-main .item .left{
+            width: 80%;
+            font-size: .28rem;
+            color: #333;
+        }
+        .all-discount .dis-main .item .right .icontuoyuankaobei{
+            color: #ccc;
+        } 
+        .all-discount .dis-main .item .right .icontuoyuan{
+            color: #0086F7;
+        } 
+        .all-discount .dis-btn{
+            width: 6.75rem;
+            height: .8rem;
+            border-radius: .5rem;
+            background-color: #0086F7;
+            color: #fff;
+            font-size: .32rem;
+            position: absolute;
+            bottom: .3rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        /* 店铺相关 */
+        .shop-item{
+            width: 100%;
+            height:auto;
+            border-radius: .1rem;
+            padding:.2rem .2rem 0;
+            background-color: #fff;
+            overflow: hidden;
+            margin-bottom: .38rem;
+        }
+        .shop-item .title{
+            width:100%;
+            height: .4rem;
+            margin-bottom: .2rem;
+        }
+        .shop-item .title .iconfont{
+            font-size: .3rem;
+            color: #333;
+        }
+        .shop-item .title .icongengduo{
+            font-size: .28rem;
+        }
+        .shop-item .title span{
+            font-size: .3rem;
+            color: #333;
+            margin: 0 .12rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui" @click="back"></i>
+        <span class="header-a">提交订单</span>
+        <div class="null"></div>
+    </div>
+    <div class="main">
+        <div class="address" @click="openaddress">
+            <div class="add flex space-between">
+                <div class="left">
+                    <div class="name flex align-items flex-start">
+                        <span>{{ addressData.name }}</span>
+                        <span>{{ addressData.phone}}</span>
+                    </div>
+                    <p class="addr ellipse">{{ addressData.province }} {{addressData.city}} {{addressData.district}} {{ addressData.address}}</p>
+                </div>
+
+                <div class="right flex align-items"><i class="iconfont icongengduo"></i></div>
+
+            </div>
+            <div class="bgimg"></div>
+        </div>
+        <div class="gds">
+            <div class="shop-item" v-for="(val,index) in orderInfo.shop">
+                <div class="title flex flex-start align-items">
+                    <i class="iconfont iconxingzhuang4"></i>
+                    <span>{{ val.shop_name }}</span>
+                </div>
+                <div class="gds-detail flex space-between" v-for="item in val.goods">
+                    <img :src="item.goods_image" alt="">
+                    <div class="gdsname">
+                        <p class="ellipsis2">{{ item.goods_name }}</p>
+                        <span class="weight">{{ item.goods_attr }}</span>
+                        <div class="price flex space-between">
+                            <div><span class="p">￥</span>
+                                <span class="shop-price" v-if="isQundao == 0">{{ item.shop_price }}</span>
+                                <span class="shop-price" v-else>{{ item.qudao_price }}</span>
+                            </div>
+                            <span class="num">×{{ item.goods_num }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fee flex space-between discount align-items" @click="openDisBox(index)">
+                    <span>优惠券</span>
+                    <span>{{ val.bocusInfo.dcMsg }} <i class="iconfont icongengduo"></i></span>
+                </div>
+                <div class="remarks flex align-items">
+                    <span>备注</span>
+                    <input type="text" placeholder="请填写订单备注" v-model="val.remake">
+                </div>
+            </div>
+            
+            <div class="fee flex space-between">
+                <span>运费</span>
+                <span>￥{{ orderInfo.goods_yunfei }}</span>
+            </div>
+            <div class="fee flex space-between">
+                <span>优惠金额</span>
+                <span v-if="bocusPrice == 0">0</span>
+                <span v-else>-{{ bocusPrice }}</span>
+            </div>
+            <div class="fee flex space-between">
+                <span>订单总价</span>
+                <span >￥{{ orderPrice }}</span>
+            </div>
+            <div class="total flex align-items flex_end">
+                <div>共<span>{{ orderInfo.goods_total_num }}</span>件商品&nbsp;&nbsp;合计</div>
+                <div class="shop-money">￥{{ orderInfo.goods_total_money }}</div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="bottom flex space-between">
+        <div class="bot-left">
+            <span class="tot">合计:</span><span style="color: #FC595B;font-size: .32rem">￥</span><span class="tot-price">{{ orderInfo.goods_total_money }}</span>
+        </div>
+        <div class="bot-right tc" @click="summitOrder">提交订单</div>
+    </div>
+    <div class="mask" v-show="discountBox" @click="closeDisBox"></div>
+    <div class="all-discount" :class="{disactive:discountBox}">
+        <div class="title flex align-items space-between">
+            <div class="left"></div>
+            <div class="middle">优惠详情</div>
+            <div class="right" @click="closeDisBox"><i class="iconfont iconchahao"></i></div>
+        </div>
+        <div class="dis-main">
+            <div class="item flex align-items space-between" v-for="(item,index) in disList" @click="changDis(index)">
+                <div class="left">{{ item.bonus_cat }} {{ item.type_name }}</div>  
+                <div class="right">
+                    <i class="iconfont" :class="[currentShop.currentDis == index ? 'icontuoyuan' : 'icontuoyuankaobei']"></i>
+                </div>
+            </div>
+        </div>
+        <div class="dis-btn fn-ctr" @click="closeDisBox">
+            <span>确定</span>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                },
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    orderInfo:{},
+                    orderPrice:"", //订单原价
+                    msg:"",
+                    addressData:{},
+                    loading:false,
+                    opt:1,
+                    discountBox:false,
+                    disList:[],
+                    currentDis:0,
+                    isQundao:0,
+                },
+                methods:{
+                    summitOrder:function(){
+                        var _this = this;
+                        _this.loading = true;
+                        _this.opt = '.65'
+                        var config = {
+                            goods_id:[],         //商品id：     JSON数组
+                            goods_attr_id:[],    //商品规格ID： JSON数组
+                            goods_num:[],        //商品数量  JSON数组
+                            cart_id:[],          //购物车id  JSON数组
+                            beizhu:[],           //订单备注  JSON数组
+                            bonus_id:[],         //优惠券id  JSON数组
+                            address_id:_this.addressData.address_id,       //地址id 
+                        };
+                        var goods_idArr = [],goods_attr_idArr = [],goods_numArr = [],cart_idArr = [],beizhuArr = [],bonus_idArr = [];
+                        _this.orderInfo.shop.map(function(sv){
+                            //获取优惠券id
+                            var boucsobj = {
+                                shop_id:sv.shopid,
+                                bonus_id:sv.currentDis != 0 ? sv.bocusList[sv.currentDis].bonus_id : "",
+                            }
+                            bonus_idArr.push(boucsobj)
+                            //获取备注
+                            var beizhuobj = {
+                                shop_id:sv.shopid,
+                                beizhu:sv.remake,
+                            }
+                            beizhuArr.push(beizhuobj);
+                            //购物车id
+                            sv.goods.map(function(gv){
+                                goods_numArr.push(gv.goods_num);         //商品数量
+                                goods_attr_idArr.push(gv.goods_attr_id)  //规格ID
+                                goods_idArr.push(gv.goods_id)               //商品ID
+                            })
+                        })
+                        //    _this.orderInfo.goods.map(function(v){
+                        //    goods_idArr.push(v.goods_id);
+                        //         goods_attr_idArr.push(v.goods_attr_id);
+                        //         goods_numArr.push(v.goods_num);
+                        //         v.cart_id ? cart_idArr.push(v.cart_id) : "";
+                        //    });
+                       config.goods_id = JSON.stringify(goods_idArr);
+                       config.goods_attr_id = JSON.stringify(goods_attr_idArr);
+                       config.goods_num = JSON.stringify(goods_numArr);
+                       config.cart_id = JSON.stringify(cart_idArr);
+                       config.beizhu = JSON.stringify(beizhuArr);
+                       config.bonus_id = JSON.stringify(bonus_idArr);
+                       console.log(JSON.stringify(config))
+                       request('/shopping/submitOrder',config,function(err,res){
+                        //  {"code":1,"msg":"订单提交成功","time":"1568680694","data":"2019091708381482715"} 
+                            if (!err && res.code == 1) {
+                                api.sendEvent({name:"refreshUserInfo"})
+                                res.data.source = api.pageParam.source || 1;   //判断此页面的源，有源说明是购物车来的，没有说明是普通商品直接下单来的
+                                setTimeout(function(){
+                                    _this.loading = false;
+                                    api.openWin({
+                                        name:"payType",
+                                        url:"../user/pay_type.html",
+                                        pageParam:{
+                                            orderno:res.data,
+                                            source:api.pageParam.source || 1,
+                                        },
+                                    })
+                                },700)
+                            }else{
+                                _this.loading = false;
+                                console.log(JSON.stringify(res))
+                                err ? console.log(JSON.stringify(err)): api.toast({msg:res.msg})
+                            }
+                       })
+                    },
+                    //打开地址
+                    openaddress:function(){
+                        api.openWin({
+                            name:"address",
+                            url:"../mohan/address.html",
+                            pageParam:{
+                                source:1,
+                            }
+                        })
+                    },
+                    //获取优惠券列表
+                    getBocusList:function(){
+                        var _this = this;
+                        var ids = api.pageParam.shop.map(function(v){     //获取所有店铺id集合
+                            return v.shop_id;
+                        })
+                        request('/shopping/get_user_bonus',{shop_id:JSON.stringify(ids)},function(err,res){
+                            console.log(JSON.stringify(res))
+                            if (!err && res.code == 1) {
+                                _this.handerBocus(res.data);
+                                
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                    // 将优惠列表放到 orderInfo里边
+                    handerBocus:function(arr){
+                        var _this = this;
+                        var orderInfo  = api.pageParam;
+                        var shops = orderInfo.shop;
+                        for (var i = 0; i < arr.length; i++) {
+                            var element = arr[i];
+                            if (element.length == 0) {
+                                shops[i].bocusList = [];
+                            } else {
+                                var currentId = element[0].shopid;
+                                var idx = findId(currentId);
+                                shops[idx].bocusList = element;
+                            }
+                        }
+                        orderInfo.shop = shops.map(function(val){
+                            if (val.bocusList.length > 0) {
+                                val.bocusList = val.bocusList.map(function(value){
+                                     value.status = false;
+                                     return value;
+                                })
+                            }
+                            val.bocusList.unshift({
+                                bonus_cat:"不使用",
+                                status:true,
+                            })
+                            val.currentDis = 0;
+                            val.bocusInfo = {       //优惠券名称用于展示
+                                dcMsg:"不使用",
+                            }
+                            val.remake = "";
+                            return val
+                        })
+                        _this.orderInfo = orderInfo;
+                        _this.orderPrice = orderInfo.goods_total_money;
+                        _this.addressData = orderInfo.address;
+                        function findId(currentId){
+                            var idx = "";
+                            for (var j = 0; j < shops.length; j++) {
+                                if(currentId == shops[j].shop_id){
+                                    idx = j;
+                                    break;
+                                }
+                            }
+                            return idx;
+                        }
+                    },
+                    //改变优惠券
+                    changDis:function(index){
+                        this.orderInfo.shop[this.currentDis].bocusInfo.dcMsg = this.disList[index].bonus_cat;
+                        this.orderInfo.shop[this.currentDis].currentDis = index;
+                        this.orderInfo.shop.push();
+                        this.computedBocus() //重新计算总价
+                        this.closeDisBox();
+                    },
+                    openDisBox:function(index){
+                        this.disList = this.orderInfo.shop[index].bocusList;
+                        this.currentDis = index;
+                        this.discountBox = true;
+                    },
+                    // 计算优惠券
+                    computedBocus:function(){
+                        var _this = this;
+                        var orderPrice = 0;    //订单总价
+                        _this.orderInfo.shop.map(function(sv){
+                            var allPrice = sv.goods.reduce(function(sum,gv){
+                                return sum+= (_this.isQundao ? Number(gv.qudao_price) :Number(gv.shop_price)) * Number(gv.goods_num);
+                            },0)
+                            if (sv.currentDis != 0) {
+                                var cutBocus = sv.bocusList[sv.currentDis];
+                                orderPrice = orderPrice + twoComputed(cutBocus,allPrice);
+                            }else{
+                                orderPrice = orderPrice + allPrice;
+                            }
+                        })
+                        _this.orderInfo.goods_total_money = orderPrice;
+                        // 二次计算
+                        function twoComputed(cutBocus,allprice){
+                            var allprice = allprice;
+                            switch(cutBocus.bonus_type){
+                                case 1:  //现金券
+                                   allprice = allprice - cutBocus.type_money;
+                                   allprice < 0 ? allprice = 0 : allprice;
+                                break;
+                                case 2:  //免费体验券
+                                    allprice = 0;
+                                break;
+                                case 4:  //折扣券
+                                    allprice = allprice * (cutBocus.type_money / 100);
+                                break;
+                            }
+                            return allprice;
+                        }
+                    },
+                    closeDisBox:function(){
+                        this.discountBox = false;
+                    },
+                    back:function(){
+                        api.closeWin();
+                    },
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.main');
+                        var header = document.querySelector('.header');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight + safeArea + "px";
+                        header.style.paddingTop = safeArea+"px";
+                        main.style.paddingTop = safeArea + headerHeight + "px";
+                    };
+                    _this.getBocusList(api.pageParam)
+                    api.addEventListener({name:'refreshAddress'},function(res,err){
+                        if (res) {
+                            _this.addressData = res.value.address;
+                        }
+                    })
+                    //监听是否渠道价格
+                    _this.isQundao = $api.getStorage('isQundao') || 0;
+                    api.addEventListener({name:"refreshQundao"},function(ret){
+                        _this.isQundao = ret.value.isQundao || 0;
+                    })
+                },
+                computed:{
+                    currentShop:function(){
+                        return this.orderInfo.shop[this.currentDis]
+                    },
+                    bocusPrice:function(){
+                        return this.orderPrice - this.orderInfo.goods_total_money;
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

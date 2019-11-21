@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>填写信息</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F8F9FB;
+}
+.header {
+    width: 7.5rem;
+    height: .93rem;
+    position: fixed;
+    top: 0;
+    background-color: #FFFFFF;
+    padding: 0 .3rem;
+    border-bottom: 1px solid #EEEEEE;
+
+}
+
+.header .iconfanhui {
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+
+}
+.header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+.middle{
+    width: 7.5rem;
+    height: 2.24rem;
+    background-color:#FFFFFF;
+    overflow: hidden;
+    padding-left: .3rem;
+    padding-right: .3rem;
+}
+ .userinfo{
+    height: 1.11rem;
+    border-bottom: 1px solid #EEEEEE;
+    overflow: hidden;
+}
+ .userinfo .left{
+    width: 2.29rem;
+    font-size: .3rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: left;
+}
+ .userinfo .right{
+    /* margin-left: 1.12rem; */
+    font-size: .3rem;
+    color: #333333;
+    text-align: left;
+    overflow: hidden;
+}
+ .userinfo .right .personal{
+    font-size: .26rem;
+    color: #333333;
+    text-align: center;
+    line-height: .52rem;
+    width: 1.2rem;
+    height: .52rem;
+    border:1px solid #CCCCCC;
+    border-radius: .3rem;
+    float: left;
+}
+ .userinfo .right .company{
+    font-size: .26rem;
+    text-align: center;
+    line-height: .52rem;
+    border:1px solid #CCCCCC;
+    color: #333333;
+    width: 1.4rem;
+    height: .52rem;
+    border-radius: .3rem;
+    float: left;
+    margin-left: .3rem;
+    padding: 0 .04rem;
+}
+.userinfo .right .active{
+    color: #0086F7;
+    border:1px solid #0086F7;
+}
+ .border{
+    border: 0;
+}
+.aboutcom{
+    width: 7.5rem;
+    height: auto;
+    background-color:#FFFFFF;
+    overflow: hidden;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    margin-top: .2rem;
+}
+.aboutcom .userinfo .iptname{
+    width: 4.4rem;
+    height: .45rem;
+    background: none;
+    font-size: .3rem;
+    color: #333333;
+    outline: none;
+    border: none;
+    float: right;
+}
+.aboutcom .userinfo .iptcode{
+    width: 4.4rem;
+    height: .45rem;
+    font-size: .3rem;
+    color: #333333;
+    background: none;
+    outline: none;
+    border: none;
+    float: right;
+}
+.aboutcom .userinfo .iptemail{
+    width: 4.4rem;
+    height: .45rem;
+    font-size: .3rem;
+    color: #333333;
+    background: none;
+	  outline: none;
+      border: none;
+      float: right;
+}
+.aboutcom .userinfo input::-webkit-input-placeholder{
+    font-size: .3rem;
+    color: #CCCCCC;
+    text-align: left;
+}
+.aboutcom .userinfo input:-moz-placeholder{
+    font-size: .3rem;
+    color: #CCCCCC;
+    text-align: left;
+}
+.aboutcom .userinfo input:-ms-input-placeholder{
+    font-size: .3rem;
+    color: #CCCCCC;
+    text-align: left;
+}
+.add{
+    width: 6.9rem;
+    height: .9rem;
+    position: fixed;
+    bottom: .3rem;
+    margin-left: .3rem;
+    background-color: #ccc;
+    border-radius: .08rem;
+    font-size: .32rem;
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: .9rem;
+    text-align: center;
+}
+.addactive{
+    background-color: #0086F7;
+}
+.notice{
+    font-size: .26rem;
+    color: #666666;
+    text-align: left;
+    padding-left: .3rem;
+    margin-top: .3rem;
+}
+
+</style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="header flex align-items space-between flex_center">
+        <i class="iconfont iconfanhui" @click="back"></i>
+        <div class="order flex_center">选择发票类型</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="main">
+    <div class="middle">
+        <div class="userinfo flex align-items ">
+            <div class="left">发票类型</div>
+            <div class="right">普通发票</div>
+        </div>
+        <div class="userinfo flex align-items border">
+            <div class="left">发票抬头</div>
+            <div class="right">
+                <div class="personal" :class="{active:invoiceInfo.head == 1}" @click="changehd(1)">个人</div>
+                <div class="company"  :class="{active:invoiceInfo.head == 2}" @click="changehd(2)">单位</div>
+            </div>
+        </div>
+    </div>
+        <div class="aboutcom">
+            <div class="userinfo flex align-items " v-show="invoiceInfo.head == 2">
+                <div class="left">单位名称</div>
+                <div class="right">
+                    <input type="text" placeholder="请输入单位名称" class="iptname" v-model="invoiceInfo.companyName">
+                </div>
+            </div>
+            <div class="userinfo flex align-items " v-show="invoiceInfo.head == 2">
+                <div class="left">纳税人识别号</div>
+                <div class="right">
+                    <input type="text" placeholder="请输入识别号" class="iptcode" v-model="invoiceInfo.companyNum">
+                </div>
+            </div>
+            <div class="userinfo flex align-items ">
+                <div class="left">发票接受方式</div>
+                <div class="right">
+                    <div class="personal" :class="{active:invoiceInfo.acceptType == 1}" @click="changeAcType(1)">邮寄</div>
+                    <div class="company"  :class="{active:invoiceInfo.acceptType == 2}" @click="changeAcType(2)">发送邮箱</div>
+                </div>
+            </div>
+            <div class="userinfo flex align-items border">
+                <div class="left" v-show="invoiceInfo.acceptType == 1">邮寄地址</div>
+                <div class="left" v-show="invoiceInfo.acceptType == 2">收票人邮箱</div>
+                <div class="right">
+                    <input type="text" placeholder="请输入" class="iptemail" v-model="invoiceInfo.email">
+                </div>
+            </div>
+        </div>
+        <div class="notice">注：如需开增值税专用发票，请联系客服</div>
+
+        <div class="add" :class="{addactive:isAllWrite}" @click="formDt">确定</div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   invoiceInfo:{
+                       head:1,   //1个人  2单位
+                       companyName:"",
+                       companyNum:"",
+                       acceptType:1, //1 邮寄 2发送邮箱
+                       email:"",
+                   },
+                   allorder:[],
+                   loading:false,
+                   opt:'.65'
+                },
+                methods:{
+                    //提交数据
+                    formDt:function(){
+                        var _this = this;
+                        if (!_this.isAllWrite) {
+                            return false
+                        }
+                        _this.loading = true;
+                        var orderIds = JSON.stringify(_this.allorder)
+                        console.log(JSON.stringify({
+                            order_id:orderIds,
+                            fapiao_type:1,
+                            fapiao_taitou:_this.invoiceInfo.head,
+                            fapiao_danwei_name:_this.invoiceInfo.companyName,
+                            fapiao_nashuiren_hao:_this.invoiceInfo.companyNum,
+                            fapiao_jieshou_way:_this.invoiceInfo.acceptType,
+                            fapiao_address:_this.invoiceInfo.email,
+                        }))
+                        request('/my/goods_fapiao',{
+                            order_id:orderIds,
+                            fapiao_type:1,
+                            fapiao_taitou:_this.invoiceInfo.head,
+                            fapiao_danwei_name:_this.invoiceInfo.companyName,
+                            fapiao_nashuiren_hao:_this.invoiceInfo.companyNum,
+                            fapiao_jieshou_way:_this.invoiceInfo.acceptType,
+                            fapiao_address:_this.invoiceInfo.email,
+                        },function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1){
+                                _this.submitSuc()
+                            }else{
+                                res ? console.log(JSON.stringify(res)) : "";
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    submitSuc:function(){
+                        var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '发票申请提交成功',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '确认'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									}
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+								    dialogBox.close({
+                                        dialogName: 'alert'
+                                    });
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+                                });
+                                api.closeToWin({name:"root"})
+							});
+                    },
+                    changehd:function(type){
+                        this.invoiceInfo.head = type;
+                    },
+                    changeAcType:function(type){
+                        this.invoiceInfo.acceptType = type;
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var middle = document.querySelector('.main');
+                        var search = document.querySelector('.header');
+                        var searchHeight = search.clientHeight;
+                        search.style.height = searchHeight + safeArea + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        middle.style.paddingTop = searchHeight + safeArea + 'px';
+                        var safeArea_bottom = api.safeArea.bottom || 0;
+                        var ft = document.querySelector('.add');
+                        ft.style.bottom = safeArea_bottom+ 16 + "px"
+                    };
+                    var _this = this;
+                    _this.allorder = api.pageParam.allOrder;
+                },
+                computed:{
+                    isAllWrite:function(){
+                        var _this = this;
+                        var status = false;
+                        if (_this.invoiceInfo.head == 1) {
+                            _this.invoiceInfo.email != "" ? status = true : "";
+                        }else if(_this.invoiceInfo.head == 2){
+                            if(_this.invoiceInfo.companyName != ""  && _this.invoiceInfo.companyNum != "" && _this.invoiceInfo.email != "") {
+                                status = true;
+                            }
+                        }
+                        console.log(status)
+                        return status;
+                    }
+                }
+            })
+        }
+    
+    
+    </script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_vgzk7s2d7mp.css">
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/rem.js"></script>
+    <title>搜索</title>
+    <style>
+        html,body{
+            background: #fff;
+        }
+        .header{
+            width: 100%;
+            height: .6rem;
+            background-color: #fff;
+            padding: 0 .3rem;
+            line-height: .6rem;
+            position: fixed;
+            top: .2rem;
+        }
+        .header i{
+            font-size: .3rem;
+        }
+        .header_cen{
+            width: 5.56rem;
+            height: .6rem;
+            border: 1px solid #CCCCCC;
+            border-radius: .3rem;
+            padding: 0 .31rem;
+            line-height: .55rem;
+        }
+        .header_cen i{
+            font-size: .3rem;
+            color: #999;
+        }
+        .header span{
+            font-size: .28rem;
+        }
+        .header_cen input{
+            width: 100%;
+            height: 100%;
+            padding: .11rem;
+            font-size: .28rem;
+            font-weight: normal;
+            text-shadow: 0px 0px 0px #000;
+            -webkit-text-fill-color: transparent;
+        }
+        .header_cen input:focus{
+            color: #0086F7;
+        }
+        input::placeholder{
+            font-size: .28rem;
+            color: #999;
+        }
+        .main{
+            overflow: hidden;
+            padding-top: .88rem;
+        }
+        /* 历史搜索 */
+        .history{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+            margin: .84rem 0 .35rem;
+        }
+        .his_top{
+            width: 100%;
+            height: .26rem;
+            margin-bottom: .4rem;
+        }
+        .his_top span{
+            font-size: .28rem;
+        }
+        .his_top i{
+            font-size: .3rem;
+        }
+        .his_cen{
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #EEEEEE;
+            /* padding-bottom: .rem; */
+        }
+        .his_cen_o{
+            width: auto;
+            height: .66rem;
+            overflow: hidden;
+            padding: 0 .38rem;
+            background: #F8F9FB;
+            border-radius: .1rem;
+            margin-right: .2rem;
+            margin-bottom: .3rem;
+            color: #666;
+            line-height: .66rem;
+            font-weight: 500;
+        }
+        /* 热门搜索 */
+        .hot{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+        }
+        .hot_top{
+            font-size: .28rem;
+            font-weight: 500;
+            margin-bottom: .46rem;
+        }
+        .hot_cen{
+            width: 100%;
+            height: auto;
+            padding-bottom: .5rem;
+        }
+        /* 搜索弹窗 */
+        .searching{
+            width: 100%;
+            height: auto;
+            padding: 0 .31rem;
+            margin-top: .3rem;
+        }
+        .search_o{
+            width: 100%;
+            height:.9rem;
+            border-bottom: 1px solid #EEE;
+            line-height: .9rem; 
+            font-size: .3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="root" v-cloak>
+        <!-- 搜索框 -->
+        <div class="header flex space-between">
+            <i class="iconfont iconfanhui" @click="back"></i>
+            <div class="header_cen flex">
+                <i class="iconfont iconxingzhuang9"></i>
+                <input type="text" placeholder="搜索" v-model="searchVal" ref="ipt">
+            </div>
+            <span @click="handerSearch">搜索</span>
+        </div>
+        <div class="main">
+        <!-- 历史搜索 -->
+        <div class="history" >
+            <div class="his_top flex space-between" v-show="!noHisList">
+                <span>历史搜索</span>
+                <i class="iconfont iconjuxing2" @click="detelHis"></i>
+            </div>
+            <div class="his_cen flex flex_wrap flex-start" v-show="!noHisList">
+                <div class="his_cen_o" v-for="item in hisList" :key="item.id" @click="sendSearch(item.keywords)">{{ item.keywords }}</div>
+            </div>
+        </div>
+        <!-- 热门搜索 -->
+        <div class="hot">
+            <div class="hot_top" v-show="!nohotList">热门搜索</div>
+            <div class="hot_cen flex flex_wrap flex-start" v-show="!nohotList">
+                <div class="his_cen_o" v-for="item in hotList" :key="item.id" @click="sendSearch(item.keywords)">{{ item.keywords }}</div>
+            </div>
+        </div>
+        <!-- 搜索弹窗 -->
+        <div class="searching" v-show="false">
+            <div class="search_o" v-for="item in guanList">{{ item.keywords }}</div>
+        </div>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var timp = "";
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   searchVal:"",
+                   hotList:[],
+                   hisList:[],
+                   guanList:[],
+                },
+                methods:{
+                    //点击搜索
+                    handerSearch:function(){
+                        console.log(this.searchVal)
+                        this.sendSearch(this.searchVal)
+                        this.searchVal == "";
+                    },
+                    //获取临时搜索关键词
+                    getSearchKey:function(){
+                        var _this = this;
+                        request('/shopping/similarity_search',{keyword:_this.searchVal},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.guanList = res.data.data;
+                            }
+                        })
+                    },
+                    //获取历史搜索
+                    getHistorySearch:function(){
+                        var _this = this;
+                        request('/shopping/goods_history_search',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                console.log(JSON.stringify(res.data))
+                                _this.hisList = res.data;
+                            }else{
+                                
+                            }
+                        })
+                    },
+                    //删除搜索历史
+                    detelHis:function(){
+                        var _this = this;
+                        var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '是否确认删除',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '确认'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									}
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+                                    request('/shopping/del_goods_history_search',{},function(err,res){
+                                        if (!err && res.code == 1) {
+                                            _this.hisList.splice(0);
+                                        }
+                                    })
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+								});
+							});
+                        
+                    },
+                    //获取热门搜索
+                    getHotSearch:function(){
+                        var _this = this;
+                        request('/shopping/goods_hot_search',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.hotList = res.data;
+                            }else{
+
+                            }
+                        })
+                    },
+                    //发起搜索
+                    sendSearch:function(searchVal){
+                        if (searchVal == "") {
+                            return false
+                        }
+                        api.sendEvent({name:"refreshSearch"})
+                        api.openWin({
+                            name:"searchOk",
+                            url:"../user/search_ok.html",
+                            pageParam:{
+                                searchVal:searchVal
+                            }
+                        })
+                        
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.main')
+                        var header = document.querySelector('.header');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight + safeArea + "px"
+                        header.style.paddingTop = safeArea +"px";
+                        main.style.paddingTop = headerHeight+ safeArea + "px";
+                    }
+                    this.getHistorySearch();
+                    this.getHotSearch();
+                    var _this  = this;
+                    api.addEventListener({name:"refreshSearch"},function(ret,err){_this.getHistorySearch()})  //刷新历史搜索
+                    window.onkeydown = function(e){
+                        if (e && e.keyCode==13) {
+                           _this.sendSearch()
+                        }
+                    };
+                },
+                computed:{
+                    searchPending:function(){
+                        return this.searchVal != ""
+                    },
+                    noHisList:function(){
+                        return this.hisList.length == 0;
+                    },
+                    nohotList:function(){
+                        return this.hotList.length == 0;
+                    }
+                },
+                watch:{
+                    searchVal:function(val){
+                        var _this = this;
+                        clearTimeout(timp);
+                        timp = setTimeout(function(){
+                            _this.getSearchKey();
+                        },700);
+                    }
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

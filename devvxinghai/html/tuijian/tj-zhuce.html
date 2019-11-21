@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>邀请有礼</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #FFFFFF;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+            text-align: right;
+            font-weight: normal;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            margin-top: .1rem;
+            padding: 0 .75rem;
+        }
+        .list{
+            width: 100%;
+            height: auto;
+            border-bottom:1px solid #DDDDDD; 
+        }
+        .list .word{
+            font-size: .3rem;
+            font-weight: bold;
+            padding-top: .4rem;
+        }
+        .list input{
+            width: 6rem;
+            height: .75rem;
+            font-weight: normal;
+            font-size: .32rem;
+            font-weight: 500;
+        }
+        .list .yzm-input{
+            width: 4.4rem;
+        }
+        .list .send{
+            font-size: .32rem;
+            color: #0086F7;
+            font-weight: 500;
+        }
+        /* 谷歌浏览器 blink v8引擎*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 苹果公司 safari*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 火狐内核 */
+        input::-moz-placeholder{ 
+            color: #CCCCCC;
+        }
+        /* 由于我的IE刚好是IE9及以下不支持， */
+        input:-ms-input-placeholder{ 
+            color: #CCCCCC;    
+        }
+        .btn{
+            width: 6rem;
+            height: .92rem;
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            background: -webkit-linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            border-radius: .1rem;
+            margin: 2rem auto 0;
+            line-height: .92rem;
+            text-align: center;
+            font-size: .32rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .code-box{
+            margin-top: .1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="top flex space-between align-items">
+        <div class="i">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>分享注册落地页</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="wrapper">
+        <div class="list">
+            <div class="word">手机</div>
+            <input type="number" placeholder="请输入手机号码">
+        </div>
+        <div class="list">
+            <div class="word">验证码</div>
+            <div class="flex space-between align-items code-box">
+                <input class="yzm-input" type="number" placeholder="请输入验证码">
+                <div class="send">发送验证码</div>
+            </div>
+        </div>
+        <div class="list">
+            <div class="word">密码</div>
+            <input type="password" placeholder="请输入密码">
+        </div>
+    </div>
+    <div class="btn">注册</div>
+    <script src="../../js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/animate.min.css">
+    
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v8eoxklephb.css">
+    <link rel="stylesheet" href="../../css/swiper.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+    <title>产品购买详情</title>
+    <style>
+        .head {
+            width: 100%;
+            height: 1.06rem;
+            padding: .18rem .3rem;
+            position: fixed;
+            top: 0;
+            z-index: 5;
+        }
+
+        .circle {
+            width: .7rem;
+            height: .7rem;
+            background: #333333;
+            opacity: .5;
+            border-radius: .5rem;
+            line-height: .7rem;
+
+        }
+
+        .circle:nth-child(2) {
+            margin-left: 4.3rem;
+        }
+
+        .iconshijian- {
+            font-size: .4rem;
+        }
+        .circle .zanactive{
+            color: #0086F7;
+        }
+        .circle i {
+            color: #fff;
+        }
+
+        .iconfenxiang {
+            font-size: .4rem;
+        }
+
+        .banner {
+            width: 100%;
+            height: 7.5rem;
+        }
+
+        .swiper-container {
+            width: 100%;
+            ;
+            height: 7.5rem;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 7.5rem;
+        }
+
+        .swiper-pagination {
+            width: .84rem;
+            height: .4rem;
+            position: absolute;
+            left: 6.5rem;
+            background: #333333;
+            opacity: .5;
+            border-radius: .2rem;
+            -webkit-transition: 300ms opacity;
+            -o-transition: 300ms opacity;
+            transition: 300ms opacity;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            z-index: 10;
+            color: #fff;
+            font-size: .2rem;
+            text-align: center;
+            line-height: .4rem;
+        }
+
+        .swiper-container-horizontal>.swiper-pagination-bullets {
+            bottom: 10px;
+            left: 0;
+            width: .84rem;
+            margin-right: .5rem;
+            /* width: 100%; */
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            padding-bottom: 1.3rem;
+        }
+
+        .main-tit {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            border-radius: .3rem .3rem 0px 0px;
+            padding: .39rem .53rem .4rem .3rem;
+        }
+
+        .main-tit p {
+            width: 100%;
+            max-height: 1rem;
+            font-size: .34rem;
+            font-weight: bold;
+            color: #333333;
+            line-height: .5rem;
+
+        }
+
+        .price {
+            margin-top: .1rem;
+            color: #FE6602;
+        }
+
+        .price span:first-child {
+            font-size: .36rem;
+            font-weight: bold;
+        }
+
+        .price span:nth-child(2) {
+            font-size: .42rem;
+            font-weight: bold;
+        }
+
+        .price span:last-child {
+            font-size: .24rem;
+            color: #666666;
+            margin-left: .05rem;
+            position: relative;
+            top: -0.02rem;
+        }
+
+        .view {
+            margin-top: .39rem;
+            width: 100%;
+            height: .9rem;
+            background: #F8F9FB;
+            padding: 0 .3rem;
+            color: #999999;
+            font-size: .28rem;
+            border-radius: .1rem;
+        }
+
+        .a span:first-child {
+            font-size: .34rem;
+            color: #333333;
+        }
+
+        .b i {
+            font-size: .2rem;
+            margin-left: .15rem;
+        }
+
+        .answer {
+            width: 100%;
+            height: 2rem;
+            background: #ffff;
+            margin-top: .2rem;
+            padding: .4rem .3rem;
+        }
+
+        .answer p {
+            font-size: .34rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .answer-go {
+            width: 100%;
+            height: .6rem;
+            margin-top: .24rem;
+        }
+
+        .answer-go span {
+            font-size: .28rem;
+            color: #999999;
+        }
+
+        .answer-b {
+            width: 1.5rem;
+            height: .6rem;
+            border: 1px solid #0086F7;
+            border-radius: .1rem;
+            line-height: .6rem;
+            font-size: .28rem;
+            color: #0086F7;
+
+        }
+
+        .detail {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            margin-top: .2rem;
+        }
+
+        .detail-top {
+            width: 100%;
+            height: 1.02rem;
+            padding-left: .3rem;
+            line-height: 1.02rem;
+            font-size: .34rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .tips {
+            width: 100%;
+            height: 3.83rem;
+            background: #fff;
+            margin-top: .2rem;
+            padding: .4rem .29rem;
+        }
+
+        .tips-detail {
+            margin-top: .3rem;
+            width: 100%;
+            height: 2.41rem;
+            background: #F8F9FB;
+            padding: 0 .3rem;
+            overflow: hidden;
+        }
+
+        .tip-s {
+            width: 100%;
+            height: .32rem;
+            /* border:1px solid black; */
+            margin-top: .3rem;
+            font-size: .28rem;
+            color: #333333;
+
+        }
+
+        .tip-s span {
+            font-weight: bold;
+
+        }
+
+        .tip-c {
+            width: .1rem;
+            height: .1rem;
+            border-radius: .5rem;
+            background: #0086F7;
+            margin-right: .08rem;
+            position: relative;
+            top: .14rem;
+        }
+
+        .z {
+            width: 4.8rem;
+        }
+
+        .tip-s:last-child {
+            margin-top: .6rem;
+        }
+
+        .recommend {
+            width: 100%;
+            height: auto;
+            padding: .4rem .3rem .2rem;
+
+        }
+
+        .list {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .list ul {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        .list li {
+            width: 3.36rem;
+            height: auto;
+            border-radius: .1rem;
+            overflow: hidden;
+            float: left;
+            background: #fff;
+            overflow: hidden;
+            margin-top: .2rem;
+            /* padding-bottom: .2rem; */
+        }
+
+        .list li img {
+            width: 3.36rem;
+            height: 3.36rem;
+        }
+
+        .food-message {
+            width: 100%;
+            height: auto;
+            padding: .2rem .36rem .2rem .22rem;
+            overflow: hidden;
+        }
+
+        .food-name {
+            width: 2.8rem;
+            max-height: .7rem;
+            font-size: .28rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .food-message p {
+            font-size: .26rem;
+            color: #999999;
+            margin-top: .2rem;
+        }
+
+        .money {
+            color: #FE6602;
+            margin-top: .1rem;
+            font-weight: bold;
+        }
+
+        .money span:first-child {
+            font-size: .28rem;
+
+        }
+
+        .money span:last-child {
+            font-size: .32rem;
+
+        }
+
+        .more {
+            width: 100%;
+            height: .9rem;
+            background: #fff;
+            line-height: .9rem;
+            color: #0086F7;
+            font-size: .3rem;
+            margin-top: .2rem;
+
+
+        }
+
+        .bottom {
+            width: 100%;
+            height: 1.1rem;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .left {
+            width: 5.38rem;
+            height: 1.1rem;
+        }
+
+        .right {
+            width: 2.2rem;
+            height: 1.1rem;
+            background: #0086F7;
+            font-size: .32rem;
+            color: #ffffff;
+            line-height: 1.1rem;
+        }
+
+        .cart {
+            width: 2.2rem;
+            height: 1.1rem;
+            background: #0086F7;
+            opacity: 0.7;
+            font-size: .32rem;
+            color: #ffffff;
+            line-height: 1.1rem;
+        }
+
+        .left-s {
+            width: 3.18rem;
+            display: flex;
+            justify-content: space-around;
+            padding: .2rem .3rem;
+        }
+        .left-s .tc:first-child{
+            position:relative;
+            top: 0.03rem;
+        }
+        .left-s .tc:first-child p{
+            margin-top: .02rem;
+        }
+        .left-s i {
+            font-size: .4rem;
+        }
+
+        .left-s p {
+            font-size: .2rem;
+        }
+
+        .iconxingzhuang3 {
+            font-size: .45rem !important;
+            position: relative;
+            top: -0.02rem;
+        }
+
+        .iconcart {
+            font-size: .45rem !important;
+        }
+
+        .popup {
+            width: 100%;
+            height: 8.08rem;
+            background: #fff;
+            position: fixed;
+            z-index: 996;
+            bottom: -8.1rem;
+            transition: .4s;
+        }
+        .popupactive{
+            bottom: 0;
+        }
+        .gds {
+            width: 100%;
+            height: 7.08rem;
+            padding: .3rem;
+        }
+
+        .gds-img img {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .gds-p {
+            margin-top: .5rem;
+            margin-left: .22rem;
+        }
+
+        .gds-p div {
+            color: #FC595B;
+            font-weight: bold;
+            margin-bottom: .3rem;
+        }
+        .p{
+            font-size: .3rem;
+        }
+        .shop-price{
+            font-size: .4rem;
+        }
+        .n{
+            font-size: .26rem;
+        }
+        .gds-p p{
+            font-size: .22rem;
+            color:#999999;
+
+
+        }
+        .guige{
+            width:100%;
+            height:auto;
+            margin-top:.66rem;
+            padding-bottom:.15rem;
+        }
+        .guige-tit{
+            font-size: .28rem;
+            color:#333333;
+            margin-bottom: .3rem;
+        }
+        .guige-list{
+            width: 100%;
+            overflow: hidden;
+        }
+        .guige-list .item{
+            width:1.56rem;
+            height:.6rem;
+            background: #F8F8F8;
+            border-radius: .3rem;
+            line-height: .6rem;
+            font-size: .3rem;
+            color:#333333;
+            margin-right:.18rem;
+            margin-bottom:.16rem;
+            border: 1px solid #fff;
+        }
+        .guige-list .item:nth-child(4n){
+            margin-right: 0;
+        }
+        .guige-list .active{
+            color:#0086F7;
+            border:1px solid #0086F7;
+            background: #fff;
+        }
+        .sure{
+            width:100%;
+            height:1rem;
+            background: #0086F7;
+            line-height: 1rem;
+            font-size: .32rem;
+            color: #fff;
+
+        }
+        .gds-num{
+            width:100%;
+            height:1.44rem;
+            border-top:1px solid #eeeeee;
+        }
+        .num{
+            width:1.66rem;
+            height:.42rem;
+            border:1px solid #eeeeee;
+            line-height: .35rem;
+            color: #666666;
+        }
+        .num-a{
+            width:.7rem;
+            border-left:1px solid #eeeeee;
+            border-right:1px solid #eeeeee;
+            color: #333333;
+            font-size: .24rem;
+        }
+        .brief{
+            width: 100%;
+            height: 100%;
+            padding: .3rem 0 ;
+        }
+        .qundao-prices span{
+            font-size: .32rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .qundao-prices span:last-child{
+            font-size: .24rem;
+            color: #ff0000;
+            font-weight: bold;
+            margin-left: .2rem;
+        }
+        .main_much{
+            width: auto;
+            height: .3rem;
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .main_much .bocus{
+            width: .4rem;
+            height: .32rem;
+            border-radius: .14rem;
+            font-size: .2rem!important;
+            background: #ff0000;
+            font-weight: normal;
+            line-height: normal;
+            margin-left: .2rem;
+        }
+        .main_much .bocus span{
+            color: #fff;
+            font-size: .24rem!important;
+        }
+        .qundao-price span{
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .qundao-price span:last-child{
+            font-size: .26rem;
+            color: #ff0000;
+            font-weight: bold;
+            margin-left: .2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+            <v-loading v-show='loading' :opt="opt"></v-loading>
+    <div class="head flex space-between">
+        <div class="circle tc" @click="back"><i class="iconfont iconfanhui"></i></div>
+        <div class="circle tc" @click="getZan"><i class="iconfont iconshijian-" :class="{zanactive : gdsZan}"></i> </div>
+        <div class="circle tc"><i class="iconfont iconfenxiang" @click="openShare"></i></div>
+    </div>
+    <div class="banner">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="(item,index) in bannerList" :key="index"><img :src="item"></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="main-tit">
+            <p class="ellipsis2">{{ info.goods_name }}</p>
+            <div class="price">
+                <span>￥</span><span>{{ info.shop_price }}</span><span></span>
+            </div>
+            <div class="qundao-prices flex align-items" v-if="isQundao == 1">
+                <span>￥</span><span>{{ info.qudao_price }}</span><span>渠道价</span>
+            </div>
+            <div class="view flex align-items space-between" @click="openGdsComment">
+                <div class="a"><span>{{ info.satisfaction }}%</span><span>满意度</span></div>
+                <div class="b"><span>{{ info.evaluate_num }}人评价</span><i class="iconfont icongengduo"></i></div>
+            </div>
+        </div>
+        <div class="answer">
+            <p>商品问答({{info.goods_question}})</p>
+            <div class="answer-go flex align-items space-between">
+                <span v-if="info.goods_question == 0">本产品暂无问答内容</span>
+                <span v-else>本产品有{{info.goods_question}}条问答</span>
+                <div class="answer-b tc" @click="openGdsQuestion" v-if="info.goods_question == 0">去提问</div>
+                <div class="answer-b tc" v-else @click="openWenDaList">去查看</div>
+            </div>
+        </div>
+        <div class="detail">
+            <div class="detail-top">商品详情</div>
+            <div class="detail-html" v-html="info.content">
+               
+            </div>
+        </div>
+        <div class="tips">
+            <h3>购买须知</h3>
+            <div class="tips-detail">
+                <div class="brief"> {{ info.goods_brief }}</div>
+               
+                <!-- <div class="tip-s flex ">
+                    <div class="tip-c"></div>
+                    <div class="flex"><span>产品说明:</span>&nbsp;<p>下单领20寸行李箱+夫妻升级大床房</p>
+                    </div>
+                </div>
+                <div class="tip-s flex ">
+                    <div class="tip-c"></div>
+                    <div class="flex"><span>使用时间:</span>&nbsp;<p class="z">赠送大东海沙滩派对+每天一瓶品牌矿泉水+当地特色农家早餐</p>
+                    </div>
+                </div>
+                <div class="tip-s flex ">
+                    <div class="tip-c"></div>
+                    <div class="flex"><span>适用范围:</span>&nbsp;<p>免费升级一晚东南亚风情酒店</p>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+        <div class="recommend">
+            <h3>相似推荐</h3>
+            <div class="list">
+                <ul class="flex space-between flex_wrap">
+                    <li v-for="item in simmilarGds" :key="item.goods_id" @click="openDetail(item.goods_id)">
+                        <img :src="item.goods_img" alt="">
+                        <div class="food-message">
+                            <div class="food-name ellipse">{{ item.goods_name }}</div>
+                            <p><span>{{ item.satisfaction }}%满意度</span>&nbsp;&nbsp;<span>{{ item.sales }}销量</span></p>
+                            <div class="main_much flex align-items">
+                                <span>￥{{ item.shop_price}}</span>
+                                <div class="bocus fn-ctr"  v-if="item.is_youhuiquan == 1"><span>券</span></div> 
+                            </div>
+                            <div class="qundao-price flex align-items" v-if="isQundao == 1">
+                                <span>￥</span><span>{{ item.qudao_price }}</span><span>渠道价</span>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="more tc" v-show="simmilarGds.length > 4">查看更多</div>
+        </div>
+        <div class="bottom flex space-between ifooter">
+            <div class="left flex space-between">
+                <div class="left-s">
+                    <div class="tc" @click="openShopDtl">
+                        <i class="iconfont iconxingzhuang"></i>
+                        <p>店铺</p>
+                    </div>
+                    <div class="tc" @click="openKefu">
+                        <i class="iconfont iconxingzhuang3"></i>
+                        <p>客服</p>
+                    </div>
+                    <div class="tc" @click="openCar">
+                        <i class="iconfont iconcart"></i>
+                        <p>购物车</p>
+                    </div>
+                </div>
+                <div class="cart tc" @click="openAttrBox(1)">加入购物车</div>
+            </div>
+            <div class="right tc" @click="openAttrBox(2)">立即购买</div>
+        </div>
+    </div>
+    <div class="mask" v-show="attrBox" @click="closeAttrBox"></div>
+    <div class="popup" :class="{popupactive : attrBox}">
+        <div class="gds">
+            <div class="gds-message flex space-between">
+                <div class="gds-img flex ">
+                    <img :src="attrImg" alt="">
+                    <div class="gds-p">
+                        <div><span class="p">￥</span><span class="shop-price">{{ attrPrice }}</span></div>
+                        <p>库存{{ attrProduct }}件</p>
+                    </div>
+                </div>
+                <i class="iconfont iconchahao"  @click="closeAttrBox"></i>
+            </div>
+            <div class="guige">
+                <div class="guige-tit">规格</div>
+                <div class="guige-list flex flex_wrap flex-start" >
+                    <div class="item tc"  v-for="(item,index) in gdsAttr" :key="index" :class="{active:currentAttr == index }" @click="changeCurAttr(index)">{{ item.attr }}</div>
+                </div>
+            </div>
+            <div class="gds-num flex space-between align-items">
+                <span>数量</span>
+                <div class="num flex space-around tc">
+                    <div @click="reduceNum">-</div>
+                    <div class="num-a">{{attrNum}}</div>
+                    <div @click="addNum">+</div>
+                </div>
+            </div>
+        </div>
+        <div class="sure tc" @click="submitDt">确认</div>
+    </div>
+    <div class="mask" v-show="shareBox" @click="shareBox = false"></div>
+    <share-box  v-show="shareBox" :shareurl="shareUrl" :class="[shareBox ? 'animated bounceInDown' : 'animated zoomOutDown']"></share-box>
+    </div>
+    
+    <script src="../../js/api.js"></script>
+    <script src="../../js/swiper.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    },
+                }
+            })
+            //分享组件
+            Vue.component('share-box',{
+                template:'<div class="shareComponent flex space-around align-content-center"><div class="item" v-for="(item,index) in list" @click="share(index)"><img :src="item.src"><div class="text">{{ item.name }}</div></div></div>',
+                data:function(){
+                    return {
+                        list:[{name:"微信",src:"../../image/weixinchat@2x.png"},{name:"朋友圈",src:"../../image/pyq@2x.png"},{name:"微博",src:"../../image/weibo@2x.png"}]
+                    }
+                },
+                props:['shareurl'],
+                methods:{
+                    share:function(type){
+                        var _this = this;
+                        if (type == 0 || type == 1) { //微信好友
+                            var wx = api.require('wx');
+                            wx.isInstalled(function(ret, err) {
+                                if (ret.installed) {
+                                    var weiType =  type == 0 ? 'session' : 'timeline'
+                                    _this.weixinShare(weiType)
+                                } else {
+                                    api.toast({msg:"检测到您的设备为安装微信"})
+                                }
+                            });
+                        }else if(type == 2){ //微博
+                            api.toast({msg:"暂未开放，敬请期待"})
+                        }
+                    },
+                    //微信分享好友
+                    weixinShare:function(type){ //类型  timeline 朋友圈   session 好友
+                        var _this = this;
+                        var wx = api.require('wx');
+                        wx.shareWebpage({
+                            apiKey: '',
+                            scene: type,
+                            title: '好玩好货都在鑫海',
+                            description: '鑫海,专业的旅游平台',
+                            thumb: 'widget://image/logo.png',
+                            contentUrl: _this.shareurl,
+                        }, function(ret, err) {
+                            // if (ret.status) {
+                            //     console.log(JSON.stringify(ret))
+                            //     api.toast({msg:"分享成功",duration:5000})
+                            // }else{
+                            //     api.toast({msg:"分享失败",duration:5000})
+                            // }
+                            _this.$parent.closeShare()
+                        });
+                    }
+                },
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    id:"",
+                    info:{},
+                    bannerList:[],
+                    simmilarGds:[],
+                    gdsZan:false,
+                    gdsAttr:[],
+                    attrBox:false,
+                    currentAttr:0, //当前哪个属性
+                    attrPrice:"",
+                    attrProduct:"",
+                    attrImg:"",
+                    attrNum:1,    // 要购买点数量
+                    clickStatus:0, //1是点了购物车 2是点了立即购买
+                    loading:true,  //加载框
+                    opt:1,         //加载框的透明度
+                    shareBox:false,
+                    shareUrl:"",
+                    isQundao:1,
+                },
+                methods:{
+                    getDetail:function(){
+                        var _this = this;
+                        request('/shopping/goods_detail',{goods_id:_this.id},function(err,res){
+                            setTimeout(function(){
+                                _this.loading = false;
+                            }, 700);
+                            if (!err && res.code == 1) {
+                                _this.info = res.data;
+                                console.log(JSON.stringify(res.data))
+                                _this.bannerList = res.data.goods_img;
+                                _this.$nextTick(function(){
+                                    var mySwiper = new Swiper('.swiper-container', {
+                                        loop: true, // 循环模式选项
+                                        // 如果需要分页器
+                                        pagination: {
+                                            el: '.swiper-pagination',
+                                            type: 'fraction',
+                                        },
+                                    })  
+                                })
+                                _this.gdsZan = res.data.is_dianzan == 0 ? false : true;
+                                _this.gdsAttr = res.data.goods_attribute;
+                                _this.attrImg = _this.gdsAttr[0].img;
+                                _this.attrPrice = _this.gdsAttr[0].shop_price;
+                                _this.attrProduct = _this.gdsAttr[0].product_number;
+                                _this.getsimilar() // 获取相似商品
+                            }
+                        })
+                    },
+                    getShareDtl:function(){
+                        var _this = this;
+                        request('/shopping/goods_fenxiang',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.shareUrl = res.data;
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                    getZan:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        request('/shopping/goods_dianzan',{goods_id:_this.id},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.gdsZan = !_this.gdsZan;
+                                api.sendEvent({name:"refreshUserInfo"});
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                    getsimilar:function(){
+                        var _this = this;
+                        request('/shopping/similar_goods',{
+                            start:0,
+                            category_id:_this.info.goods_cate_id,
+                            goods_id:_this.id,
+                        },function(err,res){
+                            if(!err && res.code == 1){
+                                _this.simmilarGds = res.data.data;
+                            }
+                        })
+                    },
+                    //打开选择规格
+                    openAttrBox:function(type){
+                        this.attrBox = true;
+                        this.$nextTick(function(){
+                            var safeArea_bottom = api.safeArea.bottom || 0;
+                            var ft = document.querySelector('.popup');
+                            ftHeight = ft.clientHeight;
+                            ft.style.height = safeArea_bottom+ ftHeight + "px"
+                        })
+                        this.clickStatus = type;
+                    },
+                    closeAttrBox:function(){
+                        this.attrBox = false;
+                    },
+                    changeCurAttr:function(index){
+                        this.currentAttr = index;
+                        this.attrImg = this.gdsAttr[index].img;
+                        this.attrPrice = this.gdsAttr[index].shop_price;
+                        this.attrProduct = this.gdsAttr[index].product_number;
+                    },
+                    addNum:function(){
+                       this.attrNum++;
+                    },
+                    reduceNum:function(){
+                        if (this.attrNum > 1) {
+                            this.attrNum--;
+                        }
+                    },
+                    //提交数据
+                    submitDt:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        if (this.clickStatus == 1) { //添加购物车
+                            request('/shopping/add_cart',{
+                                goods_id:_this.id,
+                                goods_attr_id:_this.gdsAttr[_this.currentAttr].id,
+                                goods_num:_this.attrNum,
+                            },function(err,res){
+                                if (!err && res.code == 1) {
+                                    _this.attrBox = false;
+                                    _this.getDetail();
+                                    api.sendEvent({name:"refreshUserInfo"})
+                                    api.toast({msg:"加入购物车成功"})
+                                }else{
+                                    err ? api.toast({msg:"网络出错"}) : api.toast({msg:res.msg})
+                                }
+                            })
+                        } else {
+                            _this.loading = true;
+                            _this.opt = '.65'
+                            //获取默认地址
+                            request('/shopping/get_default_address',{},function(err,res){
+                                if (!err && res.code == 1) {
+                                    _this.startOrder(res.data)
+                                }else{
+                                    _this.loading = false;
+                                    err ? api.toast({msg:"网络超时"}) : api.openWin({name:"address",url:"../mohan/address.html"})
+                                }
+                            })
+                        }
+                    },
+                    //跳转购物车
+                    openCar:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        api.openWin({
+                            name:"car",
+                            url:"../mohan/shopcart.html",
+                            reload:true,
+                        })
+                    },
+                    //跳转店铺详情
+                    openShopDtl:function(){
+                        var _this = this;
+                        api.openWin({
+                           name:"gdsShop",
+                           url:"../view/gds_shop.html",
+                           pageParam:{
+                               shopid:_this.info.shop_id,
+                           }
+                        })
+                    },
+                    //开始下单
+                    startOrder:function(addressDt){
+                        var _this = this;
+                        //下单流程
+                        var config = {
+                            goods_id:JSON.stringify([_this.id]),
+                            goods_attr_id:JSON.stringify([_this.gdsAttr[_this.currentAttr].id]),
+                            goods_num:JSON.stringify([_this.attrNum]),
+                        };
+                        request('/shopping/create_order',config,function(err,res){
+                            setTimeout(function(){
+                                _this.loading = false;
+                                _this.opt = 1;
+                            }, 700);
+                            if (!err && res.code == 1) {
+                                res.data.address = addressDt;
+                                api.openWin({
+                                    name:"submitOrder",
+                                    url:"../mapiaoliang/submit-order.html",
+                                    pageParam:res.data,
+                                })
+                            }else{
+                                console.log(JSON.stringify(err))
+                            }
+                        })
+                    },
+                    openGdsQuestion:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        api.openWin({
+                            name:"gotiwen",
+                            url:"../mapiaoliang/gotiwen.html",
+                            pageParam:_this.info,
+                        })
+                    },
+                    //看推荐商品
+                    openDetail:function(id){
+                        api.openWin({
+                            name:"detailPage",
+                            url:"../mapiaoliang/detail-page.html",
+                            pageParam:{
+                                gdsId:id
+                            },
+                            reload:true,
+                        })
+                    },
+                    //客服
+                    openKefu:function(){
+                        api.toast({msg:"暂未开放"})
+                        // if (!isLogin()) {
+                        //     api.openWin({
+                        //         name: 'login',
+                        //         url: '../guoshujie/login.html'
+                        //     });
+                        //     return false
+                        // }
+                        // api.openWin({
+                        //     name:"kefu",
+                        //     url:"../chat/chat_list.html",
+                        //     reload:true,
+                        // });
+                    },
+                    openGdsComment:function(){
+                        var _this = this;
+                        api.openWin({
+                            name:"proPingjia",
+                            url:"../view/pro-pingjia.html",
+                            pageParam:{
+                                gdsId:_this.id,
+                            }
+                        })
+                    },
+                    //打开分享
+                    openShare:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        this.shareBox = true;
+                    },
+                    closeShare:function(){
+                        this.shareBox = false;
+                    },
+                    back:function(){
+                        api.sendEvent({name:"refreshUserInfo"});
+                        api.closeWin();
+                    },
+                    openWenDaList:function(){
+                        var _this = this;
+                        api.openWin({
+                            name:"answer",
+                            url:"../mapiaoliang/answer.html",
+                            pageParam:_this.info,
+                        })
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('.head');
+                        var headHeight = header.clientHeight;
+                        header.style.height = headHeight + safeArea + 5 + "px";
+                        header.style.paddingTop = safeArea + 5 + "px";
+                        handerIOSX()
+                        // var safeArea_bottom = api.safeArea.bottom || 0;
+                        // var ft = document.querySelector('.ifooter');
+                        // ft.style.bottom = safeArea_bottom + "px";
+                    }
+                    this.id = api.pageParam.gdsId;
+                    this.getDetail();
+                    this.getShareDtl(); //获取分享地址
+                    var _this = this;
+                    api.addEventListener({name:"refreshGdsDtl"},function(){
+                        _this.getDetail();
+                        _this.getShareDtl(); //获取分享地址
+                    })
+                    //监听是否渠道价格
+                    _this.isQundao = $api.getStorage('isQundao') || 0;
+                    api.addEventListener({name:"refreshQundao"},function(ret){
+                        _this.isQundao = ret.value.isQundao || 0;
+                    })
+                }
+            })
+        }
+              
+    </script>
+</body>
+
+</html>

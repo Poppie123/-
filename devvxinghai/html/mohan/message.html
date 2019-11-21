@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>消息</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F8F9FB;
+}
+.header {
+    width: 7.5rem;
+    height: .93rem;
+    background-color: #FFFFFF;
+    padding: .3rem;
+    border-bottom: 1px solid #EEEEEE;
+
+}
+
+.header .iconfanhui {
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+
+}
+.header .myhead{
+        width: .3rem;
+        height: .3rem;
+    }
+.middle{
+    width: 7.5rem;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+.middle .message{
+    width: 7.5rem;
+    height: 1.6rem;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    border-bottom: 1px solid #EEEEEE;
+
+}
+.middle .message img{
+    width: .9rem;
+    height: .9rem;
+    float: left;
+    overflow: hidden;
+    margin-right: .2rem;
+ 
+}
+.middle .message .rigth{
+    /* width: 6rem; */
+    overflow: hidden;  
+}
+.middle .message .right .systemmsg{
+    font-size: .3rem;
+    color: #333333;
+    text-align: left;
+    margin-top: .07rem;
+}
+
+.middle .message .right .contentmsg{
+    font-size: .26rem;
+    color: #999999;
+    text-align: left;
+    margin-top: .15rem;
+}
+.middle .time{
+    font-size: .26rem;
+    color: #999999;
+    text-align: left;
+    margin-top: .15rem;
+    float: right;
+}
+.middle .msgleft{
+ width: 6rem;
+ overflow: hidden;
+}
+.middle .time{
+    margin-top: -0.5rem;
+}
+</style>
+</head>
+<body>
+    <div class="header flex align-items space-between flex_center">
+        <i class="iconfont iconfanhui "></i>
+        <div class="order ">消息</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+        <div class="message flex align-items ">
+            <img src="../../image/m_msg.png" alt="">
+            <div class="right">
+                <div class="systemmsg">系统消息</div>
+                <div class="contentmsg">邀请你来参加读书会</div>
+            </div>
+
+        </div>
+        <div class="message flex align-items space-between">
+            <div class="msgleft">
+                <img src="../../image/m_toux.png" alt="">
+                <div class="right">
+                    <div class="systemmsg">三恩</div>
+                    <div class="contentmsg">好的买了，安排发货</div>
+                </div>
+            </div>
+            <div class="time">09:07</div>
+            </div>
+            <div class="message flex align-items space-between">
+                <div class="msgleft">
+                    <img src="../../image/m_toux.png" alt="">
+                    <div class="right">
+                        <div class="systemmsg">剧中人</div>
+                        <div class="contentmsg">在吗？我要找你代练</div>
+                    </div>
+                </div>
+                <div class="time">09:07</div>
+                </div>
+    </div>
+    <script src="../../js/common.js"></script>
+</body>
+</html>

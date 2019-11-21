@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/wei.css">
+    <script src="../../js/rem.js"></script>
+    <title>注册</title>
+    <style>
+        body {
+            background: #FFFFFF;
+        }
+
+        /* 内容 */
+        .main {
+            padding-top: 1rem;
+            width: 6rem;
+            height: auto;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: .50rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 1);
+            margin-bottom: .1rem;
+        }
+
+        .main span {
+            font-size: .30rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 1);
+            margin-top: .4rem;
+        }
+
+        .main .login_border {
+            width: 100%;
+            height: .6rem;
+            overflow: hidden;
+            margin-top: .22rem;
+            border-bottom: 1px solid rgba(221, 221, 221, 1);
+        }
+
+        .login_border span {
+            font-size: .32rem;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            margin-top: 0rem;
+            color: rgba(0, 134, 247, 1);
+        }
+
+        .main input {
+            outline: none;
+            border: none;
+            width: 3rem;
+            height: .5rem;
+            font-size: .32rem;
+        }
+
+        input::-webkit-input-placeholder {
+            font-size: .32rem;
+            font-weight: 500;
+            color: #CCCCCC;
+        }
+
+        /* 注册 */
+        .register_login {
+            width: 6rem;
+            height: .92rem;
+            line-height: .92rem;
+            margin: 2.05rem auto .39rem;
+            background: #ccc;
+            border-radius: .10rem;
+            font-size: .32rem;
+            font-weight: bold;
+            text-align: center;
+            color: rgba(255, 255, 255, 1);
+        }
+        .registeractive{
+            background: linear-gradient(90deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+        }
+        .try_login {
+            text-align: center;
+            font-size: .30rem;
+            font-weight: 400;
+            color:rgba(153,153,153,1);
+        }
+        .try_login span{
+            color: rgba(0, 134, 247, 1);
+        }
+        .register_login img{
+            display: none;
+        }
+        .wei-btn span{
+            animation: fangda .4s;
+            -webkit-animation: fangda .4s;
+        }
+        .wei-c-y{
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+        .wei-c-y .rotate{
+            display: block;
+            width: 30px;
+            height: 30px;
+            animation: 2s rotate linear infinite;
+            -webkit-animation: rotate 2s linear infinite;
+        }
+        .wei-c-y span{
+            display: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <div class="main">
+            <div class="title">欢迎注册</div>
+            <div class="box">
+                <span>手机</span>
+                <div class="login_border">
+                    <input type="tel" placeholder="请输入手机号码" v-model="resign.phone">
+                </div>
+                <span>验证码</span>
+                <div class="login_border">
+                    <input type="number" class="code" placeholder="请输入验证码" v-model="resign.code">
+                    <span class="fr" id="getcode" @click="getCode">{{ timeOut }}</span>
+                </div>
+                <span>密码</span>
+                <div class="login_border">
+                    <input type="password" placeholder="请输入密码" v-model="resign.pwd">
+                </div>
+            </div>
+        </div>
+        <div class="register_login fn-ctr" :class="{'wei-c-y':resignLoading,registeractive:isAllow}" @click="resignAc">
+            <img class="rotate" src="../../image/bailoading.png" alt="">
+            <span>{{ resignBtn }}</span>
+        </div>
+        <div class="try_login">已有账号?&nbsp;&nbsp;<span @click="goLogin">登录</span></div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/monitor.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    resign:{
+                        phone:"",
+                        code:"",
+                        pwd:"",
+                    },
+                    user_id:"",              //从剪切板获取
+                    invite_code:"",          //从剪切板获取
+                    timeOut:'获取验证码',
+                    resignLoading:false,
+                    resignBtn:"注册",
+                },
+                methods:{
+                    getCode:function(){
+                        var _this = this;
+                        if(_this.resign.phone == "" || _this.timeOut != "获取验证码"){
+                            return false 
+                        }
+                        _this.timeOut = '60S',
+                        _this.getTimeOut();
+                        request('/login/get_captcha',{phone:_this.resign.phone},function(err,res){
+                            api.toast({msg:res.msg});
+                            if (!err && res.code == 1) {
+                               
+                            }else{
+                                console.log('失败')
+                            }
+                        });
+                    },
+                    //倒计时
+                    getTimeOut:function(){
+                        var _this = this;
+                        var t = 60;
+                        var timp = setInterval(function(){
+                            if (t <= 0) {
+                                clearInterval(timp);
+                                _this.timeOut = "获取验证码"
+                            }else{
+                                t--;
+                                _this.timeOut = t+"S"
+                            }
+                        },1000)
+                    },
+                    //注册
+                    resignAc:function(){
+                        var _this = this;
+                        if (_this.resign.phone == "" || _this.resign.code == "" || _this.resign.pwd == "") {
+                            return false
+                        }
+                        if (!_this.isAllow) {
+                            return false
+                        }
+                        if (!_this.resignLoading) {
+                            _this.resignLoading = true;
+                            request('/login/register',{phone:_this.resign.phone,captcha:_this.resign.code,password:_this.resign.pwd,
+                                user_id:_this.user_id,
+                                invite_code:_this.invite_code,
+                            },function(err,res){
+                                if (!err && res.code == 1) {
+                                    monAjax('注册成功')  //埋点代码
+                                    api.toast({msg:"注册成功"})
+                                    _this.resignEnd()
+                                    setTimeout(function(){
+                                        api.closeWin()
+                                    },700)
+                                }else{
+                                    monAjax('注册失败')  //埋点代码
+                                    _this.resignEnd()
+                                    api.toast({msg:res.msg})
+                                }
+                            })
+                        }
+                        
+                    },
+                    // 结束登录状态
+                    resignEnd:function(msg){
+                        this.resignLoading = false;
+                    },
+                    goLogin:function(){
+                        this.resignLoading ? "" : api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('#root');
+                        search.style.paddingTop = safeArea + "px"
+                    }
+                    //获取剪贴板数据（可能为空）
+                    var _this = this;
+                    var clipBoard = api.require('clipBoard');
+                    clipBoard.get(function(ret, err) {
+                        if (ret) {
+                            var clipvalue = ret.value;
+                            clipvalue = clipvalue.split('-xinhai-');
+                            if (clipvalue.length == 2) {
+                                _this.user_id = clipvalue[0] || "";
+                                _this.invite_code = clipvalue[1] || "";
+                            }
+                        } else {
+                            //alert(JSON.stringify(err));
+                        }
+                    });
+                },
+                computed:{
+                    isAllow:function(){
+                        var status = false;
+                        if (this.resign.phone != "" && this.resign.code != "" && this.resign.pwd != "") {
+                            status = true;
+                        }
+                        return status
+                    }
+                }
+            })
+        }
+              
+    
+    
+    </script>
+</body>
+
+</html>

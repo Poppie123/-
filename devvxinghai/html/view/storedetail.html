@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查看评价</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_dqlel4uscwd.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background: #F8F9FB;
+        }
+        .top{
+            width: 100%;
+            height: 2.8rem;
+            background-image: url('../../image/pro11@2x.png');
+            background-size: 100% 2.8rem;
+            /* position: relative;
+            z-index: 900; */
+        }
+        .top-mask{
+            width: 100%;
+            height: 2.8rem;
+            /* background: #000000;
+            opacity: .3; */
+            background: rgba(0, 0, 0, .3);
+            padding: .18rem .3rem 0;
+           /*  position: absolute;
+            z-index: 901;
+            top: 0; */
+        }
+        .top-mask .back{
+            width: .7rem;
+            height: .7rem;
+            background: rgba(0, 0, 0,.65);
+            border-radius: 50%;
+            line-height: .7rem;
+            text-align: center;
+            position: fixed;
+            top: .18rem;
+            left: .3rem;
+        }
+        .top-mask .back i{
+            font-size: .3rem;
+            color: #FFFFFF;
+            opacity: 1;
+            margin-left: -0.05rem;
+            margin-top: -0.04rem;
+        }
+        .storeinfo{
+            width: 100%;
+            margin-top: 1.38rem;
+            opacity: 1;
+        }
+        .storeinfo .touxiang{
+            width: .88rem;
+            height: .88rem;
+            background: rgba(255, 255, 255, 1);
+            border: 1px solid #EEEEEE;
+            border-radius: .04rem; 
+            padding: .06rem .08rem;
+        }
+        .storeinfo .touxiang img{
+            width: .7rem;
+            height: .74rem;
+            border-radius: .04rem;
+        }
+        .storeinfo .center{
+            width: 4.4rem;
+        }
+        .storeinfo .center .name{
+            font-size: .3rem;
+            color: #FFF;
+            font-weight: bold;
+            line-height: .42rem;
+        }
+        .storeinfo .center i{
+            font-size: .19rem;
+            color: #FFFFFF;
+            margin-left: .2rem;
+        }
+        .storeinfo .center .num{
+            font-size: .26rem;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+        .storeinfo .guanzhu{
+            width: 1.2rem;
+            height: .5rem;
+            border: 1px solid #FFFFFF;
+            border-radius: .06rem;
+            line-height: .5rem;
+            text-align: center;
+            font-size: .24rem;
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+        .coupon{
+            width: 100%;
+            height: 1.78rem;
+            padding: .3rem .3rem;
+            overflow-x: scroll;
+            overflow-y:hidden;
+            white-space: nowrap;
+        }
+        .coupon .quan{
+            width: 2.36rem;
+            height: 1.3rem;
+            line-height: 1.3rem;
+            background-image: url('../../image/youhuiquan149@2x.png');
+            background-size: 2.36rem 1.3rem;
+            margin-right: .2rem;
+            display: inline-block;
+        }
+        .coupon .quan .money{
+            display: block;
+            width: 1.89rem;
+            line-height: 1.3rem;
+            text-align: center;
+        }
+        .coupon .quan .dollar{
+            font-size: .26rem;
+            color: #DC2C1F;
+            font-weight: bold;
+        }
+        .coupon .quan .price{
+            font-size: .38rem;
+            color: #DC2C1F;
+            font-weight: bold;
+        }
+        .coupon .quan .get{
+            display: block;
+            white-space: normal;
+            width: .33rem;
+            line-height: normal;
+            padding-top: 2px;
+            font-size: .2rem;
+            color: #DC2C1F;
+            font-weight: 500;
+        }
+        .classify{
+            width: 100%;
+            height: .88rem;
+            background: #FFFFFF;
+        }
+        .classify .name{
+            font-size: .3rem;
+            color: #333333;
+            font-weight: 500;
+            position: relative;
+        }
+        .classify .active{
+            color: #0086F7 !important;
+        }
+        .classify  .up{
+            font-size: .12rem;
+            color: #BBBBBB;
+            position: absolute;
+            left: .98rem;
+            top: .1rem;
+        }
+        .classify .down{
+            font-size: .12rem;
+            color: #BBBBBB;
+            position: absolute;
+            left: .98rem;
+            top: .22rem;
+        }
+        .pro-list{
+            width: 100%;
+            padding:  0 .3rem;
+            margin-top: .2rem;
+            -moz-column-count: 2;
+            -webkit-column-count: 2;
+            column-count: 2;
+            -moz-column-gap: .18rem;
+            -webkit-column-gap: .18rem;
+            column-gap: .18rem;
+            display: inline-block;
+        }
+        .pro-list .list{
+            width: 3.36rem;
+            overflow: hidden;
+            border-radius: .1rem;
+            margin-bottom: .2rem;
+            background: #FFFFFF;
+            padding-bottom: .25rem;
+            float: left;
+            break-inside: avoid;
+        }
+        .pro-list .list img{
+            width: 3.36rem;
+            height: 2.5rem;
+        }
+        .pro-list .list .name{
+            width: 100%;
+            font-size: .28rem;
+            font-weight: bold;
+            line-height: .4rem;
+            padding: .22rem .22rem 0;
+            margin-bottom: .14rem;
+        }
+        .pro-list .list .ongoing{
+            width: .8rem;
+            height: .3rem;
+            margin-bottom: .14rem;
+            border-radius: .04rem;
+            background: rgba(0,134,247,.05);
+            border-radius: .04rem;
+            font-size: .2rem;
+            font-weight: 500;
+            color: #0086F7;
+            line-height: .3rem;
+            text-align: center;
+            margin-left: .22rem;
+        }
+        .pro-list .list .satisfy{
+            font-size: .26rem;
+            color: #999999;
+            margin-left: .22rem;
+        }
+        .pro-list .list .dollar{
+            font-size: .28rem;
+            color: #FE6602;
+            font-weight: bold;
+            margin-left: .22rem;
+        }
+        .pro-list .list .price{
+            font-size: .32rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+    <div class="top">
+        <div class="top-mask">
+            <div class="back" @click="back">
+                <i class="iconfont iconfanhui"></i>
+            </div>
+            <div class="storeinfo flex space-between align-items" @click="openShopindex">
+                <div class="touxiang">
+                    <img :src="shopInfo.shop_img" alt="">
+                </div>
+                <div class="center">
+                    <div><span class="name">{{ shopInfo.shop_name }}</span><i class="iconfont icongengduo"></i> </div>
+                    <div class="num">{{ shopInfo.focus }}人关注</div>
+                </div>
+                <div class="guanzhu" v-show="shopInfo.is_focus == 1" @click.stop="guanzhu">取消关注</div>
+                <div class="guanzhu" v-show="shopInfo.is_focus == 0" @click.stop="guanzhu">关注</div>
+            </div>
+        </div>
+    </div>
+    <div class="coupon">
+        <div class="quan" v-for="item in bonus">
+            <div class="money fl">
+                <span class="dollar">￥</span>
+                <span class="price">{{ item.type_money }}</span></div>
+            <div class="get fr" @click="getBocus(item)" v-if="item.is_receive == 0">立即领取</div>
+            <div class="get fr" v-else>已经领取</div>
+        </div>
+    </div>
+    <div class="classify flex space-around align-items">
+        <div class="name" :class="{active:currentSort == 1}" @click="changeSort(1)">综合</div>
+        <div class="name" :class="{active:currentSort == 2}"  @click="changeSort(2)">销量</div>
+        <div class="name" :class="{active:currentSort == 3 || currentSort == 4}"  @click="changeSort(3)">
+            <span>好评率</span> 
+            <i class="up iconfont iconshangsanjiaoxing" :class="{active:currentSort == 3}"></i>
+            <i class="down iconfont iconxiasanjiaoxing" :class="{active:currentSort == 4}"></i>
+        </div>
+    </div>
+    <ul class="pro-list">
+
+        <li class="list" v-for="item in list" @click="openGdsDetail(item)">
+            <img :src="item.attr_img" alt="">
+            <div class="name ellipsis2">{{ item.content }}</div>
+            <div class="satisfy">
+                <span>{{ item.rate }}%满意度</span>
+                <span>{{ item.sales }}销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">{{ item.price }}</span></span>
+            </div>
+        </li>
+
+    </ul>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    id:"",
+                    shopInfo:{},
+                    list:[],
+                    total:"",
+                    bonus:[],
+                    currentSort:1,
+                    loading:true,
+                },
+                methods:{
+                    changeSort:function(type){
+                        var _this = this;
+                        if (type == 1 || type == 2) {
+                            _this.currentSort = type;
+                        }else{
+                            switch(_this.currentSort){
+                                case 3:
+                                _this.currentSort = 4;
+                                break;
+                                case 4:
+                                _this.currentSort = 3;
+                                break;
+                                default:
+                                _this.currentSort = 3;
+                            }
+                        }
+                        this.getDtl()
+                    },
+                    getDtl:function(){
+                        var _this = this;
+                        request('/tourism/shop_detail',{shopid:_this.id,start:_this.list.length,order:_this.sortMsg},function(err,res){
+                            setTimeout(function(){_this.loading = false},700)
+                            if (!err && res.code == 1) {
+                                console.log(JSON.stringify(res.data))
+                                _this.shopInfo = res.data.data;
+                                _this.list = _this.list.concat(res.data.info);
+                                _this.total = res.data.all;
+                                _this.bonus = res.data.bonus;
+                            }
+                        },'get')
+                    },
+                    //领取优惠券
+                    getBocus:function(item){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        if (item.is_receive == 1) {
+                            api.toast({msg:"您已经领取过了"})
+                            return false
+                        }
+                        var _this = this;
+                        request('/tourism/bonus_receive',{shopid:_this.id,type_id:item.type_id},function(err,res){
+                            if (!err && res.code == 1) {
+                                api.toast({msg:"领取成功"})
+                                _this.getDtl()
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    //跳转详情
+                    openGdsDetail:function(item){
+                        api.openWin({
+                            name:"travelDtl",
+                            url:"../user/travel_dtl.html",
+                            pageParam:{
+                               obj:JSON.stringify({attrid:item.attrid,type:1})
+                            },
+                            reload:true,
+                        })
+                    },
+                    //跳转店铺主页
+                    openShopindex:function(){
+                        var _this = this;
+                        api.openWin({
+                            name:"storeIndex",
+                            url:"../view/store-index.html",
+                            pageParam:{
+                                obj:_this.shopInfo,
+                            }
+                        })
+                    },
+                    //关注店铺
+                    guanzhu:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        request('/tourism/tourism_shop_focus',{shopid:_this.shopInfo.shopid},function(err,res){
+                            if (!err && res.code == 1) {
+                               _this.shopInfo.is_focus == 1 ? _this.shopInfo.is_focus = 0 : _this.shopInfo.is_focus = 1;
+                               _this.shopInfo.is_focus == 1 ? _this.shopInfo.focus++ : _this.shopInfo.focus--;
+                               api.sendEvent({name:"refreshtravDtl"})
+                            }else{
+                                err ? console.log(JSON.stringify(err)+"/tourism/tourism_shop_focus") : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin();
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var back = document.querySelector('.back');
+                        var backTop = back.offsetTop;
+                        var searchHeight = search.clientHeight;
+                        back.style.top = safeArea + backTop+ "px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    this.id = api.pageParam.shopid;
+                    this.getDtl();
+                    var _this = this;
+                    // 下拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.list.length > 3) {
+                                api.toast({msg:"到底了"})
+                            }
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getDtl();
+                            },300)
+                        }
+                    });
+                },
+                computed:{
+                    sortMsg:function(){
+                        var arr = ["",'praise desc,comment_num desc','sales desc','rate desc','rate asc'];
+                        return arr[this.currentSort]
+                    }
+                }
+            })
+        }
+    
+    
+    
+    </script>
+</body>
+</html>

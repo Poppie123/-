@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_yqx8ifdddys.css">
+    <script src="../../js/rem.js"></script>
+    <title>预约基地</title>
+    <style>
+        header{
+            width: 100%;
+            height: .88rem;
+            padding: 0 .32rem;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        header .back{
+            width: .8rem;
+        }
+        header .title{
+            font-size: .36rem;
+            color:#333;
+            font-weight:bold;
+        }
+        header .hdright{
+            width: .8rem;
+        }
+        .main{
+            width: 100%;
+            height: auto;
+            padding-top: .88rem;
+        }
+        .list{
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+        }
+        .list .item{
+            width: 100%;
+            height: 1.09rem;
+            line-height: 1.09rem;
+            padding: 0 .28rem;
+            font-size: .32rem;
+            color: #333333;
+        }
+        
+        .list .item .item-nei{
+            width: 100%;
+            height: 100%;
+            border-bottom: 1px solid #eee;
+        }
+        .list .item:last-child .item-nei{
+            border-bottom: 0;
+        }
+        .list .active{
+            color: #fff;
+            background: #4C89FE;
+        }
+        .list .active .item-nei{
+            border-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <header class="flex space-between align-items">
+            <div class="back">
+                <i class="iconfont iconfanhui"></i>
+            </div>
+            <div class="title">预约基地</div>
+            <div class="hdright">确认</div>
+        </header>
+          
+        <div class="main">
+            <div class="list">
+                <div class="item active">
+                    <div class="item-nei">旅游基地1</div>
+                </div>
+                <div class="item">
+                    <div class="item-nei">旅游基地1</div>
+                </div>
+                <div class="item">
+                    <div class="item-nei">旅游基地1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+
+                },
+                methods:{
+
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('header');
+                        var main = document.querySelector('.main');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight+safeArea+"px"
+                        header.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = headerHeight + safeArea + "px"
+                    };
+                }
+            })
+        }
+            
+       
+    </script>
+</body>
+</html>

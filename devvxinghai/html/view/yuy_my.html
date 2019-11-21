@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_yqx8ifdddys.css">
+    <script src="../../js/rem.js"></script>
+    <title>预约基地</title>
+    <style>
+        header{
+            width: 100%;
+            height: .88rem;
+            padding: 0 .32rem;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1450;
+        }
+        header .back{
+            width: .4rem;
+            height: .4rem;
+        }
+        header .title{
+            font-size: .36rem;
+            color:#333;
+            font-weight:bold;
+        }
+        header .hdright{
+            width: .4rem;
+            height: .4rem;
+        }
+        .main{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            padding-top: .88rem;
+        }
+        .list{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+            margin-top: .2rem;
+        }
+        .list .item{
+            width: 100%;
+            height: auto;
+            border-radius: .2rem;
+            background-color: #fff;
+            margin-bottom: .2rem;
+            padding: .3rem;
+        }
+        .list .item .title{
+            width: 100%;
+            overflow: hidden;
+            height: auto;
+            margin-bottom: .4rem;
+        }
+        .list .item .title .num{
+           float: left;
+        }
+        .list .item .title .num .lvnum-t{
+           font-size: .28rem;
+           color: #999;
+        }
+        .list .item .title .num .lvnum-b{
+           font-size: .32rem;
+           color: #333333;
+           font-weight: bold;
+        }
+        .list .item .title .title-status{
+            float: right;
+            font-size: .32rem;
+            color: #0086F7;
+        }
+        .list .item .title .titleactive{
+            color: #ccc;
+        }
+        .list .item .middle{
+            width: 100%;
+            overflow: hidden;
+        }
+        .list .item .date{
+            width: 3rem;
+            height: auto;
+            text-align: left;
+        }
+        .list .item .left{
+            float: left;
+        }
+        .list .item .right{
+            float: right;
+        }
+        .list .item .date .text{
+            width: 100%;
+            text-align: left;
+            font-size: .28rem;
+            color: #999;
+        }
+        .list .item .date .time{
+            font-size: .32rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .list .item .lv-name{
+            width: 100%;
+            margin-top: .4rem;
+            font-size: .32rem;
+            color: #333;
+        }
+        .list .item .opt{
+            width: 100%;
+            overflow: hidden;
+            margin-top: .4rem;
+        }
+        .list .item .opt .cancle{ 
+           width: 1.6rem;
+           height: .7rem;
+           float: right;
+           border-radius: .35rem;
+           font-size: .32rem;
+           color: #333;
+           border: 1px solid #999999;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <no-data v-show="list.length == 0" msg="暂无预约数据"></no-data>
+        <header class="flex space-between align-items">
+            <div class="back" @click="back">
+                <i class="iconfont iconfanhui"></i>
+            </div>
+            <div class="title">预约基地</div>
+            <div class="hdright"></div>
+        </header>
+
+       <div class="main">
+             <div class="list">
+
+                 <div class="item" v-for="(item,idx) in list" :key="idx">
+                     <div class="title">
+                         <div class="num">
+                             <div class="lvnum-t">旅居卡号</div>
+                             <div class="lvnum-b">
+                                {{ item.check }}
+                            </div>
+                         </div>
+                         <div class="title-status" :class="{titleactive:item.is_use == 2}">{{ item.use }}</div>
+                     </div>
+                     <div class="middle">
+                         <div class="left date">
+                             <div class="text">开始日期</div>
+                             <div class="time">
+                                {{ item.start_time }}
+                            </div>
+                         </div>
+                         <div class="right date" v-if="item.is_hotel != 0">
+                            <div class="text">结束日期：</div>
+                            <div class="time">
+                               {{ item.over_time }}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="lv-name">{{ item.attrname }}</div>
+                     <div class="opt" v-if="item.is_use == 0">
+                         <div class="cancle fn-ctr" @click="cancleItem(item)"><span>取消</span></div>
+                     </div>
+                 </div>
+
+                <!-- <div class="item">
+                    <div class="title">
+                        <div class="num">
+                            <div class="lvnum-t">旅居卡号</div>
+                            <div class="lvnum-b">
+                                461646161616
+                            </div>
+                        </div>
+                        <div class="title-status">已核销</div>
+                    </div>
+                    <div class="middle">
+                        <div class="left date">
+                            <div class="text">开始日期</div>
+                            <div class="time">
+                                2019年08月12日
+                            </div>
+                        </div>
+                        <div class="right date">
+                            <div class="text">结束日期：</div>
+                            <div class="time">
+                                2019年08月12日
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lv-name">旅游基地名称旅游基地名称旅游基地名称</div>
+                </div> -->
+
+             </div>
+       </div>
+
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){return {}},
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    list:[],
+                    isTotal:true,
+                    total:"",
+                    loading:true,
+                    opt:1,
+                },
+                methods:{
+                    //获取列表
+                    getList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.total = false;
+                        request('/tourism/tourism_card_my_appointment',{start:_this.list.length},function(err,res){
+                            _this.loading = false;
+                            _this.isTotal = true;
+                            if (!err && res.code == 1) {
+                                _this.list = _this.list.concat(res.data.data);
+                                _this.total = res.data.all;
+                            }
+                        })
+                    },
+                    // 取消预约
+                    cancleItem:function(item){
+                        var _this = this;
+                        var dialogBox = api.require('dialogBox');
+                        var idx = _this.isTothreeDay(item.starttime)
+                        var str  = ['现在距离开始入住日期超过三天，您可以无条件取消本次预约，确定取消吗？',
+                                    '现在距离开始入住日期已经不足三天，如果申请取消的话，需要经过预约的基地同意，您确定要发出取消本次预约的申请吗？',
+                                    '您可以无条件取消本次预约，确定取消吗？'];
+                        dialogBox.alert({
+                            texts: {
+                                title: '提示',
+                                content:str[idx],
+                                leftBtnTitle: '再想想',
+                                rightBtnTitle: '取消'
+                            },
+                            styles: {
+                                bg: '#fff',
+                                w: 300,
+                                corner:5,
+                                title: {
+                                    marginT: 20,
+                                    icon: 'widget://res/gou.png',
+                                    iconSize: 40,
+                                    titleSize: 14,
+                                    titleColor: '#000'
+                                },
+                                content: {
+                                    color: '#000',
+                                    size: 14
+                                },
+                                left: {
+                                    marginB: 7,
+                                    marginL: 20,
+                                    w: 130,
+                                    h: 35,
+                                    corner: 5,
+                                    bg: '#ccc',
+                                    color:'#fff',
+                                    size: 12
+                                },
+                                right: {
+                                    marginB: 7,
+                                    marginL: 10,
+                                    w: 130,
+                                    h: 35,
+                                    corner: 5,
+                                    bg: '#0086F7',
+                                    color:'#fff',
+                                    size: 12
+                                }
+                            }
+                        }, function(ret) {
+                            if (ret.eventType == 'right') {
+                                _this.loading = true;
+                                _this.opt = "0.65"
+                                request('/tourism/tourism_card_appointment_del',{useid:item.useid},function(err,res){
+                                    _this.loading = false;
+                                    if (!err && res.code == 1) {
+                                       _this.list.splice(0);
+                                       _this.getList();
+                                    }
+                                })
+                            }
+                            dialogBox.close({
+                                dialogName: 'alert'
+                            });
+                        });
+                       
+                    },
+                    //是否到三天
+                    isTothreeDay:function(startTime){
+                        startTime  = startTime * 1000;
+                        var currentTime = (new Date()).valueOf();
+                        var day = "";  //0是超过三天  1 是不足 2是超不过不足三天 3 不足3天以上
+                        if (currentTime - startTime < 0) {
+                            var cha = Math.abs(currentTime - startTime);
+                            if (cha < (1000 * 60 * 60 * 24 * 3)) {
+                                day = 1;
+                            }else{
+                                day = 2;
+                            }
+                        }else{
+                            var cha = currentTime - startTime;
+                            if (cha > (1000 * 60 * 60 * 24 * 3)) {
+                                day = 0;
+                            }else{
+                                day = 2; 
+                            }
+                        }
+                        return day
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('header');
+                        var main = document.querySelector('.main');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight+safeArea+"px"
+                        header.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = headerHeight + safeArea + "px"
+                    };
+                    var _this = this;
+                    _this.getList();
+                    // 下拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　　　//上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.list.length > 3) {
+                                api.toast({msg:"到底了"})
+                            }
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getList();
+                            },300)
+                        }
+                    });
+                }
+            })
+        }
+            
+        
+    </script>
+</body>
+</html>

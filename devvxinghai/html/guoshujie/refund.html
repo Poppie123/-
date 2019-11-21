@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>退货</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <style>
+        body {
+            background: rgba(248, 249, 251, 1);
+        }
+
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 2;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        /* 商品开始 */
+        .main {
+            width: 100%;
+            height: auto;
+            padding-top: .88rem;
+        }
+
+        .goods_list {
+            width: 100%;
+            overflow: hidden;
+            background-color: #fff;
+            padding: .31rem .30rem 0 .31rem;
+        }
+
+        .goods_item {
+            width: 100%;
+            height: auto;
+            padding-bottom: .37rem;
+            overflow: hidden;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .goods_item img {
+            float: left;
+            width: 2.5rem;
+            height: 1.85rem;
+            border-radius: .1rem;
+        }
+
+        .goods_item .goods_right {
+            float: right;
+            width: 4.20rem;
+            height: 1.85rem;
+        }
+
+        .goods_item .goods_right .goods_name {
+            width: 100%;
+            overflow: hidden;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            line-height: .40rem;
+        }
+
+        .goods_item .goods_right .sub_money {
+            width: 100%;
+            font-size: .32rem;
+            font-weight: 400;
+            color: #FF4242;
+            margin-top: .48rem;
+        }
+
+        .goods_item .goods_right .sub_money .a {
+            font-size: .24rem;
+        }
+
+        .goods_item .goods_right .sub_money .sub_number {
+            font-size: .20rem;
+            color: #333;
+            padding-top: .15rem;
+        }
+
+        /* 申请原因 */
+        .main .reason {
+            width: 100%;
+            height: .73rem;
+            line-height: .73rem;
+            overflow: hidden;
+            background-color: #fff;
+            padding: 0 .3rem;
+        }
+
+        .main .reason .reason_left {
+            font-size: .24rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .main .reason .reason_right {
+            font-size: .28rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .main .reason .reason_right i {
+            font-size: .28rem;
+            font-weight: 400;
+            color: #999999;
+            vertical-align: -.01rem;
+            margin-left: .13rem;
+        }
+
+        /* 留言 */
+        .main .text {
+            width: 100%;
+            padding: 0 .3rem;
+            background: #fff;
+        }
+
+        .main textarea {
+            outline: none;
+            border: none;
+            width: 6.90rem;
+            height: 2.14rem;
+            background: rgba(247, 247, 247, 1);
+            border-radius: .10rem;
+            padding: .31rem .22rem;
+            line-height: .40rem;
+            font-size: .24rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .dz_textarea textarea::-webkit-input-placeholder {
+            color: #999999;
+        }
+
+        .dz_textarea textarea:-moz-placeholder {
+            color: #999999;
+        }
+
+        .dz_textarea textarea::-moz-placeholder {
+            color: #999999;
+        }
+
+        .dz_textarea textarea::-ms-input-placeholder {
+            color: #999999;
+        }
+
+        /* 上传凭证 */
+        .main .credentials {
+            width: 100%;
+            padding: 0 .21rem 0 .30rem;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .main .credentials .credent_title {
+            width: 100%;
+            height: .76rem;
+            line-height: .76rem;
+            font-size: .28rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .main .credent_title span {
+            color: #999999;
+        }
+
+        .main .credentials img {
+            width: 2.24rem;
+            height: 1.66rem;
+            border-radius: .06rem;
+        }
+
+        .main .credentials .del {
+            width: .2rem;
+            height: .2rem;
+            position: relative;
+            top: -1.72rem;
+            left: 2.1rem;
+        }
+
+        .main .credentials .item_img {
+            width: 2.24rem;
+            height: 1.66rem;
+            border-radius: .06rem;
+            margin-bottom: .2rem;
+            margin-right: .09rem;
+        }
+
+        .main .credentials .border {
+            border: 1px solid rgba(191, 191, 191, 1);
+        }
+
+        .main .credentials .border .wid {
+            position: relative;
+            width: .72rem;
+            height: 1px;
+            background: rgba(208, 208, 208, 1);
+            top: .67rem;
+            left: .75rem;
+        }
+
+        .main .credentials .border .hei {
+            position: relative;
+            width: 1px;
+            height: .72rem;
+            background: rgba(208, 208, 208, 1);
+            top: .32rem;
+            left: 1.11rem;
+        }
+
+        .main .credentials .border .credent_to {
+            font-size: .24rem;
+            font-weight: 400;
+            color: #999999;
+            text-align: center;
+            padding-top: .4rem;
+        }
+
+        .main .credentials .please_credent {
+            font-size: .22rem;
+            font-weight: 400;
+            color: #FF1111;
+            padding: .065rem 0 .25rem;
+            background: #fff;
+        }
+
+        /* 退款方式 */
+        .main .way {
+            padding-top: .32rem;
+        }
+
+        .main .way .way_content {
+            width: 100%;
+            padding: .36rem .3rem 0;
+            background: #fff;
+        }
+
+        .main .way .way_item {
+            font-size: .28rem;
+            font-weight: 400;
+            color: #333;
+            padding-bottom: .35rem;
+        }
+
+        .main .way .way_left {
+            font-size: .28rem;
+            font-weight: 400;
+            color: #999999;
+        }
+
+        /* 底部 */
+        .submit {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: .98rem;
+            background: rgba(0, 134, 247, 1);
+            text-align: center;
+            line-height: .98rem;
+            color: #FFF;
+        }
+
+        /* 弹窗 */
+        .refund_reason {
+            width: 100%;
+            height: auto;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 996;
+            background-color: #fff;
+        }
+
+        .refund_reason .title {
+            overflow: hidden;
+            text-align: center;
+            padding: .49rem .31rem .37rem;
+        }
+
+        .refund_reason .title span {
+            font-size: .32rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .refund_reason .title i {
+            float: right;
+            font-size: .25rem;
+            color: #999999;
+            padding-top: .1rem;
+        }
+
+        .refund_reason .line {
+            width: 100%;
+            height: 1px;
+            background: rgba(238, 238, 238, 1);
+        }
+
+        /* 列表 */
+        .refund_content {
+            width: 100%;
+            height: auto;
+            padding: .46rem .3rem .43rem;
+        }
+
+        .refund_content .refund_item {
+            font-size: .32rem;
+            font-weight: 400;
+            color: #666666;
+            padding-bottom: .54rem;
+        }
+
+        .refund_content .refund_item img {
+            width: .38rem;
+            height: .38rem;
+        }
+
+        .refund_content .active {
+            display: block;
+        }
+
+        .refund_content .refund_item .active .circle {
+            display: none;
+        }
+
+        .refund_content .active .none {
+            display: block !important;
+        }
+
+        .refund_content .refund_item .refund_right .none {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top flex space-between align-items">
+        <div class="i">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>退货</div>
+        <div class="content"></div>
+    </div>
+    <div class="main">
+        <div class="goods_list">
+            <div class="goods_item">
+                <img src="../../image/gsj_goods.png" alt="" srcset="">
+                <div class="goods_right fr flex flex_wrap align-content-stretch">
+                    <div class="goods_name">鑫海自营野山参鑫海自营野山参鑫海自营野山参</div>
+                    <div class="sub_money flex space-between">
+                        <div><span class="a">￥</span>88.00</div>
+                        <span class="sub_number">x1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reason flex space-between align-items">
+            <div class="reason_left">申请原因</div>
+            <div class="reason_right">
+                <span>选择退款原因</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+        </div>
+        <div class="text"><textarea class="dz_textarea" name="" id="" cols="" rows=""
+                placeholder="请描述申请售后服务的具体原因，文字、语音至少填一项，还可上传最多九张图片哦！"></textarea>
+        </div>
+        <div class="credentials">
+            <div class="credent_title">请上传凭证&nbsp;<span>(最多九张哦)</span></div>
+            <div class="crefent_item flex flex_wrap">
+                <div class="item_img">
+                    <img src="../../image/gsj_goods_picter .png" alt="" srcset="">
+                    <img src="../../image/gsj_del.png" class="del" alt="" srcset="">
+                </div>
+                <div class="item_img border">
+                    <div class="wid"></div>
+                    <div class="hei"></div>
+                    <div class="credent_to">请上传凭证</div>
+                </div>
+            </div>
+            <div class="please_credent">为了帮您更好的解决问题，请务必上传照片凭证</div>
+        </div>
+        <div class="way">
+            <div class="way_content">
+                <div class="way_item flex space-between align-items">
+                    <span class="way_left">退款方式:</span>
+                    <span class="way_right">退款至余额</span>
+                </div>
+                <div class="way_item flex space-between align-items">
+                    <span class="way_left">退货方式:</span>
+                    <span class="way_right">邮寄给商家</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="submit">提交</div>
+    <!-- 弹窗退款原因  -->
+    <div class="mask"></div>
+    <div class="refund_reason">
+        <div class="title">
+            <span>退款原因</span>
+            <i class="iconfont iconchahao"></i>
+        </div>
+        <div class="line"></div>
+        <div class="refund_content">
+            <div class="refund_item flex space-between align-items">
+                <div class="refund_left">发错货</div>
+                <div class="refund_right active">
+                    <img class="circle" src="../../image/gsj_circlek.png" alt="">
+                    <img class="none" src="../../image/gsj_circle.png" alt="">
+                </div>
+            </div>
+            <div class="refund_item flex space-between align-items">
+                <div class="refund_left">商品损坏</div>
+                <div class="refund_right">
+                    <img class="circle" src="../../image/gsj_circlek.png" alt="">
+                    <img class="none" src="../../image/gsj_circle.png" alt="">
+                </div>
+            </div>
+            <div class="refund_item flex space-between align-items">
+                <div class="refund_left">不想要了</div>
+                <div class="refund_right">
+                    <img class="circle" src="../../image/gsj_circlek.png" alt="">
+                    <img class="none" src="../../image/gsj_circle.png" alt="">
+                </div>
+            </div>
+            <div class="refund_item flex space-between align-items">
+                <div class="refund_left">缺少件</div>
+                <div class="refund_right">
+                    <img class="circle" src="../../image/gsj_circlek.png" alt="">
+                    <img class="none" src="../../image/gsj_circle.png" alt="">
+                </div>
+            </div>
+            <div class="refund_item flex space-between align-items">
+                <div class="refund_left">商品与页面描述不符</div>
+                <div class="refund_right">
+                    <img class="circle" src="../../image/gsj_circlek.png" alt="">
+                    <img class="none" src="../../image/gsj_circle.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        $('.refund_right').click(function () {
+            $(this).toggleClass('active')
+        })
+    </script>
+</body>
+
+</html>

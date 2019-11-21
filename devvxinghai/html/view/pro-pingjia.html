@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查看评价</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .clfy{
+            width: 100%;
+            padding: 0 .3rem;
+        }
+        .clfy .clfy-btn{
+            width: 1.4rem;
+            height: .52rem;
+            margin-right: .2rem;
+            margin-top: .24rem;
+            border: 1px solid #AAAAAA;
+            border-radius: .27rem;
+            line-height: .52rem;
+            font-size: .26rem;
+            color: #333333;
+            font-weight: 500;
+            text-align: center;
+        }
+        .clfy .active{
+            border: 1px solid #0086F7;
+            color: #0086F7;
+        }
+        .wrapper{
+            width: 100%;
+            padding: 0 .3rem;
+        }
+        .assess{
+            width: 100%;
+            padding: .3rem 0;
+            border-bottom: 1px solid #EEEEEE;
+        }
+        .border0{
+            border: 0;
+        }
+        .assess .person{
+            width: 100%;
+        }
+        .assess .person .niky{
+            font-size: .26rem;
+            color: #333333;
+            font-weight: 500;
+        }
+        .assess .person img{
+            width: .52rem;
+            height: .52rem;
+            background: #EEEEEE;
+            border-radius: 50%;
+            margin-right: .17rem;
+        }
+        .assess .person i{
+            font-size: .24rem;
+            color: #999999;
+        }
+        .assess .person .active{
+            color: #FE6602;
+        }
+        .assess .estimate{
+            padding: .2rem 0;
+            font-size: .26rem;
+            line-height: .36rem;
+            font-weight: 500;
+        }
+        .assess .time{
+            font-size: .24rem;
+            color: #999999;
+            font-weight: 500;
+        }
+        .assess .picture{
+            width: 100%;
+        }
+        .assess .picture img{
+            width: 2.18rem;
+            height: 2.18rem;
+            margin-bottom: .2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <no-data v-show="list.length == 0" msg="该类型下没有评价，点击下方按钮切换类型试试"></no-data>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>全部评价</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="clfy flex flex_wrap">
+        <div class="clfy-btn" :class="{active:evType == 1}" @click="evChange(1)">最新</div>
+        <div class="clfy-btn" :class="{active:evType == 2}" @click="evChange(2)">好评</div>
+        <!-- <div class="clfy-btn" :class="{active:evType == 3}" @click="evChange(3)">有图</div> -->
+    </div>
+    <ul class="wrapper">
+        <li class="assess" v-for="(item,index) in list" :key="index">
+            <div class="person flex space-between align-items">
+                <div class="flex space-between align-items">
+                    <img :src="item.headimg" alt="">
+                    <span class="niky">{{ item.username }}</span>
+                </div>
+                <div>
+                    <i class="iconfont iconpingjia" :class="{active:item.comment_rank >= 1}"></i>
+                    <i class="iconfont iconpingjia" :class="{active:item.comment_rank >= 2}"></i>
+                    <i class="iconfont iconpingjia" :class="{active:item.comment_rank >= 3}"></i>
+                    <i class="iconfont iconpingjia" :class="{active:item.comment_rank >= 4}"></i>
+                    <i class="iconfont iconpingjia" :class="{active:item.comment_rank >= 5}"></i>
+                </div>
+            </div>
+            <div class="estimate">{{ item.content }}</div>
+            <div class="picture flex space-between flex_wrap">
+            </div>
+            <div class="time">{{ item.add_time }}</div>
+        </li>
+    </ul>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            // 无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>切换</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        this.$parent.nextType();
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    id:"",
+                    evType:1,
+                    list:[],
+                    total:0,
+                    isTotal:true,
+                    loading:true,
+                    opt:1,
+                },
+                methods:{
+                    evChange:function(type){
+                        this.evType = type;
+                        this.loading = true;
+                        this.opt = '.65';
+                        this.list.splice(0);
+                        this.getList()
+                    },
+                    nextType:function(){
+                        if (this.evType == 1) {
+                            this.evType = 2  
+                        }else{
+                            this.evType = 1
+                        }
+                        this.opt = '.65';
+                        this.getList();
+                    },
+                    getList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/shopping/goods_pingjia_list',{
+                            goods_id:_this.id,
+                            start:0,
+                            status:_this.evType,
+                        },function(err,res){
+                            _this.isTotal = true;
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                _this.list = _this.list.concat(res.data.data);
+                                _this.total= res.data.total;
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : "";
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin();
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    this.id = api.pageParam.gdsId;
+                    this.getList();
+                    // 上拉加载
+                    var _this = this;
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.total < 6) {
+                                return false
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getList();
+                            },300);
+                        }
+                    });
+                }
+            })
+        }
+            
+    </script>
+</body>
+</html>

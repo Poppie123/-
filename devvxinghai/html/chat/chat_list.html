@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1190625_m3wxzcfcc89.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v8eoxklephb.css">
+    <script src="../../js/rem.js"></script>
+    <title>消息</title>
+    <style>
+        html,body{
+            background-color: #F5F5F9;
+        }
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 2;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+        }
+        .header .mdmsg{
+            color: #fff;
+            line-height: .88rem;
+        }
+        .header .content {
+            width: 1.2rem;
+            color: #fff;
+        }
+
+        .header .i {
+            width: 1.2rem;
+        }
+
+        .header i {
+            font-size: .3rem;
+            color: #fff;
+        }
+        .bg-blue{
+            width: 100%;
+            height: 2.08em;
+            padding-top: .88rem;
+            background:#0086F7;
+        }
+        .mui-title{
+            color: #fff;
+        }
+        .mui-pull-left{
+            color: #fff;
+            font-weight: 100;
+        }
+        .main{
+            padding-top: 0;
+            margin-top: 0;
+            overflow: hidden;
+        }
+        .type{
+            width: 6.94rem;
+            height: 1.66rem;
+            background-color: #fff;
+            border-radius: .1rem;
+            margin: -1.06rem auto .2rem;
+            box-shadow:1px 0px .12rem 0px rgba(99,99,99,0.1);
+        }
+        .type-item{
+            top: .6rem;
+            position: relative;
+        }
+        .type-item img{
+            display: block;
+            width: .72rem;
+            height: .72rem;
+            margin: 0 auto .04rem;
+        }
+        .type-item .text{
+            width: 100%;
+            text-align: center;
+            font-size: .24rem;
+            color: #333;
+        }
+        .list{
+            width: 100%;
+            padding: 0 .28rem;
+            overflow: hidden;
+        }
+        .list .item{
+            width: 6.94rem;
+            height: 1.66rem;
+            margin-top: .2rem;
+            border-radius: .1rem;
+            background-color: #fff;
+            padding: .36rem .28rem .32rem .28rem;
+        }
+        .list .item .left{
+            position: relative;
+        }
+        .list .item .left img{
+            width: 1rem;
+            height: 1rem;
+        }
+        .list .item .right{
+            width: 5.04rem;
+        }
+        .list .item .right .t{
+            width: 100%;
+            height: .4rem;
+            line-height: .4rem;
+           overflow: hidden;
+        }
+        .list .item .right .t .fl{
+            font-size: .32rem;
+            color: #333; 
+        }
+        .list .item .right .t .fr{
+            font-size: .24rem;
+            color: #999;
+        }
+        .list .item .right .b{
+            width: 100%;
+            height: .32rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: .32rem;
+            text-align: left;
+            font-size: .24rem;
+            color: #999;
+            margin-top: .2rem;
+
+        }
+        .msg-list{
+            min-width: .34rem;
+            height: .34rem;
+            line-height: .34rem;
+            position: absolute;
+            right: -0.18rem;
+            top: -0.1rem;
+            background-color: #F3435A;
+            opacity: .9;
+            padding: 0 .1rem;
+            border-radius: .16rem;
+            font-size: .24rem;
+            color: #fff;
+        }
+        .top_red_bg{
+            width: .12rem;
+            height: .12rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #F3435A;
+        }
+        /* [v-cloak]{
+            display: none
+        } */
+    </style>
+</head>
+<body>
+    <div class="header flex space-between align-items">
+        <div class="i back" >
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div class="mdmsg">消息</div>
+        <div class="content"></div>
+    </div>
+    <div class="main" id="app" v-cloak>
+        <div class="bg-blue"></div>
+        <!-- <div class="type flex align-center space-around">
+            <div class="xitong type-item">
+                <img src="../../image/msg_right.png" alt="">
+                <div class="text">系统消息</div>
+            </div>
+            <div class="tongzhi type-item">
+                <img src="../../image/msg_left.png" alt="">
+                <div class="text">通知信息</div>
+            </div>
+        </div> -->
+        <div class="list" style="margin-top: -0.7rem;">
+            
+            <div class="item" v-for="(item,index) in roomList" :key="index" @click="linkDetail(item.room_num,item.nickname,index)">
+                <div class="left fl">
+                    <span><img :src="item.avatar"></span>
+                    <div v-show="item.no_read_num != 0" class="msg-list">{{ item.no_read_num }}</div>
+                </div>
+                <div class="right fr">
+                    <div class="t"><span class="fl">{{ item.nickname }}</span><span class="fr">{{ item.last_time }}</span></div>
+                    <div class="b">{{ item.last_message }}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script src="../../js/api.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+    apiready = function(){
+        var app = new Vue({
+            el:"#app",
+            data:{
+                roomList:[],
+            },
+            methods:{
+                getRoomList:function(){
+                    var _this = this;
+                    request('/chat/room_list',{},function(err,res){
+                        if (res.code == 1) {
+                            console.log(res.data.room_list)
+                            _this.roomList = res.data.room_list;
+                        }else{
+                            err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                        }
+                    })
+                },
+                linkDetail:function(rm,nickname,index){
+                    request('/chat/chat',{type:6,room_num:rm},function(err,res){});
+                    api.sendEvent({name:"alreadMsg"}) //全局广播消息已经读了
+                    this.roomList[index].no_read_num = 0;
+                    this.roomList.push()
+                    api.openWin({
+                        name:"chatDetail",
+                        url:"../chat/chat.html",
+                        pageParam:{
+                            room_num:rm,
+                            targetName:nickname,
+                            msgIndex:index,
+                        },
+                        reload:true,
+                    })
+                },
+                hasRoomNum:function(dt){
+                    var _this = this;
+                    var status = false;
+                    _this.roomList.map(function(v,i){
+                        if (v.room_num == dt.room_num) {
+                            status = true;
+                            _this.roomList[i].no_read_num = v.no_read_num + 1;
+                            if (dt.content_type == 3) {
+                                _this.roomList[i].last_message = '表情';
+                            }
+                            if (dt.content_type == 2) {
+                                _this.roomList[i].last_message = dt.content;
+                            }
+                            if (dt.content_type == 4) {
+                                _this.roomList[i].last_message = '图片';
+                            }
+                            _this.roomList[i].last_time = dt.create_time;
+                            _this.roomList[i].content_type = dt.content_type;
+                        }
+                    })
+                    if (!status) {
+                        _this.roomList.unshift({
+                            room_num:dt.room_num,
+                            avatar:dt.avatar,
+                            nickname:dt.nickname,
+                            last_time:dt.create_time,
+                            last_message:dt.content,
+                            no_read_num:1
+                        })
+                    }
+                },
+            },
+            mounted:function(){
+                var _this = this;
+                _this.getRoomList()
+                //沉浸式
+                if (api.statusBarAppearance) {
+                    var safeArea = api.safeArea.top;
+                    var bgb = document.querySelector('.bg-blue');
+                    var header  = document.querySelector('.header');
+                    var bbh = bgb.clientHeight;
+                    var headerh = header.clientHeight;
+                    header.style.height = safeArea + headerh + "px";
+                    header.style.paddingTop = safeArea+"px";
+                    bgb.style.height = safeArea+bbh+40+"px";
+                }
+                //soket 链接
+                var soket = new WebSocket('ws://'+sokectUrl);
+                soket.onmessage = function(res){
+                    var dt = JSON.parse(res.data)
+                    console.log(res.data)
+                    if (dt.type == 1) {
+                        request('/chat/chat',{type:1,client_id:dt.client_id},function(err,res){})
+                    }
+                    if (dt.type == 5) {
+                        _this.hasRoomNum(dt)
+                        _this.getRoomList();
+                        console.log('accept msg');
+                    }
+                }
+                api.addEventListener({
+                    name: 'msgAready'
+                }, function(ret, err){
+                    _this.roomList[ret.value.msgIndex].no_read_num = 0;
+                    _this.roomList.push()
+                    _this.getRoomList();
+                });
+            }
+        })
+        var back = document.querySelector('.back');
+        back.onclick = function(){
+            api.closeWin()
+        }
+    }
+
+
+</script>
+</html>

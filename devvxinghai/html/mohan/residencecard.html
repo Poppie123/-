@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>旅居卡订单列表</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #F8F9FB;
+    }
+
+    .header {
+        width: 7.5rem;
+        height: .93rem;
+        background-color: #FFFFFF;
+        padding: .3rem;
+    }
+
+    .header .iconfanhui {
+        font-size: .3rem;
+        color: #333333;
+        float: left;
+    }
+
+    .header .order {
+        font-size: .36rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: center;
+
+    }
+    .header .myhead{
+        width: .3rem;
+        height: .3rem;
+    }
+    .biaoti {
+        width: 7.5rem;
+        height: .88rem;
+        padding-left: .31rem;
+        padding-right: .31rem;
+        background-color: #FFFFFF;
+    }
+
+    .biaoti .all {
+        font-size: .32rem;
+        color: #999999;
+        text-align: left;
+    }
+
+    .active {
+        color: #0086F7!important;
+    }
+
+    .middle {
+        width: 7.5rem;
+        padding-left: .3rem;
+        padding-right: .3rem;
+        margin-bottom: .5rem;
+        overflow: hidden;
+    }
+
+    .middle .main {
+        width: 6.9rem;
+        /* height: 3.97rem; */
+        background-color: #FFFFFF;
+        padding: .25rem;
+        overflow: hidden;
+        margin-top: .2rem;
+        padding-bottom: 0;
+    }
+
+    .middle .main .main-title {
+        font-size: .28rem;
+        color: #999999;
+        text-align: left;
+        overflow: hidden;
+    }
+
+    .middle .main .main-title .time {
+        float: left;
+    }
+
+    .middle .main .main-title .paid {
+        float: right;
+    }
+
+    .middle .main .main-center {
+        height: 2rem;
+        margin-top: .2rem;
+        overflow: hidden;
+        border-bottom: 1px solid #EEEEEE;
+    }
+
+    .middle .main .main-center img {
+        width: 2.24rem;
+        height: 1.66rem;
+        border-radius: .05rem;
+        float: left;
+    }
+
+    .middle .main .main-center .right {
+        margin-left: .25rem;
+        float: left;
+        overflow: hidden;
+
+    }
+
+    .middle .main .main-center .right .right-title {
+        width: 1.5rem;
+        font-size: .28rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;
+    }
+    .middle .main .main-center .right .right-center{
+        margin-top: .15rem;
+        font-size: .24rem;
+        font-weight: bold;
+        color: #666666;
+        text-align: left;
+        overflow: hidden;
+    }
+
+    .middle .main .main-center .right .right-price {
+        margin-top: .05rem;        
+        overflow: hidden;
+    }
+
+    .middle .main .main-center .right .right-price .fahuo {
+        font-size: .24rem;
+        color: #FF4242;
+        text-align: left;
+        float: left;
+    }
+    .middle .main .main-center .right .right-price .fahuo span{
+        font-size: .32rem;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .middle .main .main-center .right .right-price .num {
+        font-size: .2rem;
+        color: #333333;
+        text-align: left;
+        font-weight: normal;
+        float: right;
+        margin-right: 0;
+        margin-top: .03rem;
+    }
+
+    .middle .main .main-center .right .right-price .num .three {
+        font-size: .28rem;
+        font-weight: normal;
+    }
+    .middle .main  .heji {
+        margin-left: 3rem;
+        height: .89rem;
+        float: right;
+        font-size: .28rem;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;
+    }
+
+    .middle .main  .heji .sum {
+        margin-left: .15rem;
+    }
+    .middle .main  .heji .sum span {
+        color: #FF0000;
+    }
+    
+    
+</style>
+</head>
+
+<body>
+    <div class="header flex align-items space-between flex_center">
+        <i class="iconfont iconfanhui "></i>
+        <div class="order ">旅居卡订单</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="biaoti flex align-items space-between flex_center">
+        <div class="all active">全部</div>
+        <div class="all">制卡中</div>
+        <div class="all">已发货</div>
+        <div class="all ">已完成</div>        
+    </div>
+    <div class="middle">
+        <div class="main">
+            <div class="main-title">
+                <span class="time">2019-07-08</span>
+                <span class="paid active">制卡中</span>
+            </div>
+            <div class="main-center flex ">
+                <img src="../../image/m_card.png" alt="">
+                <div class="right">
+                    <div class="right-title">悟空旅居卡</div>
+                    <div class="right-center">这是一个很长的故事，这是一个很
+                            长的故事
+                            </div>
+                    <div class="right-price flex space-between">
+                        <div class="fahuo">￥<span>88.00</span></div>
+                        <div class="num">x<span class="three">3</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="heji flex align-items">
+                共3件商品<span class="sum">合计<span>￥1500</span></span>
+            </div>
+        </div>
+        <div class="main">
+                <div class="main-title">
+                    <span class="time">2019-07-08</span>
+                    <span class="paid active">已发货</span>
+                </div>
+                <div class="main-center flex ">
+                    <img src="../../image/m_card.png" alt="">
+                    <div class="right">
+                        <div class="right-title">悟空旅居卡</div>
+                        <div class="right-center">这是一个很长的故事，这是一个很
+                                长的故事
+                                </div>
+                        <div class="right-price flex space-between">
+                            <div class="fahuo">￥<span>88.00</span></div>
+                            <div class="num">x<span class="three">3</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="heji flex align-items">
+                    共3件商品<span class="sum">合计<span>￥1500</span></span>
+                </div>
+            </div>
+            <div class="main">
+                    <div class="main-title">
+                        <span class="time">2019-07-08</span>
+                        <span class="paid active">已完成</span>
+                    </div>
+                    <div class="main-center flex ">
+                        <img src="../../image/m_card.png" alt="">
+                        <div class="right">
+                            <div class="right-title">悟空旅居卡</div>
+                            <div class="right-center">这是一个很长的故事，这是一个很
+                                    长的故事
+                                    </div>
+                            <div class="right-price flex space-between">
+                                <div class="fahuo">￥<span>88.00</span></div>
+                                <div class="num">x<span class="three">3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="heji flex align-items">
+                        共3件商品<span class="sum">合计<span>￥1500</span></span>
+                    </div>
+                </div>
+    </div>
+    <script src="../../js/common.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_yqx8ifdddys.css">
+    <link rel="stylesheet" href="../../css/animate.min.css">
+    <script src="../../js/rem.js"></script>
+    <title>预约基地</title>
+    <style>
+        header{
+            width: 100%;
+            height: .88rem;
+            padding: 0 .32rem;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        header .back{
+            width: .4rem;
+            height: .4rem;
+        }
+        header .title{
+            font-size: .36rem;
+            color:#333;
+            font-weight:bold;
+        }
+        header .hdright{
+            width: .4rem;
+            height: .4rem;
+        }
+        .main{
+            width: 100%;
+            height: auto;
+            padding-top: .88rem;
+        }
+        .main .fm-data{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+            background-color: #fff;
+        }
+        .main .item{
+            width: 100%;
+            height: 1.21rem;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        .main .item .lbe{
+            width: 1.65rem;
+            height: auto;
+            font-size: .32rem;
+            color: #333;
+        }
+        .main .item .middle{
+            width: 4.8rem;
+            height: auto;
+            font-size: .32rem;
+            color: #999;
+        }
+        .main .item:first-child .middle{
+            margin-left:-0.14rem;
+            color: #333;
+        }
+        .main .item .middle input{
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-size: .32rem;
+            color: #333;
+            margin-left: -0.14rem;
+        }
+        .main .item .middle input::-webkit-input-placeholder{
+            color: #999;
+        }
+        .main .item  .active{
+            color: #333;
+        }  
+        .tip{
+            width:100%;
+            height: auto;
+            padding: 0 .29rem;
+            margin-top: .25rem;
+            font-size: .28rem;
+            color: #e28726;
+        }
+        .btn{
+            width: 6.9rem;
+            height: .92rem;
+            border-radius: .46rem;
+            background: #4C89FE;
+            color: #fff;
+            font-size: .32rem;
+            margin: 1.6rem auto 0;
+        }
+        .layer{
+            width: 6rem;
+            height: 3.82rem;
+            position:fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 998;
+            border-radius: .2rem;
+            background-color: #fff;
+        }
+        .layer .content{
+            width: 5.23rem;
+            height: auto;
+            margin: .85rem auto;
+        }
+        .layer .back{
+            width: 5rem;
+            height: .8rem;
+            border-radius: .4rem;
+            background-color: #4C89FE;
+            font-size: .32rem;
+            color: #fff;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" opt=".65"></v-loading>
+        <header class="flex space-between align-items">
+            <div class="back" @click="back">
+                <i class="iconfont iconfanhui"></i>
+            </div>
+            <div class="title">预约基地</div>
+            <div class="hdright"></div>
+        </header>
+
+        <div class="main">
+            <div class="fm-data">
+            <div class="item flex align-items space-between">
+                <div class="lbe">旅游基地</div>
+                <div class="middle">{{ prevPageDt.attrname }}</div>
+                <div class="right">
+                    <!-- <i class="iconfont icongengduo"></i> -->
+                </div>
+            </div>
+            <div class="item flex align-items space-between">
+                <div class="lbe">旅居卡号</div>
+                <div class="middle">
+                    <input type="text" placeholder="请输入旅居卡号" disabled v-model="prevPageDt.check">
+                </div>
+                <div class="right">
+                  
+                </div>
+            </div>
+            <div class="item flex align-items space-between" id="startTime" >
+                <div class="lbe">开始日期</div>
+                <div class="middle">{{start_time}}</div>
+                <div class="right">
+                    <i class="iconfont icongengduo"></i>
+                </div>
+            </div>
+            <div class="item flex align-items space-between" id="endTime" v-if="prevPageDt.is_hotel == 1">
+                <div class="lbe">结束日期</div>
+                <div class="middle">{{back_time}}</div>
+                <div class="right">
+                    <i class="iconfont icongengduo"></i>
+                </div>
+            </div>
+            </div>
+            <div class="tip">
+                    注：预约之后，如果不方便的话可以提前三天取消预约，
+                    如果没有取消预约，又超过时间而未去核销，系统会自
+                    动核销该旅游基地的所有消费项目
+            </div>
+            <div class="btn fn-ctr" @click="startOrder"><span>提交</span></div>
+        </div>
+        <!-- 预约成功弹窗 -->
+        <div class="mask" v-show="layerBox"></div>
+        <div class="layer" v-show="layerBox">
+            <div class="content">预约成功！您可以到“我的”-“我的预约”里查看或者取消预约</div>
+            <div class="back fn-ctr" @click="backMain"><span>返回首页</span></div>
+        </div>
+
+
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/datePicker.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    layerBox:false,
+                    start_time:"请选择出发日期",
+                    back_time:"请选择结束日期",
+                    prevPageDt:{},
+                    loading:false,
+                },
+                methods:{
+                    // 生成结束日期
+                    initEndTime:function(startTime){
+                        var _this = this;
+                        var endPicker = new datePicker();
+                        endPicker.init({
+                            'trigger': '#endTime', /*按钮选择器，用于触发弹出插件*/
+                            'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+                            'minDate':''+startTime+'',/*最小日期*/
+                            'maxDate':'2100-12-31',/*最大日期*/
+                            'onSubmit':function(){/*确认时触发事件*/
+                                var theSelectData=endPicker.value;
+                                _this.back_time = theSelectData;
+                            },
+                            'onClose':function(){/*取消时触发事件*/
+                            }
+                        })
+                    },
+                    //提交旅居信息
+                    startOrder:function(){
+                        var _this = this;
+                        _this.loading = true;
+                        var config = {
+                            cardid:_this.prevPageDt.id,
+                            order_sn:_this.prevPageDt.order_sn,
+                            attrid:_this.prevPageDt.attrid,
+                            packageid:_this.prevPageDt.packageid,
+                            detail:_this.prevPageDt.detail,
+                            start_time:_this.start_time,
+                            over_time:_this.prevPageDt.is_hotel == 1 ? _this.back_time : "",
+                        }
+                        request('/tourism/tourism_card_appointment',config,function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                _this.layerBox = true;
+                            }else{
+                                err ?console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    // 会到首页
+                    backMain:function(){
+                        api.closeToWin({
+                            name:"root"
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('header');
+                        var main = document.querySelector('.main');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight+safeArea+"px"
+                        header.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = headerHeight + safeArea + "px"
+                    };
+                    var _this = this;
+                    var calendar = new datePicker();
+                    _this.prevPageDt = api.pageParam;
+                    var threeDay = getTime(4)
+                    calendar.init({
+                        'trigger': '#startTime', /*按钮选择器，用于触发弹出插件*/
+                        'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+                        'minDate':threeDay,/*最小日期*/
+                        'maxDate':'2100-12-31',/*最大日期*/ 
+                        'onSubmit':function(){/*确认时触发事件*/
+                            var theSelectData=calendar.value;
+                            _this.start_time = theSelectData;
+                            _this.prevPageDt.is_hotel == 1 ?  _this.initEndTime(theSelectData) : "";
+                        },
+                        'onClose':function(){/*取消时触发事件*/}
+                    });
+                }
+            }) 
+        }
+            
+        
+    </script>
+</body>
+</html>

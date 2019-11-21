@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>卡片详情</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_vgzk7s2d7mp.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        .header{
+            width: 100%;
+        }
+        .banner{
+            width: 100%;
+            height: 5.72rem;
+            position: relative;
+            z-index: 900;
+        }
+        .back{
+            width: .58rem;
+            height: .58rem;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 1200;
+            left: .2rem;
+            top: .2rem;
+            background: rgba(0, 0, 0, .65)
+        }
+        .back .iconfont{
+            font-size: .32rem;
+            color: #fff;
+            font-weight: bold;
+        }
+        .travel-info {
+            width: 100%;
+            height: auto;
+            /* height: 2.69rem; */
+            position: relative;
+            z-index: 999;
+            overflow: hidden;
+            background-color: #fff;
+            border-top-right-radius:.3rem;
+            border-top-left-radius:.3rem;
+            margin-top: -0.4rem;
+            padding: 0 .29rem;
+        }
+        .travel-info .title{
+            width: 100%;
+            text-align: left;
+            overflow: hidden;
+            font-size: .34rem;
+            color: #333;
+            margin-top: .35rem;
+            font-weight: bold;
+        }
+        .travel-info .info{
+            width: 100%;
+            height: auto;
+            font-size: .28rem;
+            color: #666;
+            margin-top: .23rem;
+        }
+        .travel-info .bt{
+            width: 100%;
+            margin-top: .15rem;
+            margin-bottom: .2rem;
+        }
+        .travel-info .bt .left{
+            font-size: .36rem;
+            font-weight: bold;
+            color: #FE6602;
+        }
+        .travel-info .bt .right{
+            font-size: .26rem;
+            color: #666666;
+        }
+        .travel-info .bt .right span{
+            color: #0086F7;
+            margin-left: .02rem;
+            margin-right: .02rem;
+        }
+        .travel-detail{
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+            margin-top: .2rem;
+            padding-bottom: .9rem;
+        }
+        .travel-detail .title{
+            width: 100%;
+            padding:.3rem .3rem;
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .btn-buy{
+            width: 100%;
+            height: .9rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            z-index: 1200;
+            font-size: .32rem;
+            color: #fff;
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <div class="back flex flex_center align-items" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+            
+        <div class="banner">
+            <img :src="lvCardDetail.banner_img" alt="">
+        </div>
+        <div class="travel-info">
+            <div class="title">{{ lvprevPage.name }}</div>
+            <div class="info">{{ lvprevPage.content }}</div>
+            <div class="bt flex align-items space-between">
+                <div class="left">￥{{ lvprevPage.price }}</div>
+                <div class="right">已售<span>{{ lvprevPage.sales }}</span>人</div>
+            </div>
+        </div>
+        <div class="travel-detail">
+            <div class="title">商品详情</div>
+            <div class="detail">
+                <img :src="lvCardDetail.detail_img" alt="">
+            </div>
+        </div>
+        <div class="btn-buy fn-ctr ifooter" v-if="lvCardDetail.is_pay == 1" @click="goYuyd">立即预订</div>
+        <div class="btn-buy fn-ctr ifooter" v-else @click="goBuy">立即购买</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   id:api.pageParam.id,
+                   lvCardDetail:{},
+                   lvprevPage:{},
+                   loading:true,
+                   opt:1,
+                },
+                methods:{
+                    getDetail:function(){
+                        var _this = this;
+                        request('/tourism/tourism_card_detail',{id:_this.lvprevPage.id},function(err,res){
+                            setTimeout(function(){
+                                _this.loading = false;
+                            },700)
+                            if (!err && res.code == 1) {
+                                _this.lvCardDetail = res.data;
+                            }
+                        }) 
+                    },
+                    // 立即预订
+                    goYuyd:function(){
+                        var _this = this;
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        // order_status == 1 && pay_status == 1 
+                        if (_this.lvCardDetail.order_info.shipping_status != 2) {
+                            api.toast({msg:"您的旅居卡正在制卡中，请耐心等待",location:"middle"})
+                            return false
+                        }
+                        api.openWin({
+                            name:'yuyOrder',
+                            url:"../view/yuyue_detail.html",
+                            pageParam:{
+                               id:_this.lvCardDetail.id,
+                               order_sn:_this.lvCardDetail.order_sn,
+                            },
+                        });
+                    },
+                    //订单确认
+                    goBuy:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        _this.loading = true;
+                        _this.opt = '.65';
+                        //收货地址
+                        request('/shopping/get_default_address',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                var config = {
+                                    id:_this.lvprevPage.id,
+                                    type:1,
+                                    number:1,
+                                    order_type:1,
+                                }
+                                // 订单确认
+                                request('/tourism/order_confirm',config,function(err,res){
+                                    if (!err && res.code == 1) {
+                                        console.log(JSON.stringify(res))
+                                        _this.orderUp(res.data)
+                                    }else{
+                                        _this.loading = false;
+                                        err ? console.log(JSON.stringify(res)) : api.toast({msg:res.msg})
+                                    }
+                                })
+                            }else{
+                                _this.loading = false;
+                                err ? console.log(JSON.stringify(err)) : api.openWin({name:"address",url:"../mohan/address.html"})
+                            }
+                        })
+                        
+                    },
+                    //订单提交
+                    orderUp:function(dt){
+                        var _this = this;
+                        request('/tourism/order_post',{
+                            rec_ids:dt.rec_id,
+                            type:1,
+                            pay_type:"",
+                            order_sn:dt.order_sn,
+                        },function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                api.openWin({
+                                    name:"payType",
+                                    url:"../user/pay_type.html",
+                                    reload:true,
+                                    pageParam:{
+                                        orderno:res.data,
+                                        source:2,
+                                    }
+                                })
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('.back');
+                        var headerTop = header.offsetTop;
+                        header.style.top = safeArea + headerTop+"px";
+                        var safeArea_bottom = api.safeArea.bottom || 0;
+                        var ft = document.querySelector('.btn-buy');
+                        ft.style.bottom = safeArea_bottom + "px"
+                    }
+                    _this.lvprevPage = JSON.parse(api.pageParam.gds);
+                    _this.getDetail();
+                    api.addEventListener({name:"refreshLvjuka"},function(){
+                        _this.getDetail();
+                    })
+                }
+            })
+        }
+            
+    
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./icon_chat.css" />
+    <link rel="stylesheet" href="../../css/swiper.min.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v8eoxklephb.css">
+    <link href="../../css/common.css" rel="stylesheet" />
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #F5F5F9;
+        }
+        #app{
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            background-color: #0086F7;
+            /* background-color: transparent; */
+            z-index: 2;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+        }
+        .header .mdmsg{
+            color: #fff;
+            line-height: .88rem;
+        }
+        .header .content {
+            width: 1.2rem;
+            color: #fff;
+        }
+
+        .header .i {
+            width: 1.2rem;
+        }
+
+        .header i {
+            font-size: .3rem;
+            color: #fff;
+        }
+        .chat-list {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding: 0 .28rem;
+            padding-top: .88rem;
+            padding-bottom: 1.4rem;
+        }
+        .chat-list .chat-list-active{
+            padding-bottom:4.6rem;
+        }
+        .chat-list .item {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            margin-top: .44rem;
+        }
+        .chat-list .item:first-child{
+            margin-top: 0;
+        }
+        .chat-list .item .msg {
+            /* max-width: 4.94rem; */
+            height: auto;
+            background-color: #fff;
+            border-radius: .1rem;
+            padding: .22rem;
+            font-size: .28rem;
+        }
+        .touxiang {
+            width: .8rem;
+            height: .8rem;
+            border-radius: .1rem;
+        }
+        .time {
+            width: 100%;
+            height: 1.1rem;
+            color: #999;
+            font-size: .28rem;
+            line-height: 1.01rem;
+            text-align: center;
+        }
+
+        .item .right {
+            overflow: hidden;
+        }
+
+        .item .right .touxiang {
+            float: right;
+            margin-left: .16rem;
+        }
+
+        .item .right .msg {
+            float: right;
+            background: #0086F7;
+            color: #fff;
+        }
+
+        .item .left img {
+            float: left;
+            margin-right: .16rem;
+        }
+
+        .item .left .msg {
+            float: left;
+            font-size: .28rem;
+            color: #333333;
+
+        }
+        .send-msg{
+            width: 100%;
+            height: auto;
+            position: fixed;
+            bottom: 0rem;
+            transition: .3s;
+        }
+        .ipt{
+            width: 100%;
+            height:1.2rem; 
+            background-color: #fff;
+            padding: 0 .28rem;
+            overflow: hidden;
+        }
+        .ipt > div{
+            float: left;
+            line-height: 0.8rem;
+            margin-left: .24rem;
+            margin-top: .16rem;
+        }
+        .ipt .inmsg{
+            float: left;
+            display: block;
+            background-color: #F5F5F9;
+            box-sizing: border-box;
+            width:5.08rem;
+            padding-top: .2rem;
+            padding-bottom: .1rem;
+            height: .8rem;
+            margin-top: .16rem;
+            font-size: .28rem;
+        }
+        .ipt .iconfont {
+            font-size: .6rem;
+        }
+        .select-other{
+            width: 100%;
+            height:3.4rem;
+            overflow: hidden;
+            background-color: #F5F5F7;
+            position: absolute;
+           
+        }
+        .select-active{
+            display: block;
+            bottom:3.4rem;
+        }
+        .select-other .opt{
+            width: 1.4rem;
+            height: auto;
+            float: left;
+            margin-left: .28rem;
+            margin-top: .3rem;
+        }
+        .select-other .opt img{
+            width: 1.4rem;
+            height: 1.4rem;
+            margin-bottom: .14rem;
+        }
+        .select-other .opt div{
+            width: 100%;
+            text-align: center;
+           font-size: .28rem;
+           color: #333;
+        }
+        .send-info{
+            width: 1.46rem;
+            height: .7rem;
+            background-color: #0086F7;
+            border-radius: .1rem;
+            color: #fff;
+            margin-top: .04rem;
+        }
+        .xlloading{
+            margin-top: 0;
+            padding-top: .2rem;
+            padding-bottom: 0;
+        }
+        .fl{
+            float: left;
+        }
+        .fr{
+            float: right;
+        }
+        .imgs .image{
+            width: 2.4rem;
+        }
+        .bq .look{
+            width: 25px;
+            height: 25px;
+            margin-top: .16rem;
+        }
+        .epsion{
+            width: 100%;
+            height: 2.8rem;
+            margin: 0 auto;
+            overflow: hidden;
+            overflow-y: scroll;
+            padding: 0 .28rem;
+            padding-left: .4rem;
+        }
+        .epsion .bq{
+            width: 25px;
+            height: 25px;
+            float: left;
+            margin: 10px 10px;
+        } 
+        .swiper-container{
+            width: 100%;
+            margin: 0 auto;
+            height:100%;
+            position: relative;
+        }
+        .swiper-pagination-bullet-active{
+            background: #0086F7;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="header flex space-between align-items">
+            <div class="i" @click="back">
+                <i class="iconfont iconfanhui"></i>
+            </div>
+            <div class="mdmsg">{{ targetName }}</div>
+            <div class="content"></div>
+        </div>
+        <div :class="other ? 'chat-list chat-list-active' : 'chat-list'" ref="chatlist" id="chatbox">
+            <div v-show="moreMsg" class="xlloading"><img src="../../image/xljz.gif" alt=""><span>正在努力加载中</span></div>
+            <div class="item" v-for="(item,index) in chatList">
+                <div class="time">{{ item.create_time }}</div>
+                <div :class="item.send_id == user_id ? 'user-msg right' : 'user-msg left'">
+                    <img class="touxiang" :src="item.avatar" >
+                    <div v-if="item.content_type == 2" class="msg">{{ item.content }}</div>
+                    <div v-if="item.content_type == 4" :class="item.send_id == user_id ? 'imgs fr' : 'imgs fl' " v-html="item.content" ></div>
+                    <div v-if="item.content_type == 3" :class="item.send_id == user_id ? 'bq fr' : 'bq fl' " v-html="item.content" ></div>
+                </div>
+            </div>
+            <!-- <div class="item ">
+                <div class="user-msg left">
+                    <img class="touxiang" src="../../image/tou.png" alt="">
+                    <div class="msg">你好，关注我能第一时间看到我的分享哦~~</div>
+                </div>
+            </div> -->
+            
+        </div>
+        <div :class="[other ? 'select-active send-msg' : 'send-msg']">
+            <div class="ipt">
+                <textarea class="inmsg" name="" id="" v-model="chatMsg"></textarea>
+                <div class="lian" v-show="chatMsg == ''" @click="startBottom(1)">
+                    <i class="iconfont icon-tuoyuan1"></i>
+                </div>
+                <div class="other" @click="startBottom(2)" v-show="chatMsg == ''">
+                    <i class="iconfont icon-yuanjiaojuxing1"></i>
+                </div>
+                <div v-show="chatMsg != ''" class="send-info flex align-center flex-center fn-ctr" @click="sendChatMsg"><span>发送</span></div>
+            </div>
+            <div class="select-other">
+                <div v-show="choseep" class="opt" @click="choseXiangCe('library')">
+                    <img src="../../image/sendMsg.png" alt="">
+                    <div>相册</div>
+                </div>
+                <div v-show="choseep" class="opt" @click="choseXiangCe('camera')">
+                    <img src="../../image/sendPt.png" alt="">
+                    <div>拍照</div>
+                </div>
+                <div v-show="!choseep" class="epsion">
+                    <div class="bqitem" v-for="val in epsionList" :key="val.index" @click="sendBq(val.index)">
+                        <img class="bq"  :src="val.path" >
+                    </div>
+                    <!-- <div class="swiper-wrapper">
+                        <div class="swiper-slide epsion">
+                            
+                        </div>
+                        <div class="swiper-slide epsion">
+                            <img class="bq" v-for="val in epsionList[1]" :key="val.index" :src="val.path" @click="sendBq(val.index)">
+                        </div>
+                        <div class="swiper-slide epsion">
+                            <img class="bq" v-for="val in epsionList[2]" :key="val.index" :src="val.path" @click="sendBq(val.index)">
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/swiper.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        api_init = function () {
+            var room_num = api.pageParam.room_num; //房间号
+            var targetName = api.pageParam.targetName;
+            var app = new Vue({
+                el:"#app",
+                data:{
+                    chatList:[],    //聊天数据列表
+                    chatRoomNum:"", //房间号
+                    targetName:"",  //聊天对象的名字
+                    user_id:"",     //用户的ID
+                    other:false,    //是否打开选择更多信息
+                    chatMsg:"",     //要发送的信息
+                    moreMsg:false,   //下拉加载更多聊天信息
+                    more:false,
+                    choseep:true,   //选择的是图片
+                    epsionList:[],  //存放星星图标
+                    
+                },
+                methods:{
+                    // 获取聊天数据
+                    getChatDetail:function(){
+                        var _this = this;
+                        request('/chat/chat_detail',{room_num:_this.chatRoomNum},function(err,res){
+                            if (res.code == 1) {
+                                console.log(JSON.stringify(res))
+                                _this.chatList = res.data.message_list;
+                                _this.$nextTick(function(){
+                                    _this.scrollBottom()
+                                })
+                            }
+                        })
+                    },
+                    //下拉加载新消息
+                    getlongMsg:function(){
+                        var _this = this;
+                        var firstId = _this.chatList[0].id;
+                        _this.more = true;
+                        request('/chat/more_chat_detail',{room_num:_this.chatRoomNum,message_id:firstId},function(err,res){
+                            _this.more = false
+                            if (res.code == 1) {
+                                _this.chatList = res.data.message_list.concat(_this.chatList);
+                                _this.$nextTick(function(){
+                                    var dh = $('.chat-list .item').height();
+                                    _this.$refs.chatlist.scrollTo(0,dh * res.data.message_list.length)
+                                })
+                            }else{
+                                _this.more = false
+                            }
+                        })
+                    },
+                    //选择其他东西
+                    startBottom:function(type){   //type 1表情  2图片
+                        var _this = this;
+                        if (this.other) {
+                            if ((type == 1 && !this.choseep) || (type == 2 && this.choseep)) {
+                                this.other = false
+                            }else{
+                                type == 1 ?  this.choseep = false :  this.choseep = true
+                            }
+                        }else{
+                            this.other = true;
+                            type == 1 ?  this.choseep = false :  this.choseep = true
+                        }
+                        this.$nextTick(function(){
+                            _this.scrollBottom()
+                        })
+                      
+                    },
+                    //发送文本聊天信息
+                    sendChatMsg:function(){
+                        var _this = this;
+                        request('/chat/chat',{
+                            type:2,
+                            room_num:_this.chatRoomNum,
+                            content:_this.chatMsg,
+                        },function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.chatMsg = "";
+                            }else{
+                                console.log(JSON.stringify(err))
+                            }
+                        })
+                    },
+                    //选择图片
+                    choseXiangCe:function(type){
+                        var _this = this;
+                        api.getPicture({
+                            sourceType: type,
+                            mediaValue: 'pic',
+                            destinationType: 'url',
+                            allowEdit: true,
+                            quality: 50,
+                            targetWidth: 100,
+                            targetHeight: 100,
+                            saveToPhotoAlbum: false
+                        }, function(ret, err) {
+                            if (ret) {
+                                api.ajax({
+                                    url: url+'/chat/chat',
+                                    method: 'post',
+                                    data:{
+                                        values:{
+                                            type:4,
+                                            room_num:_this.chatRoomNum,
+                                        },
+                                        files:{
+                                            content:ret.data
+                                        }
+                                    },
+                                },function(ret,err){
+                                    if (ret) {
+                                        _this.chatMsg = "";
+                                    }else{
+                                        api.toast('发送失败，请检查网络')
+                                    }
+                                })
+                            } else {
+                                api.toast({msg:'请开启手机权限'})
+                            }
+                        });
+                    },
+                    //发送表情
+                    sendBq:function(index){
+                        var _this = this;
+                        request('/chat/chat',{
+                            type:3,
+                           room_num:_this.chatRoomNum,
+                           content:index
+                        },function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.chatMsg = "";
+                            }else{
+                                console.log(JSON.stringify(err))
+                            }
+                           
+                        })
+                    },
+                    scrollBottom:function(){
+                        var _this = this;
+                        var scDom = _this.$refs.chatlist;
+                        var chatDom = document.getElementsByClassName('chat-list')[0];
+                        //兼容代码 低版本手机不自动滚动到消息底部
+                        typeof chatDom.scrollTo == 'function' ? chatDom.scrollTo(0,chatDom.scrollHeight - chatDom.clientHeight) : ""
+                    },
+                    //返回上一个页面
+                    back:function(){
+                        var _this = this;
+                        request('/chat/chat',{type:6,room_num:_this.chatRoomNum},function(err,res){})
+                        api.sendEvent({name:"msgAready",extra: {
+                            msgIndex: api.pageParam.msgIndex,
+                        }})
+                        api.closeWin()
+                    },
+                    // 渲染表情
+                    renderBq:function(){
+                        //生成表情图片
+                        var bqlist=[];
+                        for (var i = 1; i < 55; i++) {
+                            bqlist.push({
+                                path:"../../image/biaoqing/bq"+i+".png",
+                                index:i,
+                            })
+                        }   
+                        this.epsionList = bqlist;
+                        // //每21个表情生成这种数据结构  [ [..21..] , [..21..] , [..21..] ]
+                        // var linarr = [];
+                        // var bql = bqlist.length;
+                        // for (let j = 0; j < Math.ceil(bql / 21); j++) {
+                        //     j == (Math.ceil(bql / 21) -1) ?  linarr.push(bqlist.splice(0,bqlist.length)) : linarr.push(bqlist.splice(0,21))
+                        // }
+                        // this.epsionList = linarr;
+                        // var _this = this;
+                        // setTimeout(function(){
+                        //     var mySwiper = new Swiper('.swiper-container', {
+                        //         direction: 'horizontal', // 垂直切换选项
+                        //         loop: true, // 循环模式选项
+                        //         // 如果需要分页器
+                        //         pagination: {
+                        //             el: '.swiper-pagination',
+                        //         },
+                        //     })
+                        // },2000)
+                    },
+                },
+                mounted:function(){
+                    // 沉浸式
+                    if (api.statusBarAppearance) { 
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('.header');
+                        var main = document.querySelector('.chat-list')
+                        var headHeight = header.clientHeight;
+                        header.style.height = headHeight + safeArea + "px";
+                        header.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = headHeight+safeArea+"px";
+                    }
+                    var _this = this;
+                    var timp = "";
+                    _this.chatRoomNum = room_num;    //获取全局房间号
+                    _this.targetName = targetName;   //聊天对象的名字
+                    //生成表情图
+                    _this.renderBq();
+                    _this.user_id    = $api.getStorage('uid');
+                    _this.getChatDetail();
+                    var sc = "";  //滚动条具顶部高度
+                    var sh = "";  //滚动区域总高度
+                    var ch = "";  //滚动条高度
+                    // 页面滚动
+                    _this.$refs.chatlist.onscroll = function(){
+                        sc = this.scrollTop;
+                        sh = this.scrollHeight;
+                        ch = this.clientHeight;
+                        if (sc == 0) {
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                if (!_this.more) {
+                                    _this.getlongMsg()
+                                }
+                            },1000)
+                        }
+                    }
+                    var soket = new WebSocket('ws://'+sokectUrl);
+                    soket.onmessage = function(res){
+                        var dt = JSON.parse(res.data)
+                        if (dt.type == 1) {
+                            request('/chat/chat',{type:1,client_id:dt.client_id},function(err,res){console.log(JSON.stringify(err))})
+                        }
+                        if (dt.type == 5) {
+                            if (sc + ch > sh - 100) { //判断页面是否在接近底部，发完信息滚动到底部
+                                _this.chatList.push(dt);
+                                _this.$nextTick(function(){
+                                    _this.scrollBottom()
+                                })
+                            }else{
+                                _this.chatList.push(dt);
+                            }
+                        }
+                    }
+                },
+            })
+        }
+    </script>
+</body>
+
+</html>

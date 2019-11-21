@@ -1,0 +1,501 @@
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	overflow: -moz-scrollbars-none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+html, body {
+	height: 100%;
+	background: #F7F7F7;
+	/* color: #333333; */
+}
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.fl{float: left;}
+.fr{float: right}
+img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+input, textarea {
+    outline: none;
+    border: none;
+    resize:none ;
+}
+li {
+    list-style: none;
+}
+span {
+	display: inline-block;
+}
+
+/* 置顶 */
+.backtop {
+	position: fixed;
+	bottom: 0.3rem;
+	right: 0.1rem;
+	width: 0.6rem;
+	height: 0.6rem;
+	z-index: 100;
+	display: none;
+}
+.backtop img {
+	width: 100%;
+	height: 100%;
+}
+/*弹性布局兼容*/
+.flex {
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+.flex_wrap {
+	-webkit-flex-wrap: wrap;
+	-moz-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-o-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.flex_nwrap {
+	-webkit-flex-wrap: nowrap;
+	-moz-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	-o-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+}
+
+.flex_center {
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	-o-justify-content: center;
+	justify-content: center;
+}
+
+.flex_end {
+	-webkit-box-pack: flex-end;
+	-webkit-justify-content: flex-end;
+	-moz-justify-content: flex-end;
+	-ms-justify-content: flex-end;
+	-o-justify-content: flex-end;
+	justify-content: flex-end;
+}
+
+.space-between {
+	-webkit-box-pack: space-between;
+	-webkit-justify-content: space-between;
+	-moz-justify-content: space-between;
+	-ms-justify-content: space-between;
+	-o-justify-content: space-between;
+	justify-content: space-between;
+}
+
+.flex_1 {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+.space-around {
+	-webkit-box-pack: space-around;
+	-webkit-justify-content: space-around;
+	-moz-justify-content: space-around;
+	-ms-justify-content: space-around;
+	-o-justify-content: space-around;
+	justify-content: space-around;
+}
+
+ .align-items { /*在flex当前容器中纵轴中的位置如果是文字必须包裹在span之中 */
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	-o-align-items: center;
+	align-items: center;
+}
+.align-content-stretch{
+    -webkit-box-align: stretch;
+	-webkit-align-content: stretch;
+	-moz-align-content: stretch;
+	-ms-align-content: stretch;
+	-o-align-content: stretch;
+	align-content: stretch;
+}
+.align-content-center{
+    -webkit-box-align: center;
+	-webkit-align-content: center;
+	-moz-align-content: center;
+	-ms-align-content: center;
+	-o-align-content: center;
+	align-content: center;
+}
+.align-content-around{
+    -webkit-box-align: center;
+	-webkit-align-content: center;
+	-moz-align-content: center;
+	-ms-align-content: center;
+	-o-align-content: center;
+	align-content: space-around;
+}
+.transform-center {
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+}
+
+.transition {
+	-moz-transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+}
+/* 一行根据宽度省略多余字体 */
+.ellipse {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ellipsis2 {  /* 溢出隐藏 */
+	overflow:hidden;
+	text-overflow: ellipsis;
+	display:-webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient:vertical;
+}
+.fn-ctr{
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	-o-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	-o-justify-content: center;
+	justify-content: center;
+
+}
+.tc{
+	text-align: center;
+}
+ /* for Chrome 隐藏滚动条 */
+ .main > *::-webkit-scrollbar {
+    display: none;
+}
+/* 遮罩层 */
+.mask{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	background-color: #000;
+	opacity: .6;
+	z-index: 995;
+}
+.none{
+    display: none;
+}
+.block{
+    display: block;
+}
+/* 页面底部导航栏 */
+.footer{
+	width: 100%;
+	height: 1.1rem;
+	background: #fff;
+	position: fixed;
+	bottom: 0;
+	z-index: 1;
+}
+.footer_o{
+	width: 25%;
+	height: 100%;
+	padding-top: .12rem;
+	color: #999;
+	text-align: center;
+}
+.footer_o p{
+	width: 100%;
+	font-size: .28rem;
+	text-align: center;
+	margin-top: -0.05rem;
+}
+.footer .footer_o .dft{
+	display: block;
+	width: .45rem;
+	height: .5rem;
+	margin: 0 auto;
+}
+.footer .footer_o .jihuo{
+	display: none;
+}
+.footer .active .dft{
+    display: none;
+}
+.footer .active .jihuo{
+	display: block;
+	width: .45rem;
+	height: .5rem;
+	margin: 0 auto;
+}
+.footer .active p{
+	color: #0086F7;
+}
+/* 分类页面公共头部 */
+.common_header{
+	width: 100%;
+	height: .88rem;
+	background: #fff;
+	position: fixed;
+	top: 0;
+	z-index: 1300;
+	padding: 0 .31rem;
+	border-bottom: 1px solid #EEEEEE;
+}
+.common_header i{
+	font-size: .28rem;
+	color: #333333;
+	font-weight: bold;
+}
+.common_header span{
+	font-size: .36rem;
+	color: #333;
+	font-weight: bold;
+}
+.common_header > div{
+	width: .25rem;
+	height: 100%;
+}
+[v-cloak] {
+	display: none;
+}
+/* #root{
+	width: 100%;
+	min-height: 100%;
+	position:relative;
+} */
+.loading{
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1200;
+	display: flex;
+	align-items: center;
+}
+.loading .middlews{
+	width: 100%;
+	height: 30px;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+}
+.loading .middlews span{
+	display: block;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	position: relative;
+}
+.loading .middlews .left{
+	background-color: #4489FE;
+	margin-right: 5px;
+	animation: .8s leftAni infinite linear;
+	-webkit-animation: .8s leftAni infinite linear;
+}
+.loading .middlews .right{
+	background-color: #FE7746;
+	margin-left: 5px;
+	animation: .8s rightAni infinite linear;
+	-webkit-animation: .8s rightAni infinite linear;
+}
+@keyframes leftAni{
+	0%{
+		left:0;
+	}
+	25%{
+		z-index: 1001;
+	}
+	50%{
+		left:20px;
+	}
+	75%{
+		z-index: 1000;
+	}
+	100%{
+		left: 0;
+	}
+}
+@-webkit-keyframes leftAni{
+	0%{
+		left:0;
+	}
+	25%{
+		z-index: 1001;
+	}
+	50%{
+		left:20px;
+	}
+	75%{
+		z-index: 1000;
+	}
+	100%{
+		left: 0;
+	}
+}
+@keyframes rightAni{
+	0%{
+		left:0;
+	}
+	25%{
+		z-index: 1000;
+	}
+	50%{
+		left:-20px;
+	}
+	75%{
+		z-index: 1001;
+	}
+	100%{
+		left: 0;
+	}
+}
+@-webkit-keyframes rightAni{
+	0%{
+		left:0;
+	}
+	25%{
+		z-index: 1000;
+	}
+	50%{
+		left:-20px;
+	}
+	75%{
+		z-index: 1001;
+	}
+	100%{
+		left: 0;
+	}
+}
+.no-data{
+	width: 100%;
+	height: 100%;
+	background-color:transparent;
+	position: fixed;
+	z-index: 990;
+	left: 0;
+	top: 0;
+}
+.no-data img{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 0;
+	right:0;
+	top: 250px;
+	margin: auto; 
+}
+.no-data .no-data-text{
+	width: 200px;
+	height: auto;
+	text-align: center;
+	position: fixed;
+	top: 370px;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+.no-data .text{
+	width: 100%;
+	height: auto;
+	font-size: .28rem;
+	color: #ccc;
+}
+.no-data .btn{
+	width: 100px;
+	height:35px;
+	border-radius: 5px;
+	margin: 10px auto 0;
+	background-color: #0086F7;
+	color: #fff;
+}
+/* 分享组件样式  */
+.shareComponent{
+	width: 100vw;
+	height: 40vw;
+	background-color: #fff;
+	position: fixed;
+	bottom: 0;
+	z-index: 1500;
+}
+.shareComponent  .item{
+	width: 1rem;
+	height: 1.6rem;
+	overflow: hidden;
+	margin-top: .8rem;
+}
+.shareComponent  .item img{
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	border-radius: 50%;
+	margin: 0 auto;
+}
+.shareComponent  .item .text{
+	width: 100%;
+	text-align: center;
+	font-size: .28rem;
+	color:#333;
+	margin-top: .1rem;
+}
+.disb{
+	display: flex;
+}
+/* 按钮点击遮罩层动画 */
+@keyframes scrd{
+    0%{
+        transform: scale(0);
+    }
+    50%{
+        transform: scale(25);
+    }
+    100%{
+        transform: scale(50);
+    }
+}
+@-webkit-keyframes scrd{
+    0%{
+        transform: scale(0);
+    }
+    50%{
+        transform: scale(25);
+    }
+    100%{
+        transform: scale(50);
+    }
+}

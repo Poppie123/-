@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改支付密码</title>
+    <link rel="stylesheet" href="../../css/wei.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        body {
+            background: rgba(248, 248, 248, 1);
+        }
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            padding-top: .88rem;
+            overflow: hidden;
+        }
+
+        .main .item {
+            width: 6.9rem;
+            height: 1.1rem;
+            margin: 0 auto;
+            font-size: .30rem;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+        
+        .main .item .phone {
+            font-weight: bold;
+        }
+
+        .main .xingpwd {
+            width: 100%;
+            height: 1.1rem;
+            font-size: .28rem;
+            color: #333;
+            line-height: 1.1rem;
+            position:relative;
+        }
+        .main .xingpwd .iconfont{
+            font-size: .28rem;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            right: .05rem;
+        }
+        .main .xingpwd span{
+            margin-right: .15rem;
+        }
+        .xingactive{
+            color: #333;
+        }
+        .main .account{
+            width: 5rem;
+            height: 1.1rem;
+            line-height: 1.08rem;
+            color: #333;
+            font-size: .3rem;
+            text-align: right;
+        }
+        input::-webkit-input-placeholder {
+            font-size: .30rem;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+        }
+
+        .main .border_top {
+            border-top: 1px solid rgba(238, 238, 238, 1);
+        }
+
+        .main .item #getcode {
+            color: rgba(0, 134, 247, 1);
+        }
+
+        .main .main_top {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .main .main_center {
+            margin-top: .2rem;
+            background: rgba(255, 255, 255, 1);
+        }
+        .tips{
+            width: 6.9rem;
+            margin: .4rem auto 0;
+            text-align: right;
+            font-size: .32rem;
+            color: #333;
+        }
+        /* 登录 */
+        .btn_login {
+            width: 6.9rem;
+            height: .9rem;
+            line-height: .9rem;
+            margin: .4rem auto 0;
+            background: #ccc;
+            border-radius: .10rem;
+            font-size: .32rem;
+            font-weight: bold;
+            text-align: center;
+            color: rgba(255, 255, 255, 1);
+        }
+        .btnactive{
+            background: rgba(0, 134, 247, 1);
+        }
+        .btn_login img{
+            display: none;
+        }
+        .wei-btn span{
+            animation: fangda .4s;
+            -webkit-animation: fangda .4s;
+        }
+        .wei-c-y{
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+        .wei-c-y .rotate{
+            display: block;
+            width: 30px;
+            height: 30px;
+            animation: 2s rotate linear infinite;
+            -webkit-animation: rotate 2s linear infinite;
+        }
+        .wei-c-y span{
+            display: none;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>{{ title }}</div>
+        <div class="content"></div>
+    </div>
+    <div class="main">
+        <!-- <div class="main_top">
+            <div class="item flex space-between align-items">
+                <span>当前账户</span>
+                <span class="phone"><input class="account" type="tel" placeholder="请输入手机号" v-model="forget.phone"></span>
+            </div>
+            <div class="item border_top flex space-between align-items">
+                <input type="text" class="code" placeholder="请输入验证码"  v-model="forget.code">
+                <span id="getcode" @click="getCode">{{ timeOut }}</span>
+            </div>
+        </div> -->
+        <div class="main_center">
+            <div class="item align-items"> 
+                <div class="xingpwd" :class="{xingactive:oldpwdxing != '请输入旧支付密码' }" @click="iptPayPwd('oldpwd')" ><span>请输入旧密码:</span>{{oldpwdxing}} <i class="iconfont iconchahao" v-show="forget.oldpwd" @click.stop="deletepwd('oldpwd')"></i></div>
+            </div>
+            <div class="item align-items border_top"> 
+                <div class="xingpwd" :class="{xingactive:newpwdxing != '请输入新支付密码' }" @click="iptPayPwd('newpwd')" ><span>请输入新密码:</span>{{newpwdxing}} <i class="iconfont iconchahao" v-show="forget.newpwd" @click.stop="deletepwd('newpwd')"></i></div>
+            </div>
+            <div class="item align-items border_top"> 
+                <div class="xingpwd" :class="{xingactive:erpwdxing != '请再次输入新支付密码' }" @click="iptPayPwd('erpwd')"><span>请确认新密码:</span>{{erpwdxing}} <i class="iconfont iconchahao" v-show="forget.erpwd" @click.stop="deletepwd('erpwd')"></i></div>
+            </div>
+        </div>
+        <div class="tips" @click="openforgetPwd">忘记支付密码?</div>
+        <div class="btn_login fn-ctr" :class="{'wei-c-y':forgetLoading,btnactive:isAllWrite}" @click="btnSure">
+            <img class="rotate" src="../../image/bailoading.png" alt="">
+            <span>{{ forgetMsg }}</span>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    forget:{
+                        oldpwd:"",
+                        newpwd:"",
+                        erpwd:"",
+                    },
+                    placePwd:"请输入支付密码",
+                    forgetLoading:false,
+                    forgetMsg:"确定",
+                    timeOut:'获取验证码',
+                    title:"修改支付密码",
+                },
+                methods:{
+                    //获取验证码
+                    getCode:function(){
+                        var _this = this;
+                        if(_this.forget.phone == "" || _this.timeOut != "获取验证码"){
+                            return false
+                        }
+                        _this.timeOut = "60S";
+                        _this.getTimeOut()
+                        request('/login/get_captcha',{phone:_this.forget.phone},function(err,res){
+                            if (!err && res.code == 1) {
+                                api.toast({msg:res.msg})
+                            }else{
+                                console.log('失败')
+                            }
+                        })
+                    },
+                    //倒计时
+                    getTimeOut:function(){
+                        var _this = this;
+                        var t = 60;
+                        var timp = setInterval(function(){
+                            if (t <= 0) {
+                                clearInterval(timp);
+                                _this.timeOut = "获取验证码";
+                            }else{
+                                t--;
+                                _this.timeOut = t+"S";
+                            }
+                        },1000)
+                    },
+                    iptPayPwd:function(str){
+                        var _this = this;
+                        var paymentDialog = api.require('paymentDialog');
+                        var param = {
+                            styles:{
+                                titleText:"请输入支付密码",
+                                titleTextSize:16,
+                        }};
+                        paymentDialog.show(param,function(ret){
+                            paymentDialog.hide();
+                            if(ret.event == 'onFinish'){
+                                _this.forget[str] = ret.content;
+                            }
+                        });
+                    },
+                    //删除密码
+                    deletepwd:function(str){
+                        this.forget[str] = "";
+                    },
+                    btnSure:function(){
+                        var _this = this;
+                        if (_this.forgetLoading) {
+                            return false
+                        }
+                        if (_this.forget.oldpwd == "" || _this.forget.newpwd == "" || _this.forget.erpwd == "") {
+                            return false
+                        }
+                        _this.forgetLoading = true
+                        request('/my/change_pay_password',{
+                            pay_old_password:_this.forget.oldpwd,
+                            pay_new_password:_this.forget.newpwd,
+                            pay_check_new_password:_this.forget.erpwd,
+                        },function(err,res){
+                            if (!err && res.code == 1) {
+                                api.toast({msg:res.msg})
+                                api.sendEvent({name:"refreshUserPay"})
+                                api.sendEvent({name:"refreshSetting"})
+                                setTimeout(function(){
+                                   api.closeWin();
+                                },700)
+                            }else{
+                                err ? api.toast({msg:'网络出错'}) : api.toast({msg:res.msg})
+                            }
+                            _this.resginEnd();
+                        })
+                    },
+                    //打开忘记支付密码
+                    openforgetPwd:function(){
+                        var pagestr = api.pageParam;
+                        pagestr.title = "找回支付密码";
+                        pagestr.source = "edit";
+                        api.openWin({
+                            name:"forget_paypwd",
+                            url:"../guoshujie/forget_paypwd.html",
+                            pageParam:api.pageParam,
+                        })
+                    },
+                    // 结束登录状态
+                    resginEnd:function(msg){
+                        this.forgetLoading = false; 
+                    },
+                    back:function(){
+                        if (!this.forgetLoading) {
+                            api.closeWin()
+                        }
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var main = document.querySelector('.main');
+                        var th  = search.style.height;
+                        search.style.marginTop = safeArea + "px";
+                        main.style.paddingTop = safeArea+ 44 + "px";
+                    }
+                    // var phone = api.pageParam.phone || "";
+                    // this.title = api.pageParam.title;
+                    // if (phone != "") {
+                    //     this.forget.phone = phone;
+                    //     var ac = document.querySelector('.account');
+                    //     ac.setAttribute('disabled',true);
+                    //     ac.style.backgroundColor = 'white';
+                    // }
+                },
+                computed:{
+                    oldpwdxing:function(){
+                        var _this = this;
+                        var len = _this.forget.oldpwd.length;
+                        var xing = "";
+                        if (len == 0) {
+                            xing = "";
+                        }else{
+                            xing+= _this.forget.oldpwd;
+                            // for (var i = 1; i <= len; i++) {
+                            //     xing+="*"
+                            // }
+                        }
+                        return xing;
+                    },
+                    newpwdxing:function(){
+                        var _this = this;
+                        var len = _this.forget.newpwd.length;
+                        var xing = "";
+                        if (len == 0) {
+                            xing = "";
+                        }else{
+                            xing+= _this.forget.newpwd;
+                            // for (var i = 1; i <= len; i++) {
+                            //     xing+="*"
+                            // }
+                        }
+                        return xing;
+                    },
+                    erpwdxing:function(){
+                        var _this = this;
+                        var len = _this.forget.erpwd.length;
+                        var xing = "";
+                        if (len == 0) {
+                            xing = "";
+                        }else{
+                            xing+= _this.forget.erpwd;
+                            // for (var i = 1; i <= len; i++) {
+                            //     xing+="*"
+                            // }
+                        }
+                        return xing;
+                    },
+                    isAllWrite:function(){
+                        var status = true;
+                        if (this.forget.oldpwd == "" || this.forget.newpwd == "" || this.forget.erpwd == "") {
+                            status = false;
+                        }
+                        return status;
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

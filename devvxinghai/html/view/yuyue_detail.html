@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>查看使用详情</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+<link rel="stylesheet" href="../../css/common.css">
+<script src="../../js/rem.js"></script>
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F8F9FB;
+}
+.header {
+    width: 7.5rem;
+    height: .93rem;
+    background-color: #FFFFFF;
+    padding: 0 .3rem;
+    position: fixed;
+    top: 0;
+    z-index: 1450;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.header .iconfanhui {
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+
+}
+.header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+
+.middle{
+    width: 7.5rem;
+    height: 12.06rem;
+    overflow: hidden;
+}
+.middle .first{
+    height: 1.9rem;
+    overflow: hidden;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    
+}
+.middle .left{
+    float: left;
+    margin-top: .5rem;
+}
+.middle img{
+    display: block;
+    width:.36rem;
+    height:.36rem;
+    position: relative;
+    top: 0.05rem;
+   
+}
+.middle .first .line{
+    width: .01rem;
+    height: 1rem;
+    margin-left: .16rem;
+    background-color: #EEEEEE;
+}
+.middle .upline{
+    width: .01rem;
+    height: .5rem;
+    margin-left: .16rem;
+    background-color: #EEEEEE;
+    margin-top: -0.5rem;
+}
+.middle .right{
+    float: left;
+    width: 6rem;
+    margin-left: .2rem;
+    margin-top: .5rem;
+}
+.middle .right .title{
+    /* width: 4.78rem; */
+    font-size: .32rem;
+    color: #333333;
+    text-align: left;
+}
+.middle .right .time{
+    font-size: .26rem;
+    color: #999999;
+    text-align: left;
+    margin-top: .15rem;
+    margin-bottom: .4rem;
+}
+.middle .circle{
+    width: .13rem;
+    height: .13rem;
+    background-color: #999999;
+    border-radius: 50%;
+    margin-left: .1rem;
+}
+.middle .second{
+    height: 1.9rem;
+    overflow: hidden;
+    margin-top:0;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    border-bottom: 1px solid #eee;
+}
+.middle .second .right{
+    margin-top: .3rem;
+    float: left;
+    width: 6rem;
+    margin-left: .2rem;
+}
+.middle .second .right .title{
+    width: 4.78rem;
+    font-size: .32rem;
+    color: #333333;
+    text-align: left;
+    
+}
+.middle .second .right .time{
+    font-size: .26rem;
+    color: #999999;
+    text-align: left;
+    margin-top: .15rem;
+    margin-bottom: .2rem;
+}
+
+.middle .myorder{
+    width: 7.5rem;
+    height: 2rem;
+    background-color: #FFFFFF;
+    padding-left: .3rem;
+    overflow: hidden;
+}
+.middle .myorder .ordernum {
+    font-size: .28rem;
+    text-align: left;
+    color: #999999;
+    margin-top: .4rem;
+    overflow: hidden;
+    margin-left: .28rem;
+}
+.middle .myorder .ordernum span{
+    font-size: .32rem;
+    text-align: left;
+    color: #333333;
+    margin-left: .2rem;
+}
+
+.middle .myorder .down{
+    height: 1.08rem;
+    overflow: hidden;
+    margin-top: .4rem;
+
+}
+.middle .myorder .down .lefta{
+    font-size: .28rem;
+    color: #999999;
+    text-align: left;
+    float: left;
+    margin-left: .28rem;
+}
+.middle .myorder .down .lefta span{
+    font-size: .32rem;
+    color: #0086F7;
+    text-align: left;
+    float: right;
+    margin-left: .2rem;
+    position: relative;
+    top: .04rem;
+}
+.middle .myorder .down .center{
+    width: .01rem;
+    height: .3rem;
+    background-color: #EEEEEE;
+    float: left;
+    margin-left: .4rem;
+    margin-top: .1rem;
+}
+.middle .myorder .down .righta{
+    font-size: .28rem;
+    color: #999999;
+    text-align: left;
+    float: left;
+}
+.middle .myorder .down .righta span{
+    font-size: .32rem;
+    color: #0086F7;
+    text-align: left;
+    position: relative;
+    top: .04rem;
+   
+}
+</style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" opt="1"></v-loading>
+    <div class="header flex align-items space-between">
+        <i class="iconfont iconfanhui " @click="back"></i>
+        <div class="order ">使用详情</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+        <div class="myorder">
+            <div class="ordernum">
+                有效期至:<span>{{ dt.over_time }}</span>
+            </div>
+            <div class="down ">
+                <div class="lefta ">总使用次数(次)：<span>{{ dt.all_count }}</span></div>
+                <div class="center"></div>
+                <div class="righta ">剩余使用次数(次)：<span>{{ dt.count }}</span></div>
+            </div>
+            
+        </div>
+        <div class="second" v-for="item in dt.detail" @click="goyuye(item)">
+            <div class="right">
+                <div class="title">{{ item.detail }}</div>
+                <div class="time"><span>{{ item.attrname }}</span>{{ item.spending_time }}</div>
+            </div>
+        </div>
+        <!-- <div class="second">
+            <div class="right">
+                <div class="title">鑫海野枸杞野枸杞</div>
+                <div class="time">2018-18-13 10:30</div>
+            </div>
+        </div> -->
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    id:"",
+                    order_sn:"",
+                    check:"",
+                    dt:{},           //全局数据对象
+                    loading:true,
+                },
+                methods:{
+                    getDtl:function(){
+                        var _this = this;
+                        request('/tourism/tourism_card_use_detail',{id:_this.id,order_sn:_this.order_sn},function(err,res){
+                            setTimeout(function(){_this.loading = false},700)
+                            if (!err && res.code == 1) {
+                                _this.dt = res.data;
+                            }else{
+                                err ? consoel.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    //去预约
+                    goyuye:function(item){
+                        if (item.is_use !== 0 ) {
+                            return false
+                        }
+                        item.id = this.id;
+                        item.order_sn = this.order_sn;
+                        api.openWin({
+                            name:"yuyOrder",
+                            url:"../view/yuy_order.html",
+                            pageParam:item,
+                        })
+
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.middle');
+                        var header = document.querySelector('.header');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight + safeArea + "px";
+                        header.style.paddingTop = safeArea+"px";
+                        main.style.paddingTop = safeArea + headerHeight  + "px";
+                    };
+                    _this.id = api.pageParam.id;
+                    _this.order_sn = api.pageParam.order_sn;
+                    _this.getDtl();
+                }
+            })
+        }
+    </script>
+</body>
+</html>

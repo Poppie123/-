@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旅游列表</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_kdbfja02pkl.css">
+    <style>
+        html,body{
+            height: 100%;
+            background: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            /* box-shadow:0px 1px 0px 0px rgba(238,238,238,1); */
+        }
+        .top .search{
+            width: 5.56rem;
+            height: .6rem;
+            line-height: .56rem;
+            border: 1px solid #cccccc;
+            border-radius: .3rem;
+            padding-left: .3rem;
+            font-size: .28rem;
+            color: #999999;
+            font-weight: 500;
+        }
+        .top .search i{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .top .search input{
+            width: 4.6rem;
+            height: 100%;
+            line-height: .6rem;
+            font-size: .28rem;
+            font-weight: 500;
+            margin-left: .1rem;
+        }
+        /* 谷歌浏览器 blink v8引擎*/
+        .top .search input::-webkit-input-placeholder{
+            color: #999999;
+        }
+        /* 苹果公司 safari*/
+        .top .search input::-webkit-input-placeholder{
+            color: #999999;
+        }
+        /* 火狐内核 */
+        .top .search input::-moz-placeholder{ 
+            color: #999999;
+
+        }
+        /* 由于我的IE刚好是IE9及以下不支持， */
+        .top .search input:-ms-input-placeholder{ 
+            color: #999999;    
+        }
+        .top .content{
+            width: .3rem;
+            text-align: right;
+        }
+        .top .word{
+            font-size: .28rem;
+            color: #333333;
+            font-weight: 500;
+        }
+        .none{
+            display: none;
+        }
+        .top .i{
+            width: .3rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .classify{
+            width: 100%;
+            height: .88rem;
+            background: #FFFFFF;
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+            position: fixed;
+            z-index: 999;
+        }
+        .classify .name{
+            font-size: .3rem;
+            color: #333333;
+            font-weight: 500;
+            position: relative;
+        }
+        .classify .active{
+            color: #0086F7 !important;
+        }
+        .classify .up{
+            font-size: .12rem;
+            color: #BBBBBB;
+            position: absolute;
+            left: .98rem;
+            top: .02rem;
+        }
+        .classify .down{
+            font-size: .12rem;
+            color: #BBBBBB;
+            position: absolute;
+            left: .98rem;
+            top: .16rem;
+        }
+        .classify .shaixuan{
+            font-size: .24rem;
+            color: #999999;
+        }
+        .pro-list{
+            width: 100%;
+            padding:  0 .3rem;
+            margin-top: .2rem;
+            -moz-column-count: 2;
+            -webkit-column-count: 2;
+            column-count: 2;
+            -moz-column-gap: .18rem;
+            -webkit-column-gap: .18rem;
+            column-gap: .18rem;
+            display: inline-block;
+        }
+        .pro-list .list{
+            width: 3.36rem;
+            border-radius: .1rem;
+            margin-bottom: .2rem;
+            background: #FFFFFF;
+            padding-bottom: .25rem;
+            float: left;
+            break-inside: avoid;
+        }
+        .pro-list .list img{
+            width: 3.36rem;
+            height: 2.5rem;
+        }
+        .pro-list .list .name{
+            width: 100%;
+            font-size: .28rem;
+            font-weight: bold;
+            line-height: .4rem;
+            padding: .22rem .22rem 0;
+            margin-bottom: .14rem;
+        }
+        .pro-list .list .ongoing{
+            width: .8rem;
+            height: .3rem;
+            margin-bottom: .14rem;
+            border-radius: .04rem;
+            background: rgba(0,134,247,.05);
+            border-radius: .04rem;
+            font-size: .2rem;
+            font-weight: 500;
+            color: #0086F7;
+            line-height: .3rem;
+            text-align: center;
+            margin-left: .22rem;
+        }
+        .pro-list .list .satisfy{
+            font-size: .26rem;
+            color: #999999;
+            margin-left: .22rem;
+        }
+        .pro-list .list .dollar{
+            font-size: .28rem;
+            color: #FE6602;
+            font-weight: bold;
+            margin-left: .22rem;
+        }
+        .pro-list .list .price{
+            font-size: .32rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .screen-mask{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 1.77rem;
+            background-color: #000;
+            opacity: .6;
+            z-index: 998;
+        }
+        .popup{
+            background: #FFFFFF;
+            position: fixed;
+            top: 1.77rem;
+            z-index: 999;
+            width: 7.5rem;
+            height: 9rem;
+            padding: .4rem .3rem 0;
+        }
+        .popup .jiage{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .popup .qujian{
+            width: 100%;
+            margin-top: .3rem;
+        }
+        .popup .qujian i{
+            font-size: .2rem;
+            color: #333333;
+            font-weight: bold;
+        }
+        .popup .qujian input{
+            width: 2.8rem;
+            height: .72rem;
+            border: 1px solid #DDDDDD;
+            border-radius: .06rem;
+            text-align: center;
+            font-size: .24rem;
+            line-height: .7rem;
+        }
+        /* 谷歌浏览器 blink v8引擎*/
+        .popup .qujian input::-webkit-input-placeholder{
+            color: #666666;
+        }
+        /* 苹果公司 safari*/
+        .popup .qujian input::-webkit-input-placeholder{
+            color: #666666;
+        }
+        /* 火狐内核 */
+        .popup .qujian input::-moz-placeholder{ 
+            color: #666666;
+
+        }
+        /* 由于我的IE刚好是IE9及以下不支持， */
+        .popup .qujian input:-ms-input-placeholder{ 
+            color: #666666;    
+        }
+        .popup .select{
+            width: 100%;
+        }
+        .popup .option{
+            width: 1.86rem;
+            height: .72rem;
+            background: #F8F9FB;
+            border-radius: .06rem;
+            font-size: .28rem;
+            font-weight: 500;
+            line-height: .7rem;
+            text-align: center;
+            margin-top: .5rem;
+            margin-right: .24rem;
+        }
+        .popup .btn{
+            width: 6.3rem;
+            height: .9rem;
+            background: #0086F7;
+            border-radius: .1rem;
+            line-height: .9rem;
+            text-align: center;
+            font-size: .32rem;
+            font-weight: 500;
+            color: #FFFFFF;
+            position: absolute;
+            left: .6rem;
+            bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="top flex space-between align-items">
+        <div class="i">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div class="search flex">
+            <i class="iconfont iconxingzhuang9"></i>
+            <!-- <span>搜索</span> -->
+            <input type="text" placeholder="搜索">
+        </div>
+        <div class="content none"></div>  <!-- 旅游列表显示 -->
+        <div class="word">搜索</div>  <!-- 弹窗显示 -->
+    </div>
+    <div class="top88"></div>
+    <div class="classify flex space-around align-items">
+        <div class="name">综合</div>
+        <div class="name">销量</div>
+        <div class="name active">
+            <span>好评率</span> 
+            <i class="iconfont iconshangsanjiaoxing up active"></i>
+            <i class="iconfont iconxiasanjiaoxing down "></i>
+        </div>
+        <div class="name">
+            <span>筛选</span>
+            <i class="shaixuan iconfont iconxingzhuang5"></i>
+        </div>
+    </div>
+    <ul class="pro-list">
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉+玉龙雪山5日4晚跟团游玩跟团游玩</div>
+            <div class="ongoing">进行中</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉+玉龙雪山5日4晚跟团游玩跟团游玩</div>
+            <div class="ongoing">进行中</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+                <img src="../../image/pro11@2x.png" alt="">
+                <div class="name ellipsis2">丽江+香格里拉</div>
+                <div class="satisfy">
+                    <span>97%满意度</span>
+                    <span>23销量</span>
+                </div>
+                <div>
+                    <span class="dollar">￥<span class="price">3001</span></span>
+                </div>
+            </li>
+        <li class="list">
+            <img src="../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉+玉龙雪山5日4晚跟团游玩跟团游玩</div>
+            <div class="ongoing">进行中</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+        <li class="list">
+            <img src="../../../image/pro11@2x.png" alt="">
+            <div class="name ellipsis2">丽江+香格里拉</div>
+            <div class="satisfy">
+                <span>97%满意度</span>
+                <span>23销量</span>
+            </div>
+            <div>
+                <span class="dollar">￥<span class="price">3001</span></span>
+            </div>
+        </li>
+    </ul>
+    <div class="screen-mask"></div>
+    <div class="popup">
+        <div class="jiage">价格/优惠</div>
+        <div class="qujian">
+            <input type="number" placeholder="最低价">
+            <!-- <div class="to">-</div> -->
+            <i class="iconfont iconjianhao"></i>
+            <input type="number" name="" id="" placeholder="最高价">
+        </div>
+        <div class="select flex ">
+            <div class="option">国内</div>
+            <div class="option">国外</div>
+        </div>
+        <div class="btn">确定</div>
+    </div>
+    <script src="../../js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>订单详情</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        body {
+            background: #F7F7F7;
+        }
+
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 1300;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .main {
+            padding-top: .88rem;
+            padding-bottom: 1.2rem;
+            width: 100%;
+            height: auto;
+        }
+
+        /* 地址 */
+        .main .address {
+            width: 100%;
+            background: #F7F7F7;
+            overflow: hidden;
+        }
+
+        .main .address .address_content {
+            width: 100%;
+            height: 1.83rem;
+            padding: 0 .30rem;
+        }
+
+        .main .address .address_content .user_name {
+            width: 100%;
+            height: .7rem;
+            margin-top: .3rem;
+            line-height: .7rem;
+            font-size: .30rem;
+            font-weight: bold;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .main .address .address_content .user_name span {
+            float: left;
+        }
+
+        .main .address .address_content .user_name .phone {
+            float: left;
+            margin-left: .8rem;
+        }
+
+        .main .address .address_content .address_detail {
+            height: .8rem;
+            font-size: .26rem;
+            font-weight: 500;
+            color: #333;
+            line-height: .35rem;
+        }
+
+        /* 背景线 */
+        .main .address .add_bg {
+            width: 7.25rem;
+            height: .06rem;
+            margin: 0 auto;
+            background-image: url(../../image/gsj_bg.png);
+            background-repeat: repeat;
+            background-size: 100% 100%;
+        }
+
+        /* 快递单号 */
+        .main .courier_number {
+            width: 100%;
+            height: 1.09rem;
+            padding: .41rem .3rem 0;
+            font-size: .28rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .main .courier_number i {
+            font-size: .25rem;
+            color: #333;
+        }
+
+        /* 商品开始 */
+        .goods_content {
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+            padding: .41rem .30rem 0 .31rem;
+        }
+
+        .goods_list {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .goods_item {
+            width: 100%;
+            height: auto;
+            padding-bottom: .37rem;
+            overflow: hidden;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .goods_item img {
+            float: left;
+            width: 2.5rem;
+            height: 1.85rem;
+            border-radius: .1rem;
+        }
+
+        .goods_item .goods_right {
+            float: right;
+            width: 4.20rem;
+            height: 1.85rem;
+            overflow: hidden;
+        }
+
+        .goods_item .goods_right .goods_name {
+            width: 100%;
+            overflow: hidden;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            line-height: .44rem;
+        }
+
+        .goods_item .goods_right .sub_money {
+            width: 100%;
+            font-size: .32rem;
+            font-weight: 400;
+            color: #FF4242;
+            margin-top: .48rem;
+        }
+
+        .goods_item .goods_right .sub_money .a {
+            font-size: .24rem;
+        }
+
+        .goods_item .goods_right .sub_money .sub_number {
+            font-size: .20rem;
+            color: #333;
+            padding-top: .15rem;
+        }
+
+        /* 商品金额 */
+        .main .main_list {
+            width: 100%;
+            overflow: hidden;
+            padding: .31rem .28rem 0 .32rem;
+            background: #fff;
+        }
+
+        .main .main_list .main_item {
+            margin-bottom: .28rem;
+            font-size: .24rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .main .main_second {
+            margin-top: .2rem;
+        }
+
+        /* 底部 */
+        .goods_footer {
+            width: 100%;
+            height: .98rem;
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            line-height: .98rem;
+            font-size: .32rem;
+            font-weight: 400;
+        }
+
+        .goods_footer .goods_footer_item {
+            width: 33.33%;
+            height: .98rem;
+            background-color: #fff;
+        }
+        .goods_footer .shouhuo{
+            width: 66.66%!important;
+            height: .98rem;
+            background: #0086F7;
+            color: #fff;
+            font-weight: bold;
+        }
+        .goods_footer .allwidth{
+            width: 100%;
+            background: #0086F7;
+            color: #fff;
+        }
+        .goods_footer .quanhui{
+            width: 66.66%!important;
+            height: .98rem;
+            background: #ccc;
+            color: #fff;
+            font-weight: bold;
+        }
+        .goods_footer .service {
+            /* background: rgb(32, 23, 23); */
+            color: #0086F7;
+        }
+
+        .goods_footer .service i {
+            font-size: .44rem;
+            padding: .02rem .15rem 0 .3rem;
+        }
+
+        .goods_footer .refund {
+            background: rgba(91, 180, 255, 1);
+        }
+
+        .goods_footer .evaluation {
+            background: rgba(0, 134, 247, 1);
+        }
+          .goods_footer .goods_footer_item:nth-child(n+2){
+            color: #fff;
+        }
+        .goods_footer .goods_footer_item:last-child{
+            font-weight: bold;
+        }
+        .buy-timeout{
+            width: 100%;
+            height: 1.6rem;
+            overflow: hidden;
+            padding: 0 1.08rem;
+            background-image: url('../../image/m_bg.png');
+            background-size: 100% 100%;
+        }
+        .buy-timeout .text{
+            font-size: .32rem;
+            color: #fff;
+            font-weight: bold;
+            margin-top: .3rem;
+            margin-bottom: .1rem;
+        }
+        .buy-timeout .time{
+            font-size: .32rem;
+            color: #fff;
+        }
+        .copy-order{
+            margin-left: .15rem;
+            color: #0086F7;
+        }
+        .hexiaospan{
+            margin-right: 10px;
+        }
+        /* 店铺部分样式 */
+        .shop-item{
+            width: 100%;
+            height: auto;
+            border-radius: .2rem;
+            margin-bottom: .15rem;
+            background: #fff;
+            box-shadow: 0px 4px 12px 0px rgba(192,192,192,0.3);
+            padding: .26rem;
+        }
+         .shop-item .shop-name{
+            width: 100%;
+            height: .92rem;
+        }
+         .shop-item .shop-name .circle{
+            margin: 0 .15rem;
+            width: .38rem;
+            height: .38rem;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            position: relative;
+        }
+         .shop-item .shop-name .circle .iconjuxing{
+            display: none;
+        }
+         .shop-item .shop-name .ciractive{
+            border: 0;
+        }
+         .shop-item .shop-name .ciractive .iconjuxing{
+            display: inline;
+            font-size: .4rem;
+            color:#0086F7;
+            position: absolute;
+            left: -2px;
+            top: -2px;
+        }
+        .shop-item .shop-name .iconxingzhuang4{
+            font-size: .3rem;
+            margin-right: .1rem;
+        }
+         .shop-item .shop-name span{
+            font-size: .28rem;
+            color: #333;
+        }
+         .shop-item .shop-name .icongengduo{
+            font-size: .28rem;
+            color: #333;
+        }
+        .shop-item .goods_right{
+            width: 3.5rem;
+        }
+        .shop-item .goods_list .goods_item{
+            margin-top: .2rem;
+        }
+        .shop-item .goods_list .goods_item:last-child{
+            border-bottom: 0;
+        }
+        /* 头部 */
+        .buy-header{
+            width: 100%;
+            height: .88rem;
+            line-height: .88rem;
+            background: #BADEFF;
+            padding: 0 .31rem;
+        }
+        .buy-header .text{
+            font-size: .32rem;
+            color: #0086F7;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>{{ orderStatusMsg }}</div>
+        <div class="content"></div>
+    </div>
+    <div class="main">
+        <div class="buy-timeout" v-if="orderInfo.pay_status == 0 && orderInfo.order_status != 2">
+            <div class="text">等待买家付款</div>
+            <div class="time">{{ endTime }}</div>
+        </div>
+        <!-- 旅居卡头部 -->
+        <div class="buy-header" v-if="orderInfo.order_type == 1 && orderInfo.pay_status !== 0">
+            <div class="text" v-if="orderInfo.order_status == 1 && orderInfo.pay_status==1 && orderInfo.shipping_status == 0">制卡中</div>
+            <div class="text" v-else-if="orderInfo.shipping_status == 1">已发货</div>
+            <div class="text" v-else-if="orderInfo.pay_status == 1 && orderInfo.shipping_status == 2">已完成</div>
+        </div>
+        
+        <div class="address" v-if="orderInfo.consignee != ''">
+            <div class="address_content">
+                <div class="user_name">
+                    <span>{{ orderInfo.consignee }}</span>
+                    <div class="phone">{{ orderInfo.phone }}</div>
+                </div>
+                <div class="address_detail">{{ orderInfo.province }} {{ orderInfo.city }} {{ orderInfo.district}} {{ orderInfo.address}}</div>
+                <div class="add_bg"></div>
+            </div>
+        </div>
+        <div class="courier_number flex space-between" v-if="orderInfo.invoice_no">
+            <div class="">快递单号：<span>{{ invoice_no }}</span></div>
+            <i class="iconfont icongengduo"></i>
+        </div>
+        <div class="goods_content" v-if="orderInfo.order_type !== 4">
+            <div class="goods_list">
+                <div class="goods_item" v-for="item in orderInfo.order_goods">
+                    <img :src="item.goods_img" alt="" srcset="">
+                    <div class="goods_right fr flex flex_wrap align-content-stretch">
+                        <div class="goods_name ellipsis2">{{ item.goods_name }}</div>
+                        <div class="sub_money flex space-between align-items">
+                            <div><span class="a">￥</span>{{ item.shop_price }}</div>
+                            <span class="sub_number">x{{ item.goods_number }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="goods_content" v-if="orderInfo.order_type == 4">
+            <div class="shop-item" v-for="shopval in orderInfo.order_goods">
+                <div class="shop-name flex align-items flex flex-start"  @click="openShopPage(shopval.shop_id)">
+                    <i class="iconfont iconxingzhuang4"></i>
+                    <span>{{ shopval.shop_name }}</span>
+                    <i class="iconfont icongengduo"></i>
+                </div>
+                <div class="goods_list">
+                    <div class="goods_item" v-for="item in shopval.goods">
+                        <img :src="item.goods_img" alt="" srcset="">
+                        <div class="goods_right fr flex flex_wrap align-content-stretch">
+                            <div class="goods_name ellipsis2">{{ item.goods_name }}</div>
+                            <div class="sub_money flex space-between align-items">
+                                <div><span class="a">￥</span>{{ item.shop_price }}</div>
+                                <span class="sub_number">x{{ item.goods_number }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="main_list">
+            <div class="main_item flex space-between align-items">
+                <span>商品金额</span>
+                <span>￥{{ orderInfo.goods_amount }}</span>
+            </div>
+            <div class="main_item flex space-between align-items">
+                <span>优惠</span>
+                <span>{{ orderInfo.order_amount - orderInfo.goods_amount }}</span>
+            </div>
+            <div class="main_item flex space-between align-items">
+                <span>实付款</span>
+                <span>￥{{ orderInfo.order_amount }}</span>
+            </div>
+        </div>
+        <div class="main_list main_second">
+            <div class="main_item flex space-between align-items">
+                <span>订单号</span>
+                <span>{{ order_id }}<span class="copy-order" @click="copyOrder">一键复制</span></span>
+            </div>
+            <div class="main_item flex space-between align-items" v-if="orderInfo.add_time">
+                <span>订单创建时间</span>
+                <span>{{ orderInfo.add_time_msg }}</span>
+            </div>
+            <div class="main_item flex space-between align-items" v-if="orderInfo.check !== null">
+                <span>核销码</span>
+                <span><span class="hexiaospan" v-for="checkVal in orderInfo.check">{{checkVal}}</span><span class="copy-order" @click="copyHexiao(orderInfo.check)">一键复制</span></span>
+            </div>
+            <!-- <div class="main_item flex space-between align-items">
+                <span>优惠</span>
+                <span>-￥100.00</span>
+            </div> -->
+        </div>
+    </div>
+    <!-- 普通订单 -->
+    <div class="goods_footer flex ifooter" v-if="orderInfo.order_type == 4">
+        <div class="goods_footer_item service flex" v-if="orderInfo.order_status != 8 && orderInfo.order_status != 2 &&  orderInfo.order_type == 4 && orderInfo.order_status !== 5" @click="openKefu">
+            <i class="iconfont iconlianxikefu"></i>
+            <span>联系客服</span>
+        </div>
+        <div class="goods_footer_item refund" v-if="orderInfo.pay_status == 0 && orderInfo.order_status != 2"  @click="handerOrder(2)">取消订单</div>
+        <div class="goods_footer_item evaluation" v-else-if="orderInfo.pay_status == 0 && orderInfo.order_status != 2"  @click="handerOrder(1)">去付款</div>
+        <div class="goods_footer_item shouhuo" v-else-if="orderInfo.pay_status == 1 && orderInfo.shipping_status == 0 && orderInfo.order_type == 4" @click="handerOrder(3)">提醒发货</div>
+        <!-- <div class="goods_footer_item refund" v-if="orderInfo.pay_status == 1"  @click="handerOrder(2)">取消订单</div> -->
+        <div class="goods_footer_item shouhuo" v-else-if="orderInfo.shipping_status == 1" @click="handerOrder(5)">确认收货</div>
+        <div class="goods_footer_item refund" v-else-if="orderInfo.shipping_status == 2 && orderInfo.order_status == 7 && orderInfo.order_status != 8" @click="handerOrder(6)">申请退款</div>
+        <div class="goods_footer_item evaluation" v-if="orderInfo.shipping_status == 2 && orderInfo.order_status == 7 && orderInfo.order_status != 8" @click="handerOrder(7)">去评价</div>
+        <div class="goods_footer_item quanhui" v-if="orderInfo.order_status == 3" >退款中</div>
+        <!-- <div class="goods_footer_item refund">申请退款</div> 
+        <div class="goods_footer_item evaluation">去评价</div> --> 
+    </div>
+    <!-- 旅居卡 -->
+    <div class="goods_footer flex ifooter" v-if="orderInfo.order_type == 1">
+        <div class="goods_footer_item allwidth" v-if="orderInfo.pay_status == 0 && orderInfo.order_status != 2"  @click="handerOrder(1)">去付款</div>
+        <div class="goods_footer_item allwidth" v-if="orderInfo.shipping_status == 1" @click="handerOrder(5)">确认收货</div>
+        <div class="goods_footer_item allwidth" v-if="orderInfo.pay_status == 1 && orderInfo.shipping_status == 2" @click="handerOrder(8)">查看使用详情</div>
+    </div>
+    <!-- 旅游产品 -->
+    <div class="goods_footer flex ifooter" v-if="orderInfo.order_type == 2 || orderInfo.order_type == 3">
+        <div class="goods_footer_item allwidth" v-if="orderInfo.pay_status == 0 && orderInfo.order_status != 2"  @click="handerOrder(1)">去付款</div>
+        <div class="goods_footer_item allwidth" v-if="orderInfo.shipping_status == 1" @click="handerOrder(5)">确认收货</div>
+        <div class="goods_footer_item allwidth" v-if="orderInfo.pay_status==1 && orderInfo.order_status==1" @click="handerOrder(6)">申请退款</div>
+        <div class="goods_footer_item allwidth" v-if="orderInfo.order_status==7" @click="handerOrder(7)">去评价</div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        //order_type 1:旅居卡 2:旅游 3:健康 4:商城
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    order_id:"",
+                    loading:true,
+                    opt:'1',
+                    orderInfo:{},
+                    endTime:"",
+                },
+                methods:{
+                    getDtl:function(){
+                        var _this = this;
+                        //shipping_id,shipping_name,shipping_fee,invoice_no
+                        //快递id  快递名称   快递费用   快递单号
+                        request('/my/order_detail',{order_id:_this.order_id},function(err,res){
+                            setTimeout(function(){_this.loading = false;},1100)
+                            if (!err && res.code == 1) {
+                                _this.orderInfo = res.data;
+                                _this.orderInfo.pay_status == 0 ? _this.startTimeout() : ""//如果是未支付订单，开启倒计时
+                                _this.orderInfo.check != null ? _this.orderInfo.check = _this.orderInfo.check.split(',') : ""
+                            }else{
+                                
+                            }
+                        })
+                    },
+                    //处理订单操作
+                    handerOrder:function(type){
+                        var _this = this;
+                        if (type == 1) {    //去付款
+                            if (_this.endTime == "订单已超时") {
+                                api.toast({msg:"订单已超时"})
+                                return false
+                            }
+                            api.openWin({
+                                name:"payType",
+                                url:"../user/pay_type.html",
+                                pageParam:{
+                                    orderno:_this.order_id,
+                                    source:2,
+                                }
+                            })
+                        }else if(type == 2){ //取消订单
+                            _this.loading = true;
+                            _this.opt = '.65';
+                            request('/my/order_quxiao.html',{order_id:_this.order_id},function(err,res){
+                                _this.loading = false;
+                                if (!err && res.code == 1) {
+                                    api.sendEvent({name:"refreshOrder"})
+                                    _this.getDtl()
+                                }else{
+                                    err ? console.log('/my/order_quxiao500') : api.toast({msg:res.msg});
+                                }
+                            })
+                        }else if(type == 3){ //提醒发货
+                            _this.loading = true;
+                            _this.opt = '.65';
+                            request('/my/order_tixingfahuo',{order_id:_this.order_id},function(err,res){
+                                _this.loading = false;
+                                if (!err && res.code == 1) {
+                                    api.toast({msg:"提醒发货成功",location:'middle'})
+                                }else{
+                                    err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                                }
+                            })
+
+                        }else if(type == 5){ //确认收货
+                            var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '请确认收货',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '确认'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									},
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+                                    _this.loading = true;
+                                    _this.opt = '.65';
+                                    request('/my/order_shouhuo',{order_id:_this.order_id},function(err,res){
+                                        _this.loading = false;
+                                        if (!err && res.code == 1) {
+                                            api.sendEvent({name:"refreshOrder"})
+                                            _this.getDtl();
+                                        } else {
+                                            err ? console.log('/my/order_shouhuo500') : api.toast({msg:res.msg})
+                                        }
+                                    })
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+								});
+							});
+                           
+                        }else if(type == 6){ //申请退款
+                            var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '请确认退款',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '确认'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									},
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+                                    _this.loading = true;
+                                    _this.opt = '.65';
+                                    request('/my/order_tuikuan',{order_id:_this.order_id,mark:"不想要了",shouhou_desc:"",tuikuan_way:1},function(err,res){
+                                        _this.loading = false;
+                                        if (!err && res.code == 1) {
+                                            api.sendEvent({name:"refreshOrder"})
+                                            _this.getDtl();
+                                            api.toast({msg:"申请退款成功,请等待商家确认"})
+                                        } else {
+                                            err ? console.log('/my/order_tuikuan500') : api.toast({msg:res.msg})
+                                        }
+                                    })
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+								});
+							});
+                            
+                        }else if(type == 7){ //去评价
+                            api.openWin({
+                                name:"goEvaluation",
+                                url:"../guoshujie/go_evaluation.html",
+                                pageParam:{
+                                    order_id:_this.order_id,
+                                    type:_this.orderInfo.order_type,
+                                },
+                            })
+                        }else if(type == 8){ // 旅居卡使用详情
+                            api.openWin({
+                                name:'yuyOrder',
+                                url:"../view/yuyue_detail.html",
+                                pageParam:{
+                                    id:_this.orderInfo.order_goods[0].goods_id,
+                                    order_sn:_this.orderInfo.order_id,
+                                },
+                            })
+                        }
+                    },
+                    startTimeout:function(){
+                        var _this = this;
+                        var currentTimp = Math.floor((new Date()).valueOf() / 1000); //当前时间戳(s)
+                        var orderTimp = _this.orderInfo.add_time //订单时间戳(s)
+                        var fifteenMinTimp = 30 * 60;             //30分钟的时间戳(s)
+                        if ( currentTimp - orderTimp < fifteenMinTimp) {    //订单在有效期范围内
+                            setInterval(function(){
+                                currentTimp = Math.floor((new Date()).valueOf() / 1000); //当前时间戳(s)
+                                if (currentTimp - orderTimp < fifteenMinTimp) {
+                                    var timeObj = interval(currentTimp,orderTimp + fifteenMinTimp);
+                                    _this.endTime = '剩余'+timeObj.m+':'+timeObj.s+'关闭';
+                                }else{
+                                    _this.endTime = "订单已超时"
+                                }
+                            },1000);
+                        } else {
+                            _this.endTime = "订单已超时";  
+                        }
+                    },
+                    openKefu:function(){
+                        api.toast({msg:"暂未开放"})
+                        // api.openWin({
+                        //     name:"kefu",
+                        //     url:"../chat/chat_list.html",
+                        //     reload:true,
+                        // });
+                    },
+                    openShopPage:function(id){
+                        api.openWin({
+                            name:"gdsShop",
+                            url:"../view/gds_shop.html",
+                            pageParam:{
+                                shopid:id,
+                            }
+                        })
+                    },
+                    // 一键复制订单号
+                    copyOrder:function(){
+                        var orderNo = this.order_id;
+                        copy(orderNo)
+                    },
+                    //复制核销号
+                    copyHexiao:function(hexiaono){
+                        var str = hexiaono.join(' ')
+                        copy(str)
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var mb = document.querySelector('.top');
+                        var mbHeight = mb.clientHeight;
+                        var main = document.querySelector('.main');
+                        mb.style.height = mbHeight + safeArea  + "px";
+                        mb.style.paddingTop = safeArea  + "px";
+                        main.style.paddingTop = mbHeight + safeArea + "px";
+                        handerIOSX();
+                    }
+                    this.order_id = api.pageParam.order_id;
+                    this.getDtl();
+                    var _this = this;
+                    api.addEventListener({name:"refreshOrderDtl"},function(){_this.getDtl()}); //监听刷新订单
+                },
+                computed:{
+                    orderStatusMsg:function(){
+                        var _this = this;
+                        var msg = "";
+                        if (_this.orderInfo.order_type == 4) {   //订单
+                            if (_this.orderInfo.pay_status == 0 && _this.orderInfo.order_status != 2) {
+                                msg = "未支付"
+                            }else if(_this.orderInfo.pay_status == 1 && _this.orderInfo.shipping_status == 0 && _this.orderInfo.order_status != 8 && _this.orderInfo.order_type != 1){
+                                msg = "待发货"
+                            }else if(_this.orderInfo.shipping_status == 1 && _this.orderInfo.order_status != 8){
+                                msg = "待收货"
+                            }else if(_this.orderInfo.shipping_status == 2 && _this.orderInfo.order_status == 7 && _this.orderInfo.order_status != 8){
+                                msg = "待评价"
+                            }else if(_this.orderInfo.order_status == 8){
+                                msg = "已完成"
+                            }else if(_this.orderInfo.order_status == 2){
+                                msg = "已取消"
+                            }else if(_this.orderInfo.order_status == 3){
+                                msg = "退款中"
+                            }else if(_this.orderInfo.order_status == 5){
+                                msg = "已退款"
+                            }else if(_this.orderInfo.order_status == 4){
+                                msg = "退货中"
+                            }
+                        }else if(_this.orderInfo.order_type == 1){ //旅居卡
+                            if (_this.orderInfo.pay_status == 0 && _this.orderInfo.order_status != 2) {
+                                msg = "未支付"
+                            }else if(_this.orderInfo.order_status == 1 && _this.orderInfo.pay_status == 1 && _this.orderInfo.shipping_status !== 2){
+                                msg = "制卡中"
+                            }else if(_this.orderInfo.pay_status == 1 && _this.orderInfo.shipping_status == 2){
+                                msg = "待核销"
+                            }else if(_this.orderInfo.order_status == 8){
+                                msg = "已完成"
+                            }
+                        }else{  //旅游产品
+                            if (_this.orderInfo.pay_status == 0 && _this.orderInfo.order_status != 2) {
+                                msg = "未支付"
+                            }else if(_this.orderInfo.pay_status == 1 && _this.orderInfo.order_status == 1){
+                                msg = "待核销"
+                            }else if(_this.orderInfo.order_status == 2){
+                                msg = "已取消"
+                            }else if(_this.orderInfo.order_status == 3){
+                                msg = "退款中"
+                            }else if(_this.orderInfo.order_status == 5){
+                                msg = "已退款"
+                            }else if(_this.orderInfo.order_status == 7){
+                                msg = "待评价"
+                            }else if(_this.orderInfo.order_status == 8){
+                                msg = "已完成"
+                            }
+                        }
+                        return msg;
+                    }
+                }
+            })
+         }
+             
+    </script>
+</body>
+
+</html>

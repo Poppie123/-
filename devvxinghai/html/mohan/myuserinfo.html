@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v69sqgksnke.css">
+    <link rel="stylesheet" href="../../css/mescroll.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #F8F9FB;
+    }
+    .header{
+        width: 7.5rem;
+        height: 3.7rem;
+        padding-left: .5rem;
+        padding-right: .5rem;
+        background-color: #FFFFFF;
+        overflow: hidden;
+    }
+    .header .tou{
+        width: 6.5rem;
+        margin-top: .3rem;
+        margin-left: 5.7rem;
+        overflow: hidden;
+    }
+    .header .tou .iconsetup{
+        font-size: .35rem;
+        color: #333333;
+        margin-right: .2rem;
+    }
+    .header .tou .iconmessage{
+        font-size: .35rem;
+        color: #333333;
+    }
+    .header .title{
+        margin-top: .1rem;
+        overflow: hidden;
+        /* float: left; */
+    }
+    .header .title img{
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 50%;
+        margin-left: .05rem;
+        overflow: hidden;
+        float: left;
+    }
+    .header .title .right{
+        float: left;
+        margin-left: .2rem;
+    }
+    .header .title .right .name{
+        font-size: .36rem;
+        color: #333333;
+        text-align: left;
+    }
+    .header .title .right .vip{
+        width: auto;
+        height: .38rem;
+        background-color: #F9DEAF;
+        font-size: .22rem;
+        color: #504C4B;
+        text-align: center;
+        line-height: .42rem;
+        border-radius: .3rem;
+        margin-top: .1rem;
+        padding: 0 .2rem;
+    }
+    .header .colltitle{
+        width: 6.5rem;
+        height: 1.8rem;
+        overflow: hidden;
+    }
+    .header .order{
+        overflow: hidden;
+    }
+    .header .order .num{
+        font-size: .3rem;
+        color: #333333;
+        font-weight: bold;
+        text-align: center;
+    }
+    .header .order .myorder{
+        font-size: .24rem;
+        color: #999999;
+        text-align: center;
+        margin-top: .15rem;
+    }
+    .middle{
+        width: 7.5rem;
+        padding-left: .3rem;
+        padding-right: .3rem;
+        padding-bottom: 0;
+    }
+    .middle .wallet{
+        width: 6.9rem;
+        height: 2.62rem;
+        background-color: #FFFFFF;
+        margin-top: .3rem;
+        padding: .3rem;
+    }
+    .middle .wallet .txt{
+        font-size: .32rem;
+        color: #333333;
+        font-weight: bold;
+        text-align: left;
+        margin-top: .1rem;
+        overflow: hidden;
+    }
+    .middle .wallet .walletclass{
+        padding-left: .3rem;
+        padding-right: .3rem;
+        margin-top: .4rem;
+        overflow: hidden;
+    }
+    .middle .wallet .walletclass .first{
+        width: 1.2rem;
+        text-align: center;
+        overflow: hidden;
+    }
+    .middle .wallet .walletclass .first img{
+        width: .5rem;
+        height: .5rem;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .middle .wallet .walletclass .first .balance{
+        width: 100%;
+        font-size: .26rem;
+        color: #333333;
+        text-align: center;
+        margin-top: .1rem;
+    }
+    .middle .othermsg{
+        width: 6.94rem;
+        /* height: 7.05rem; */
+        background-color: #FFFFFF;
+        overflow: hidden;
+        margin-top: .3rem;
+        margin-bottom: .3rem;
+        padding-left: .3rem;
+        padding-right: .3rem;
+    }
+    .middle .othermsg .msgaddress{
+        height: 1rem;
+        border-bottom: 1px solid #EEEEEE;
+    }
+    .middle .othermsg .msgaddress span{
+        font-size: .3rem;
+        color: #333333;
+        text-align: left;
+    }
+    .middle .othermsg .msgaddress .icongengduo{
+        font-size: .15rem;
+        color: #CCCCCC;
+    }
+    .middle .othermsg  .border{
+        border-bottom: 0;
+    }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="header">
+        <div class="tou">
+            <i class="iconfont iconsetup" @click="setUserInfo"></i>
+            <i class="iconfont iconmessage" @click='openChat'></i>
+        </div>
+        
+        <div class="title flex align-items" @click="setUserInfo">
+            <img :src="userInfo.headimg" alt="">
+            <div class="right">
+                <div class="name">{{ userInfo.username }}</div>
+                <div class="vip">{{ userInfo.user_rank  }}</div>
+            </div>
+        </div>
+        <div class="colltitle flex align-items space-between flex_center">
+            <div class="order" @click="openOrder">
+                <div class="num">{{ totalNum.order_nums }}</div>
+                <div class="myorder">我的订单</div>
+            </div>
+            <div class="order" @click="openCar">
+                <div class="num">{{ totalNum.cart_nums }}</div>
+                <div class="myorder">购物车</div>
+            </div>
+            <div class="order" @click="openCollect">
+                <div class="num">{{ totalNum.collect_nums }}</div>
+                <div class="myorder">收藏</div>
+            </div>
+            <div class="order" @click="openFootJi">
+                <div class="num">{{ totalNum.footprint_nums }}</div>
+                <div class="myorder">足迹</div>
+            </div>
+        </div>
+    </div>
+    <div class="middle">
+        <div class="wallet">
+            <div class="txt">我的钱包</div>
+            <div class="walletclass flex align-items space-between">
+                <div class="first" @click="openyue">
+                   <img src="../../image/m_yue.png" alt="">
+                    <div class="balance">余额</div>
+                </div>
+                <!-- <div class="first" @click="openBankCard">
+                    <img src="../../image/m_yinhang.png" alt="">
+                    <div class="balance">银行卡</div>
+                </div> -->
+                <div class="first youhui" @click="openYouhui">
+                    <img src="../../image/m_youhuijuan.png" alt="">
+                    <div class="balance">优惠券</div>
+                </div>
+                <div class="first" @click="openInvoice"> 
+                    <img src="../../image/m_fapiao.png" alt="">
+                    <div class="balance">开发票</div>
+                </div>
+            </div>
+        </div>
+        <div class="othermsg">
+            <div class="msgaddress flex align-items space-between " @click="openGuanZhu">
+                <span>我的关注</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between " @click="openYuy">
+                <span>我的预约</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between" @click="openMyComment">
+                <span>我的点评</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between" @click="openMyquest">
+                <span>我的提问</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between" @click="openExtension">
+                <span>推荐有礼</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between" @click="openBussinessAuth" >
+                <span>商家认证</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between " @click="openKefu">
+                <span>官方客服</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between " @click="openMyAddress">
+                <span>我的地址</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+            <div class="msgaddress flex align-items space-between border" @click="openBussiness">
+                <span>商务合作</span>
+                <i class="iconfont icongengduo"></i>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    userInfo:{},  //用户信息
+                    totalNum:{},  
+                },
+                methods:{
+                    //获取用户信息
+                    getMyUserInfo:function(){
+                        var _this = this;
+                        request('/my/getUserinfo',{},function(err,res){
+                            api.refreshHeaderLoadDone()
+                            if (!err && res.code == 1) {
+                                _this.userInfo = res.data;
+                                _this.handerQundao(res.data.is_certification)
+                            } else {
+                                _this.handerQundao(0)
+                                if (res.msg == "请先登录") {
+                                    $api.rmStorage('uid');
+                                }
+                                err ? console.log(JSON.stringify(err),'/my/getUserinfo') : ""
+                            }
+                        })
+                    },
+                    /**
+                     * name:登录后判断显示渠道价
+                     * @param:isQundao 1是展示渠道价 0是不展示;
+                    */
+                    handerQundao:function(isQundao){      
+                        $api.setStorage('isQundao',isQundao)    
+                        api.sendEvent({name:"refreshQundao",extra:{isQundao:isQundao}});
+                    },
+                    // 获取统计数量
+                    getNumber:function(){
+                        var _this = this;
+                        request('/my/number_statistics',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.totalNum = res.data;
+                            }
+                        })
+                    },
+                    //进入用户设置
+                    setUserInfo:function(){
+                        var _this = this;
+                        monAjax('进入用户设置页面')  //埋点代码
+                        api.openWin({
+                            name:"setting",
+                            url:"../zhangtiantian/setting.html",
+                            pageParam:{
+                                phone: _this.userInfo.phone,
+                            }
+                        })
+                    },
+                    //进入我的收货地址
+                    openMyAddress:function(){
+                        api.openWin({
+                            name:"address",
+                            url:"../mohan/address.html",
+                            reload:true
+                        })
+                    },
+                    //进入我的收藏
+                    openCollect:function(){
+                        monAjax('进入收藏页面')  //埋点代码
+                        api.openWin({
+                            name:"mycollection",
+                            url:"../mohan/mycollection.html",
+                        })  
+                    },
+                    //进入足迹
+                    openFootJi:function(){
+                        monAjax('进入足迹页面')  //埋点代码
+                        api.openWin({
+                            name:"footprint",
+                            url:"../mohan/footprint.html",
+                        })
+                    },
+                    //进入余额
+                    openyue:function(){
+                        api.openWin({
+                            name:"remainder",
+                            url:"../zhangtiantian/remainder.html",
+                        })
+                    },
+                    //进入银行卡列表(接口有问题)
+                    openBankCard:function(){
+                        api.toast({msg:"功能暂未开放，暂请期待"})
+                        // api.openWin({
+                        //     name:"bankCard",
+                        //     url:"../zhangtiantian/bankcard.html",
+                        // })
+                    },
+                    //进入优惠券
+                    openYouhui:function(){
+                        api.openWin({
+                            name:"discount",
+                            url:"../mohan/discount.html",
+                        })
+                    },
+                    //进入开发票
+                    openInvoice:function(){
+                        //api.toast({msg:"功能暂未开放，暂请期待"})
+                        api.openWin({
+                            name:"invoice",
+                            url:"../mohan/invoice.html",
+                        })
+                    },
+                    //进入我的关注列表（接口待完善）
+                    openGuanZhu:function(){
+                        // api.toast({msg:"功能暂未开放，暂请期待"})
+                        api.openWin({
+                            name:"myconcern",
+                            url:"../zhangtiantian/myconcern.html",
+                            reload:true,
+                        });
+                    },
+                    //进入客服页面
+                    openKefu:function(){
+                        api.openWin({
+                            name:"kefu",
+                            url:"../mohan/kefu.html",
+                            reload:true,
+                        });
+                    },
+                    //打开商家认证
+                    openBussinessAuth:function(){
+                        //api.toast({msg:"功能暂未开放，暂请期待"})
+                        api.openWin({
+                            name:"rzBusiness",
+                            url:"../renzheng/rz-business.html",
+                        })
+                    },
+                    //打开推荐有礼
+                    openExtension:function(){
+                        api.openWin({
+                            name:"tiShare",
+                            url:"../tuijian/tj-share.html",
+                        })
+                    },
+                    //打开我的提问
+                    openMyquest:function(){
+                        api.openWin({
+                            name:"wodetiwen",
+                            url:"../mapiaoliang/wodetiwen.html",
+                        })
+                    },
+                    //打开我的评价
+                    openMyComment:function(){
+                        api.openWin({
+                            name:"myEvaluation",
+                            url:"../guoshujie/my_evaluation.html",
+                        })
+                    },
+                    // 我的预约
+                    openYuy:function(){
+                        api.openWin({
+                            name:"yuyMy",
+                            url:"../view/yuy_my.html",
+                        })
+                    },
+                    openCar:function(){
+                        monAjax('进入购物车页面')  //埋点代码
+                        api.openWin({
+                            name:"car",
+                            url:"../mohan/shopcart.html",
+                            reload:true,
+                        })
+                        // api.openWin({
+                        //     name:"car",
+                        //     url:'../mohan/car.html',
+                        //     reload:true,
+                        // })
+                    },
+                    openOrder:function(){
+                        monAjax('进入订单页面')  //埋点代码
+                        api.openWin({
+                            name:"myorder",
+                            url:"../mohan/myorder.html",
+                            reload:true,
+                        })
+                    },
+                    // 打开商务合作
+                    openBussiness:function(){
+                        api.openWin({
+                            name:"shangwuhezuo.html",
+                            url:"../renzheng/shangwuhezuo.html",
+                        })
+                    },
+                    openChat:function(){
+                        api.toast({msg:"暂未开放"})
+                        // api.openWin({
+                        //     name:"chatList",
+                        //     url:"../chat/chat_list.html",
+                        // })
+                    },
+                    refreshPage:function(){
+                        this.getMyUserInfo();
+                        this.getNumber();
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.header');
+                        var searchHeight = search.clientHeight;
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px";
+                        $api.fixStatusBar(search)
+                    };
+                    this.getMyUserInfo();
+                    this.getNumber();
+                    api.addEventListener({name:"refreshUserInfo"},function(){
+                        _this.refreshPage();
+                    });
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#fff',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新'
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.refreshPage()
+                    });
+                },
+            })
+        }
+    </script>
+</body>
+</html>

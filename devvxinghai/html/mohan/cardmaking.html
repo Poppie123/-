@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>制卡中详情</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #F8F9FB;
+    }
+    .header {
+        width: 7.5rem;
+        height: .93rem;
+        background-color: #FFFFFF;
+        padding: .3rem;
+    }
+
+    .header .iconfanhui {
+        font-size: .3rem;
+        color: #333333;
+        float: left;
+    }
+
+    .header .order {
+    
+        font-size: .36rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: center;
+
+    }
+    .header .myhead{
+        width: .3rem;
+        height: .3rem;
+    }
+    .middle{
+        width: 7.5rem;
+        overflow: hidden;
+    }
+    .middle .main{
+        width: 7.5rem;
+        height: .88rem;
+        background-color: #BADEFF;
+        font-size: .32rem;
+        color: #0086F7;
+        text-align: left;
+        overflow: hidden;
+        padding-left: .4rem;
+    }
+        
+    .userinfo{
+        width: 7.5rem;
+        height: 1.83rem;
+        background-color: #FFFFFF;
+        overflow: hidden;
+    }
+    .userinfo .username{
+        font-size: .26rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;  
+        padding-left: .3rem; 
+        padding-top: .3rem; 
+    }
+    .userinfo .username span{
+        margin-left: .8rem;
+    }
+    .userinfo .address{
+        font-size: .26rem;
+        margin-top: .2rem;
+        padding-left: .3rem; 
+    }
+    .userinfo img{
+        width: 7.24rem;
+        height: .06rem;
+        overflow: hidden;
+        margin: 0 auto;
+        margin-top: .25rem;
+    }
+    .content{
+        width: 7.5rem;
+        height: 4.79rem;
+        background-color: #FFFFFF;
+        padding: .3rem;
+        margin-top: .2rem;
+    }
+    .content .up{
+        height: 2.4rem;
+        overflow: hidden;
+        border-bottom:  1px solid #EEEEEE;
+    }
+    .content .up img{
+        width: 2.5rem;
+        height: 1.85rem;
+        border-radius: .05rem;
+        margin-top: .1rem;
+        float: left;
+    }
+    .content .up .right{
+        float: left;
+        margin-left: .2rem;
+        overflow: hidden;
+    }
+    .content  .up .right .right-title{
+        width: 4.2rem;
+        font-size: .28rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;  
+       margin-top: .15rem;
+    }
+    .content .up .right .right-money{
+        margin-top: .9rem;
+        overflow: hidden;
+    }
+    .content .up .right .right-money .money{ 
+        font-size: .24rem;
+        color: #FF4242;
+        text-align: left;
+        float: left;
+    }
+    .content .up .right .right-money .money span{ 
+        font-size: .32rem;
+        font-weight: bold;
+    } 
+    .content .up .right .right-money .num{ 
+        font-size: .2rem;
+        color: #333333;
+        text-align: left;
+        float: right;
+        margin-right: .06rem;
+        margin-top: .09rem;
+    }
+    .content .up .right .right-money .num span{ 
+        font-size: .28rem;
+    }
+    .content .goods-money{
+        font-size: .24rem;
+        color: #333333;
+        text-align: left;
+        margin-top: .23rem;
+        overflow: hidden;
+    }
+    .content .goods-money .goods{
+        float: left;
+    }
+    .content .goods-money .shop-money{
+        float: right;
+    }
+    .middle .times{
+        width: 7.5rem;
+        /* height: 2.07rem; */
+        background-color: #FFFFFF;
+        margin-top: .2rem;
+        padding: .3rem;
+    }
+    .middle .times .number{
+        font-size: .24rem;
+        color: #333333;
+        text-align: left;
+        overflow: hidden;
+    }
+    .middle .times .number .goods{
+        float: left;
+    }
+    .middle .times .number .order-num{
+        float:right;
+    }
+    .middle .times .date{
+        font-size: .24rem;
+        color: #333333;
+        text-align: left;
+        margin-top: .23rem;
+        overflow: hidden;
+    }
+    .middle .times .date .time{
+        float: left;
+    }
+    .middle .times .date .order-time{
+        float:right;
+    }
+.footer{
+    width: 7.5rem;
+    height: .98rem;
+    background-color: #FFFFFF;
+    position: fixed;
+    bottom: 0;
+    overflow: hidden;
+}
+.footer .kefu{
+    width: 3.75rem;
+    height: .98rem;
+    font-size: .32rem;
+    color: #0086F7;
+    text-align: center;
+    line-height: .98rem;
+    float: left;
+}
+.footer .kefu .icondianhua{
+    font-size: .4rem;
+    color: #0086F7;
+    margin-right: .2rem;
+}
+.footer .cancel{
+    width: 3.75rem;
+    height: .98rem;
+    font-size: .32rem;
+    color: #FFFFFF;
+    background-color:#5BB4FF; 
+    text-align: center;
+    line-height: .98rem;
+    float: right;
+}
+
+</style>
+</head>
+<body>
+<div class="header flex align-items space-between flex_center ">
+    <i class="iconfont iconfanhui "></i>
+    <div class="order">制卡中</div>
+    <div class="myhead"></div>
+</div>
+<div class="middle">
+    <div class="main flex align-items ">
+            制卡中
+    </div>
+    <div class="userinfo">
+        <div class="username">小七<span>193****9627</span></div>
+        <div class="address usernmae ">河南省郑州市金水区大石桥街道绿地新都会</div>
+        <img src="../../image/m_line.png" alt="">
+    </div>
+    <style>
+    
+    </style>
+    <div class="content">
+        <div class="up">
+            <img src="../../image/m_card.png" alt="">
+            <div class="right">
+                <div class="right-title">悟空旅居卡</div>
+                <div class="right-money">
+                    <div class="money">￥<span>88.00</span></div>
+                    <div class="num">x<span>3</span></div>
+                </div>
+            </div>
+        </div>
+        <style>
+           
+        </style>
+        <div class="goods-money">
+            <span class="goods">商品金额</span><span class="shop-money">￥2500.00</span>
+        </div>
+        <div class="goods-money">
+            <span class="goods">优惠</span><span class="shop-money">-￥100.00</span>
+        </div>
+        <div class="goods-money">
+            <span class="goods">实付款</span><span class="shop-money">￥2500.00</span>
+        </div>
+    </div>
+    <style >
+    
+    </style>
+    <div class="times">
+         <div class="number">
+            <span class="goods">订单编号</span><span class="order-num">99971604531</span>
+        </div>
+        <div class="date">
+            <span class="time">下单时间</span><span class="order-time">2019-07-08 11:50:20</span>
+        </div>
+        <div class="date">
+            <span class="time">核销码</span><span class="order-time">123456</span>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+<!-- <div class="footer">
+    <div class="kefu"><i class="iconfont icondianhua"></i>联系客服</div>
+    <div class="cancel">去评价</div>
+    <div class="paid">去付款</div>
+</div> -->
+
+
+
+    <script src="../../js/common.js"></script>
+</body>
+</html>

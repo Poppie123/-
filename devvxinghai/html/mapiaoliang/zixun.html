@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <title>咨询问题</title>
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            background: #fff;
+        }
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            top: 0;
+            padding: 0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            background: #fff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .header i {
+            font-size: .32rem;
+        }
+
+        .header-a {
+            width: auto;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+
+        .null {
+            width: .32rem;
+            height: .32rem;
+        }
+        .main{
+            width:100%;
+            height:auto;
+            padding:.88rem .3rem .3rem; 
+
+        }
+        textarea{
+            width:100%;
+            height:6rem;
+            padding-top: .3rem;
+            color: #333333;
+            font-size: .3rem;
+        }
+        textarea::-webkit-input-placeholder{
+            font-size: .3rem;
+            color:#999999;
+        }
+        .submit{
+            width: 6.9rem;
+            height: .8rem;
+            background: #ccc;
+            border-radius:.1rem;
+            color: #fff;
+            font-size: .3rem;
+            line-height: .8rem;
+            font-weight: bold;
+            position: fixed;
+            bottom: .4rem;
+            left:.3rem;
+            right:.3rem;
+            margin: auto;
+        }
+        .submitactive{
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            background:-webkit-linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+        }
+        .popup {
+            width: 6rem;
+            height: 3.5rem;
+            background: #fff;
+            z-index: 996;
+            position: fixed;
+            top: 4.92rem;
+            left: 0;
+            right:0;
+            margin: auto;
+        }
+
+        .success {
+            width: 6rem;
+            height: 1.29rem;
+            line-height: 1.29rem;
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .popup p {
+            width: 4.6rem;
+            height: .75rem;
+            margin: 0 auto;
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .sure {
+            width: 6rem;
+            height: 1rem;
+            margin-top: .5rem;
+            border-top: 1px solid #eeeeee;
+            font-size: .32rem;
+            color: #0086F7;
+            line-height: 1rem;
+            
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui" @click="back('tip')"></i>
+        <span class="header-a">咨询问题</span>
+        <div class="null"></div>
+    </div>
+    <div class="main">
+        <textarea placeholder="向专家咨询吧..." v-model="msg"></textarea>
+    </div>
+    <div class="submit tc" :class="{submitactive:isAllWrite}" @click="sendQuess">提交</div>
+    <div class="mask" v-show="digbox"></div>
+    <div class="popup" v-show="digbox">
+        <div class="success tc">提交成功</div>
+        <p>请等待专家解答,可到【我的提问】里查看答案</p>
+        <div class="sure tc" @click="back">确认</div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    msg:"",
+                    id:"",
+                    digbox:false,
+                    loading:false,
+                    opt:'.65',
+                },
+                methods:{
+                    sendQuess:function(){
+                        var _this = this;
+                        if (!_this.isAllWrite) {
+                            return false
+                        }
+                        _this.loading = true;
+                        request('/my/consult',{question:_this.msg,expert_id:_this.id},function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                _this.digbox = true;
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    back:function(tip){
+                        if (tip == 'tip') {
+                            var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '退出页面，支付资金不予退回，是否继续操作',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '确认'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									}
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+								    api.closeWin()
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+								});
+							});
+                        }else{
+                            api.closeWin();
+                        }
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('.header');
+                        var main = document.querySelector('.main');
+                        var headHeight = header.clientHeight;
+                        header.style.height = headHeight + safeArea  + "px";
+                        header.style.paddingTop = safeArea  + "px";
+                        main.style.paddingTop = headHeight + safeArea + "px";
+                    };
+                    this.id = api.pageParam.id;
+
+                },
+                computed:{
+                    isAllWrite:function(){
+                        return this.msg != "";
+                    }
+                }
+            })
+        }
+             
+    </script>
+</body>
+
+</html>

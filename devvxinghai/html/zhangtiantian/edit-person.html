@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑资料</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 1300;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+            background: #ffffff;
+        }
+        .wrapper i{
+            font-size: .21rem;
+            color: #cccccc;
+            margin-left: .17rem;
+        }
+        .touxiang{
+            width: 100%;
+            height: 1.57rem;
+            line-height: 1.57rem;
+            background: #ffffff;
+        }
+        .touxiang img{
+            width: .96rem;
+            height: .96rem;
+            border-radius: 50%;
+            margin-top: .3rem;
+            background: #ffffff;
+        }
+        .list{
+            width: 100%;
+            height: 1.11rem;
+            background-color: #fff;
+            line-height: 1.11rem;
+            border-top: 1px solid #EEEEEE;
+        }
+        .key{
+            font-size: .3rem;
+            font-weight: 500;
+            color: #333333;
+        }
+        .values{
+            font-size: .3rem;
+            font-weight: 500;
+            color: #999999;
+        }
+        .niky{
+            text-align: right;
+            line-height: 1.08rem;
+            font-size: .3rem;
+            font-weight: 500;
+            color: #999999;
+            margin-right: .41rem;
+        }
+        .border0{
+            border: 0 !important;
+            border-radius: .1rem;
+        }
+        #wrapper{
+            position: relative;
+        }
+        .btn{
+            width: 6.9rem;
+            height: .9rem;
+            overflow: hidden;
+            position: relative;
+            top: .6rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index:1000;
+            background-color: #0086F7;
+            border-radius: .08rem;
+            font-size: .32rem;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>个人信息</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="wrapper" id="wrapper">
+        <div class="touxiang" @click="changeHeading">
+            <div class="key fl">头像</div>
+            <div class="fr">
+                <img class="fl" :src="userInfo.headimg" alt="">
+                <i class="fl iconfont icongengduo"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="key fl">昵称</div>
+            <div class="fr">
+                <input class="niky fl" type="text" v-model="userInfo.username" @blur="changeUserName">
+            </div>
+        </div>
+        <div class="list">
+            <div class="key fl">我的手机号</div>
+            <div class="fr">
+                <div class="values fl">{{ userInfo.phone }}</div>
+                <!-- <i class="fl iconfont icongengduo"></i> -->
+            </div>
+        </div>
+        <div class="list">
+            <div class="key fl">旅居卡会员</div>
+            <div class="fr">
+                <div class="values fl">{{ userInfo.user_rank }}</div>
+                <!-- <i class="fl iconfont icongengduo"></i> -->
+            </div>
+        </div>
+        <div class="btn fn-ctr zhezao" @click="saveUserInfo"><span>保存</span></div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            //  加载组件
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    userInfo:{
+                        headimg:"",
+                        username:"",
+                        phone:"",
+                        user_rank:"",
+                    },
+                    loading:true,
+                },
+                methods:{
+                    //获取用户信息
+                    getUserInfo:function(){
+                        var _this = this;
+                        request('/my/getUserinfo',{},function(err,res){
+                            setTimeout(function(){_this.loading = false},700)
+                            if (!err && res.code == 1) {
+                                _this.userInfo = res.data;
+                                console.log(JSON.stringify(_this.userInfo))
+                            } else {
+                                
+                            }
+                        })
+                    },
+                    //修改头像
+                    changeHeading:function(){
+                        var _this = this;
+                        api.actionSheet({
+                            cancelTitle: '取消',
+                            buttons: ['拍照', '从相册选择'],
+                            style: {
+                                fontNormalColor: '#000',
+                            }
+                        }, function(ret, err) {
+                            var index = ret.buttonIndex;
+                            if (index == 1) {
+                                var resultList = api.hasPermission({
+                                    list:['camera']
+                                });
+                                if(resultList[0].granted==true){
+                                    _this.getpic('camera');
+                                }else{
+                                    api.requestPermission({
+                                        list:['camera'],
+                                        code:1
+                                    }, function(ret, err){
+                                        if(ret.list[0].granted){
+                                            _this.getpic('photos');
+                                        }
+                                    });
+                                }
+                            } else if (index == 2) {
+                                var resultList = api.hasPermission({
+                                    list:['photos']
+                                });
+                                if(resultList[0].granted==true){
+                                    _this.getpic('photos');
+                                }else{
+                                    api.requestPermission({
+                                        list:['photos'],
+                                        code:1
+                                    }, function(ret, err){
+                                        if(ret.list[0].granted){
+                                            _this.getpic('photos');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    },
+                    getpic:function(t) {
+                        var _this = this;
+                        api.getPicture({
+                            sourceType: t,
+                            encodingType: 'jpg',
+                            mediaValue: 'pic',
+                            destinationType: 'url',
+                            allowEdit: true,
+                            quality: 50,
+                        }, function(ret, err) {
+                            if (ret) {
+                                if(ret.data != ""){
+                                    data = ret.data;
+                                    api.sendEvent({name:'refreshUserInfo'});
+                                    _this.userInfo.headimg = data;
+                                }
+                            } else {
+                                api.toast({
+                                    msg: '请重试'
+                                });
+                            }
+                        });
+                    },
+                    //修改用户名
+                    changeUserName:function(){
+                        var _this = this;
+                        // request('/my/changeUsername',{username:_this.userInfo.username},function(err,res){
+                        //     if (!err && res.code == 1) {
+                        //         api.sendEvent({name:"refreshUserInfo"})
+                        //     }
+                        // })
+                    },
+                    // 保存用户信息
+                    saveUserInfo:function(){
+                        var _this = this;
+                        console.log(_this.userInfo.userName)
+                        // 表单方式提交数据或文件
+                        api.ajax({
+                            url: url+"/my/change_userinfo",
+                            method: 'post',
+                            data: {
+                                values: {
+                                    username: _this.userInfo.username,
+                                },
+                                files: {
+                                    headimg:_this.userInfo.headimg,
+                                }
+                            }
+                        }, function(ret, err) {
+                            if (ret) {
+                                if (ret.code == 1) {
+                                    api.toast({msg:"保存成功",location:"middle"});
+                                    api.sendEvent({name:'refreshUserInfo'});    //刷新用户界面信息 32*28 20px
+                                }else{
+                                    api.toast({msg:ret.msg})
+                                }
+                            } else {
+                                api.toast({msg:"保存失败",location:"middle"})
+                            }
+                        });
+                        
+                    },
+                    back:function(){
+                        // api.alert({
+                        //     msg:JSON.stringify(windows)
+                        // });
+                        api.closeWin()
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px";
+                        search.style.height = searchHeight+safeArea+"px";
+                        search.style.paddingTop = safeArea + "px";
+                    };
+                    this.getUserInfo();
+                }
+            })
+        }
+            
+        
+    
+    
+    </script>
+</body>
+</html>

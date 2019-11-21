@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>解除绑定-输入支付密码</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_b4dstbosxwj.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .center{
+            width: 100%;
+            padding: 0 .65rem;
+        }
+        .center .tip{
+            font-size: .3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 1.8rem;
+        }
+        .center .password{
+            width: 6.19rem;
+            height: .98rem;
+            border: 1px solid #cccccc;
+            border-radius: .1rem;
+            margin: .48rem auto 0;
+            padding-left: .11rem;
+            background-color: #fff;
+        }
+        .center .password > div{
+            display: block;
+            width: 16.66%;
+            height: 100%;
+            line-height: .98rem;
+            float: left;
+            /* display: block; */
+            padding-right: .1rem;
+            margin: 0;
+            font-size: .34rem;
+            text-align: center;
+            border-right: 1px solid #CCCCCC;
+        }
+        .center .password div:last-child{
+            border: 0 !important;
+            border-radius: .1rem;
+        }
+        .center .forget{
+            font-size: .24rem;
+            color: #999999;
+            font-weight: 500;
+            margin-top: .3rem;
+            text-align: right;
+        }
+        /* 键盘 */
+        .keyboard{
+            width: 7.5rem;
+            height: 4.49rem;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+        }
+        .keyboard .a,.keyboard .b , .keyboard .c{
+            width: 100%;
+            height: 1.12rem;
+            border-bottom: 1px solid #ccc;
+        }
+        .keyboard .a .item,.keyboard .b .item, .keyboard .c .item{
+            width: 33%;
+            height: 1.12rem;
+            float: left;
+            text-align: center;
+            font-size: .48rem;
+        }
+        .keyboard .item:nth-child(-n+2){
+            border-right: 1px solid #ccc;
+        }
+        .keyboard .d{
+            width: 100%;
+            height: 1.12rem;
+        }
+        .keyboard .d .item{
+            width: 33%;
+            height: 1.12rem;
+            float: left;
+            font-size: .48rem;
+        }
+        .keyboard .d .item:first-child{
+            background-color: #e4e9ef;
+        }
+        .keyboard .d .item:last-child{
+            width: 33.33%;
+            background-color: #e4e9ef;
+        }
+        .keyboard .d .item:last-child .iconfont{
+            font-size: .5rem;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>解绑银行卡</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="center">
+        <div class="tip">请输入支付密码，以验证身份</div>
+        <div class="password">
+            <div>{{pwdL[0]}}</div>
+            <div>{{pwdL[1]}}</div>
+            <div>{{pwdL[2]}}</div>
+            <div>{{pwdL[3]}}</div>
+            <div>{{pwdL[4]}}</div>
+            <div>{{pwdL[5]}}</div>
+        </div>
+        <div class="forget">忘记密码?</div>
+    </div>
+    <!-- <pwd-ipt @delete="deletePwd" @add="addPwd"></pwd-ipt> -->
+    <div class="keyboard">
+        <div class="a">
+            <div class="item fn-ctr" @click="addPwd(1)"><span>1</span></div>
+            <div class="item fn-ctr" @click="addPwd(2)"><span>2</span></div>
+            <div class="item fn-ctr" @click="addPwd(3)"><span>3</span></div>
+        </div>
+        <div class="b">
+            <div class="item fn-ctr"  @click="addPwd(4)"><span>4</span></div>
+            <div class="item fn-ctr"  @click="addPwd(5)"><span>5</span></div>
+            <div class="item fn-ctr"  @click="addPwd(6)"><span>6</span></div>
+        </div>
+        <div class="c">
+            <div class="item fn-ctr"  @click="addPwd(7)"><span>7</span></div>
+            <div class="item fn-ctr"  @click="addPwd(8)"><span>8</span></div>
+            <div class="item fn-ctr"  @click="addPwd(9)"><span>9</span></div>
+        </div>
+        <div class="d">
+            <div class="item fn-ctr"></div>
+            <div class="item fn-ctr"  @click="addPwd(0)"><span>0</span></div>
+            <div class="item fn-ctr" @click="deletePwd">
+                <i class="iconfont iconbackspace"></i>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            // Vue.component("pwd-ipt",{
+            //     template:`div class="keyboard"><div class="a">'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(1)"><span>1</span></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(2)"><span>2</span></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(3)"><span>3</span></div></div><div class="b">'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(4)"><span>4</span></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(5)"><span>5</span></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(6)" ><span>6</span></div></div><div class="c">'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(7)"><span>7</span></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(8)"><span>8</span></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(9)"><span>9</span></div></div><div class="d">'
+            //                 +'<div class="item fn-ctr"></div>'
+            //                 +'<div class="item fn-ctr" @click="haveNumber(0)"><span>0</span></div>'
+            //                 +'<div class="item fn-ctr" @click="delete"><i class="iconfont iconbackspace"></i></div></div></div>`,
+            //     data:function(){
+            //         return {
+
+            //         }
+            //     },
+            //     methods:{
+            //         haveNumber:function(item){
+            //             this.$emit('add',item)
+            //         },
+            //         delete:function(){
+            //             this.$emit('delete',item)
+            //         }
+            //     },
+            //     mounted:function(){
+
+            //     }
+            // })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    pwdL:["","","","","","",""],
+                },
+                methods:{
+                    back:function(){
+                        api.closeWin()
+                    },
+                    addPwd:function(num){
+                        if (this.pwdL[5] != "") {
+                            return false
+                        }
+                        api.notification({
+                            vibrate:[100,100]
+                        });
+                        var _this = this;
+                        for (var i = 0; i < _this.pwdL.length; i++) {
+                            var v= _this.pwdL[i];
+                            if (v == "") {
+                                _this.pwdL[i] = num;
+                                this.pwdL.push();
+                                break;
+                            }else{
+
+                            }
+                            
+                        }
+                    },
+                    deletePwd:function(){
+                        var _this = this;
+                        var index = null;
+                        for (var i = 0; i < this.pwdL.length; i++) {
+                            if (this.pwdL[i] == "") {
+                                index = i;
+                                break;
+                            }
+                        }
+                        api.notification({
+                            vibrate:[100,100]
+                        });
+                        index == null ? this.pwdL[5] == "" :  this.pwdL[index - 1] = "";
+                        this.pwdL.push();
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

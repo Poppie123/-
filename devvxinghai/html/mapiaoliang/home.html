@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_hkj4622n5z.css">
+    <script src="../../js/rem.js"></script>
+    <title>店铺主页</title>
+    <style>
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            top: 0;
+            z-index: 1300;
+            padding: 0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            border-bottom: 1px solid #eeeeee;
+            background: #fff;
+        }
+
+        .header i {
+            font-size: .32rem;
+        }
+
+        .header-a {
+            width: auto;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+        .null{
+            width:.32rem;
+            height:.32rem;
+        }
+        .main{
+            width:100%;
+            height:auto;
+            padding-top:.88rem;
+        }
+        .item{
+            width:100%;
+            height:4.37rem;
+            background: #fff;
+            padding:0 .3rem;
+            margin-bottom: .2rem;
+        }
+        .top{
+            width:100%;
+            height:1.5rem;
+            overflow: hidden;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .img{
+            width:.88rem;
+            height:.88rem;
+            border-radius: .15rem;
+            overflow: hidden;
+            margin-right:.2rem;
+        }
+        .img img{
+            width:.86rem;
+            height:.86rem;
+        }
+        .name-a{
+            margin-top:0.02rem;
+            font-size: .3rem;
+            color: #333333;
+            font-weight: bold;
+        }
+        .name-b{
+            margin-top:.1rem;
+            font-size: .26rem;
+            color: #999999;
+        }
+        .fen{
+            color: #0086F7;
+            margin-right: .04rem;
+        }
+        .service{
+            width:100%;
+            height:2.85rem;
+        }
+        .pro{
+            width: 2.18rem;
+            margin-right: .1rem;
+            padding-top:.2rem;
+            font-size: .24rem;
+        }
+        .pro img{
+            width:2.18rem;
+            height:1.62rem;
+            border-radius: .1rem;
+        }
+        .pro-name{
+            color: #333333;
+            margin:.18rem  0 .1rem;
+        }
+        .pro-price{
+            color: #FE6602;
+            font-weight: bold;
+        }
+
+    
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui" @click="back"></i>
+        <span class="header-a">健康服务</span>
+        <div class="null"></div>
+    </div>   
+    <div class="main">
+        <ul>
+            <li class="item" v-for="item in shopList" :key="item.shopid">
+                <div class="top flex align-items space-between" @click="openShop(item.shopid)">
+                    <div class="left flex">
+                        <div class="img"><img :src="item.shop_img" alt=""></div>
+                        <div class="name">
+                            <p class="name-a">{{ item.shop_name }}</p>
+                            <div class="name-b">
+                                <span class="fen">{{ item.rank }}</span><span>分</span>&nbsp;&nbsp; <span>{{ item.sales }}月销</span>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="iconfont icongengduo"></i>
+                </div>
+                <div class="service flex flex-start" v-show="item.shop_goods.length > 0">
+                    <div class="pro" v-for="v in item.shop_goods" @click="openLvyou(v)">
+                        <img :src="v.attr_img" alt="">
+                        <div class="pro-name ellipse">{{ v.content }}</div>
+                        <div class="pro-price">￥{{ v.price }}</div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   shopList:[],
+                   total:0,
+                   isTotal:true,
+                   loading:true,
+                },
+                methods:{
+                   getShopList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/tourism/health_list',{start:0},function(err,res){
+                            _this.isTotal = true;
+                            setTimeout(function(){_this.loading = false},700)
+                            if (!err && res.code == 1) {
+                                _this.shopList = res.data.data;
+                                _this.total = res.data.all;
+                            }
+                        },'get')
+                   },
+                   //打开店铺 （ 接口报错）
+                   openShop:function(id){
+                       api.openWin({
+                           name:"storedetail",
+                           url:"../view/storedetail.html",
+                           pageParam:{
+                               shopid:id,
+                           }
+                       })
+                   },
+                   //店铺商品跳转
+                   openLvyou:function(item){
+                        console.log(JSON.stringify(item))
+                        api.openWin({
+                            name:"travelDtl",
+                            url:"../user/travel_dtl.html",
+                            pageParam:{
+                                obj:JSON.stringify({attrid:item.attrid,type:item.type})
+                            },
+                            reload:true,
+                        })
+                   },
+                   back:function(){
+                       api.closeWin();
+                   },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main  = document.querySelector(".main");
+                        var search = document.querySelector('.header');
+                        var headerHeight = search.clientHeight;
+                        search.style.height = safeArea + headerHeight + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = safeArea + headerHeight+ 'px'
+                    }
+                    this.getShopList();
+                    // 上拉加载
+                    var _this = this;
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.shopList.length == _this.total) {
+                            if (_this.total < 4) {
+                                return false;
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getShopList();
+                            },300)
+                        }
+                    });
+                }
+            })
+        }
+    
+    
+    
+    </script>
+</body>
+</html>

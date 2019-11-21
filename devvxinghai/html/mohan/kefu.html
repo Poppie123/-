@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>官方客服</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+
+        .header {
+            width: 7.5rem;
+            height: .93rem;
+            background-color: #FFFFFF;
+            padding: 0 .3rem;
+
+        }
+
+        .header .iconfanhui {
+            font-size: .3rem;
+            color: #333333;
+            float: left;
+        }
+
+        .header .order {
+            font-size: .36rem;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
+        }
+
+        .header .myhead {
+            width: .3rem;
+            height: .3rem;
+        }
+
+        .middle {
+            width: 7.5rem;
+            overflow: hidden;
+            padding: .6rem;
+        }
+
+        .middle .code {
+            width: 6.3rem;
+            height: 9rem;
+            background-image: url('../../image/m_kefubg.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            margin-top: .55rem;
+        }
+
+        .middle .code .erweima {
+            width: 2.99rem;
+            height: 2.99rem;
+            margin: 0 auto;
+            border: 1px solid #CCCCCC;
+            margin-top: 1.93rem;
+        }
+        .middle .code .erweima img{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .middle .code .saocode {
+            font-size: .3rem;
+            color: #333333;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: .3rem;
+        }
+
+        .middle .code .contact {
+            width: 2.7rem;
+            height: .8rem;
+            margin: 0 auto;
+            margin-top: 1.03rem;
+            background-color: #FAFAFE;
+            border-radius: .3rem;
+            padding-left: .3rem;
+            padding-right: .3rem;
+        }
+
+        .middle .code .contact img {
+            width: .58rem;
+            height: .58rem;
+            overflow: hidden;
+        }
+
+        .middle .code .contact .kefu {
+            font-size: .3rem;
+            color: #666666;
+            text-align: center;
+            margin: 0 auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header flex align-items flex_center space-between" ref="hd">
+            <i class="iconfont iconfanhui" @click="back"></i>
+            <div class="order ">官方客服</div>
+            <div class="myhead"></div>
+        </div>
+        <div class="middle">
+            <div class="code">
+                <div class="erweima">
+                    <img :src="info.kefu_ercode" alt="">
+                </div>
+                <div class="saocode">扫一扫添加客户微信,长按保存图片</div>
+                <div class="contact flex align-items space-around">
+                    <img src="../../image/m_phone.png" />
+                    <div class="kefu" @click="openCall">联系客服</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el: "#root",
+                data: {
+                    info:{},
+                },
+                methods:{
+                    getKefuInfo:function(){
+                        var _this = this;
+                        request('/my/official_customer_service',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                console.log(JSON.stringify(res.data))
+                                _this.info = res.data;
+                            }
+                        })
+                    },
+                    openCall:function(){
+                        var _this = this;
+                        api.call({
+                            type: 'tel_prompt',
+                            number: _this.info.kefu_hotline,
+                        });
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function () {
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var middle = document.querySelector('.middle');
+                        var search = this.$refs.hd;
+                        var searchHeight = search.clientHeight;
+                        search.style.height = searchHeight + safeArea + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        middle.style.paddingTop = searchHeight + safeArea + 'px';
+                    };
+                    var _this = this;
+                    _this.getKefuInfo()
+                    //摇一摇
+                    api.addEventListener({
+                        name:'shake'
+                    }, function(ret, err){        
+                        savePicture(_this.info.kefu_ercode)
+                    });
+                    var timp = "";
+                    api.addEventListener({
+                        name:'longpress'
+                    },function(ret,err){
+                        clearTimeout(timp)
+                        timp = setTimeout(function(){
+                            savePicture(_this.info.kefu_ercode)
+                        },1200)
+                    });
+                }
+            })
+        }
+        
+
+
+    </script>
+</body>
+
+</html>

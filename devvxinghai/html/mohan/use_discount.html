@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>优惠券已使用</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v69sqgksnke.css">
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+    html,
+    body {
+        height: 100%;
+        background-color: #F8F9FB;
+    }
+    .header {
+        width: 7.5rem;
+        height: .93rem;
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #EEEEEE;
+        padding: .3rem;
+    }
+
+    .header .iconfanhui {
+        font-size: .3rem;
+        color: #333333;
+        float: left;
+    }
+
+    .header .order {
+        font-size: .36rem;
+        font-weight: bold;
+        color: #333333;
+        text-align: center;
+
+        position: relative;
+    }
+    .header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+
+
+    .header .order .iconsanjiaoxing-copy {
+        position: absolute;
+        top: 0;
+        font-size: .5rem;
+        color: #333333;
+
+    }
+   
+    .middle .titlehead{
+        width: 7.5rem;
+        height: .9rem;
+        padding-left:.3rem;
+        padding-right: .3rem;
+        position: relative;
+        background-color: #FFFFFF;
+    }
+    .middle .titlehead .tourism{
+        font-size: .3rem;
+        color: #999999;
+        text-align: left;
+    }
+    .middle .active .tourism{
+        font-size: .3rem;
+        font-weight: bold;
+        color: #4589FF;
+        text-align: left;
+    }
+    .middle .active .line{
+        width: .82rem;
+        height: .04rem;
+        position: absolute;
+        bottom: 0;
+        background-color: #0086F7;
+        border-radius: .5rem;
+    }
+    .main{
+            width: 7.5rem;
+           overflow: hidden;
+           padding-left: .3rem;
+           padding-right: .3rem;
+        }
+        .main .first{
+            width: 6.9rem;
+            height: 1.8rem;
+            background-image: url('../../image/m_useryouhui.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-top: .2rem;
+        }
+        .main .first .left{
+            width: 2.55rem;
+            height: 1.8rem;
+            overflow: hidden;
+            float: left;
+        }
+        .main .first .left .money{
+            font-size: .34rem;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+            margin: 0 auto;
+            margin-top: .3rem;
+            overflow: hidden;
+        }
+        .main .first .left .money span{
+            font-size: .6rem;
+            font-weight: bold;
+        }
+        .main .first .left .xianjin{
+            font-size: .24rem;
+            text-align: center;
+            color: #FFFFFF;
+            margin: 0 auto;
+            margin-top: .1rem;
+            overflow: hidden;
+        }
+        .main .first .right{
+            float: left;
+            margin-left: .2rem;
+            overflow: hidden;
+        }
+        .main .first .right .title{
+            width: 2.47rem;
+            font-size: .3rem;
+            text-align: left;
+            margin: 0 auto;
+            color: #333333;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin-top: .5rem;
+            overflow: hidden;
+        }
+        .main .first .right .time{
+            width: 2.47rem;
+            font-size: .2rem;
+            text-align: left;
+            margin: 0 auto;
+            color: #333333;
+            margin-top: .2rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header flex align-items space-between">
+        <i class="iconfont iconfanhui "></i>
+        <div class="order flex_center">优惠券<i class="iconfont iconsanjiaoxing-copy"></i></div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+        <div class="titlehead flex align-items flex_center space-around">
+            <div class="headleft flex flex_center ">
+                <div class="tourism">未使用</div>
+                <div class="line"></div>
+            </div>
+            <div class="headleft  flex flex_center active" >
+                <div class="tourism">已使用</div>
+                <div class="line"></div>
+            </div>
+            <div class="headleft  flex flex_center " >
+                <div class="tourism">已失效</div>
+                <div class="line"></div>
+            </div>
+        </div>
+     </div>
+        <div class="main">
+            <div class="first">
+                <div class="left">
+                <div class="money">￥<span>10</span></div>
+                <div class="xianjin">现金劵</div>
+            </div>
+            <div class="right">
+                <div class="title">全平台通用</div>
+                <div class="time">2019.03.21-2019.04.21</div>
+            </div>
+         </div>
+         <div class="first">
+                <div class="left">
+                <div class="money">￥<span>10</span></div>
+                <div class="xianjin">现金劵</div>
+            </div>
+            <div class="right">
+                <div class="title">全平台通用
+                    </div>
+                <div class="time">2019.03.21-2019.04.21</div>
+            </div>
+         </div>
+    </div>
+   
+
+    <script src="../../js/common.js"></script>
+</body>
+
+</html>

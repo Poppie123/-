@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旅游详情</title>
+    <link rel="stylesheet" href="../../css/swiper.css">
+    <link rel="stylesheet" href="../../css/animate.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_x812nd0vtw.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        .header{
+            width: 100%;
+        }
+        .banner{
+            width: 100%;
+            height: 5.72rem;
+            position: relative;
+            z-index: 1000;
+        }
+        .swiper-container{
+            width: 100%;
+            height: 5.72rem;
+            overflow: hidden;
+        }
+        .back{
+            width: .58rem;
+            height: .58rem;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 1200;
+            left: .2rem;
+            top: .2rem;
+            background: rgba(0, 0, 0, .65)
+        }
+        .zan{
+            width: .58rem;
+            height: .58rem;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 1200;
+            right: .2rem;
+            top: .2rem;
+            background: rgba(0, 0, 0, .65)
+        }
+        
+        .hb .iconfont{
+            font-size: .32rem;
+            color: #fff;
+        }
+        .zan .iconfont{
+            font-size: .36rem;
+        }
+        .zan-active .iconfont{
+            color: #4489fe;
+        }
+        .back .iconfont{
+            font-size: .24rem;
+        }
+        .share{
+            width: .58rem;
+            height: .58rem;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 1200;
+            right: 1rem;
+            top: .2rem;
+            background: rgba(0, 0, 0, .65)
+        }
+        .travel-info {
+            width: 100%;
+            height: auto;
+            /* height: 2.69rem; */
+            position: relative;
+            z-index: 1100;
+            overflow: hidden;
+            background-color: #fff;
+            border-top-right-radius:.3rem;
+            border-top-left-radius:.3rem;
+            margin-top: -0.4rem;
+            padding: 0 .29rem;
+        }
+        .travel-info .info{
+            width: 100%;
+            height: auto;
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+            margin-top: .23rem;
+        }
+        .travel-info .bt{
+            width: 100%;
+            margin-top: .15rem;
+            margin-bottom: .2rem;
+        }
+        .travel-info .bt .left{
+            font-size: .36rem;
+            font-weight: bold;
+            color: #FE6602;
+        }
+        .travel-info .bt .left span{
+            font-size: .24rem;
+            color: #666;
+            font-weight: normal;
+        }
+        .travel-info .bt .right{
+            font-size: .26rem;
+            color: #666666;
+        }
+        .travel-info .bt .right span{
+            color: #0086F7;
+            margin-left: .02rem;
+            margin-right: .02rem;
+        }
+        .travel-info .manyi{
+            width: 6.9rem;
+            height: .9rem;
+            padding: 0 .29rem;
+            background-color: #F8F9FB;
+            border-radius: .1rem;
+            margin-bottom: .4rem;
+        }
+        .travel-info .manyi .left{
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .travel-info .manyi .left span{
+            font-size: .28rem;
+            color: #999;
+            font-weight: normal;
+        }
+        .travel-info .manyi .right{
+            font-size: .28rem;
+            color: #999;
+        }
+        .travel-info .manyi .right .iconfont{
+            font-size: .26rem;
+        }
+        .travel-detail{
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+            margin-top: .2rem;
+        }
+        .travel-date {
+            width: 100%;
+            height: 2.2rem;
+            overflow: hidden;
+            background: #fff;
+            margin-top: .2rem;
+            padding: 0 .32rem;
+            position: relative;
+            z-index: 1000;
+        }
+        .travel-date .title{
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+            margin-top: .3rem;
+        }
+        .travel-date .list{
+            width: auto;
+            height: 1.47rem;
+            overflow-x:scroll;
+            overflow-y: hidden;
+        }
+        .travel-date .list .item{
+            display: inline-block;
+            box-sizing: content-box;
+            width: auto;
+            height: .88rem;
+            border-radius: .1rem;
+            margin-right: .24rem;
+            padding:  0 .3rem;
+            border: 1px solid #e5e5e5;
+        }
+        .travel-date .list .active{
+            border: 1px solid #0086F7;
+        }
+        .travel-date .list .item div:first-child{
+            width: 100%;
+            text-align: center;
+            font-size: .22rem;
+            color: #333;
+            margin-top: 0.1rem;
+            margin-bottom: 0.05rem;
+            font-weight: bold;
+        }
+        .travel-date .list .item div:last-child{
+            width:100%;
+            text-align: center;
+            font-size: .22rem;
+            color: #FE6602;
+        }
+        .travel-date .last{
+            margin-right: 0!important;
+            font-weight: bold;
+        }
+        .travel-date .last > div{
+            font-size: .24rem!important;
+            color: #0086F7!important;
+            margin-right: 0;
+        }
+        .travel-detail .title{
+            width: 100%;
+            padding:.3rem .3rem;
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+            position: relative;
+            z-index: 1100;
+        }
+        .travel-xingcheng{
+            width: 100%;
+            height: 4.04rem;
+            background-color: #fff;
+            overflow: hidden;
+            margin-top: .2rem;
+            padding: 0 .3rem;
+            position: relative;
+            z-index: 1100;
+        }
+        .travel-xingcheng .title{
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+            margin-top: .3rem;
+        }
+        
+        .travel-xingcheng .list{
+            width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            margin-top: .29rem;
+            margin-bottom: .29rem;
+        }
+        .travel-xingcheng .list::-webkit-scrollbar {
+            display: none;
+        }
+        .travel-xingcheng .list .item{
+            display: inline-block;
+            width: 2.4rem;
+            height: 1.4rem;
+            background-color: #F8F9FB;
+            border-radius: .1rem;
+            margin-right: .2rem;
+        }
+        .travel-xingcheng .list .item div:first-child{
+            width: 100%;
+            text-align: center;
+            font-size: .3rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: .28rem;
+            margin-bottom: .12rem;
+        }
+        .travel-xingcheng .list .item div:last-child{
+            width: 100%;
+            text-align: center;
+            font-size: .26rem;
+            color: #666;
+        }
+        .travel-xingcheng .list  .active{
+            /* background-color: #0086F7; */
+            background:rgba(0,134,247,.1);
+        }
+        .travel-xingcheng .list  .active > div{
+            color: #0086F7!important;
+        }
+        .travel-xingcheng .tr-opt{
+            width: 100%;
+            height: .32rem;
+            margin-bottom:.3rem; 
+        }
+        .travel-xingcheng .tr-opt .iconfont{
+            font-size: .28rem;
+            color: #333;
+            position: relative;
+            top: 0.04rem;
+        }
+        .travel-xingcheng .tr-opt span{
+            font-size: .28rem;
+            color: #333;
+            margin-left: .14rem;
+        }
+        
+        .btn-buy{
+            width: 100%;
+            height: .9rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            font-size: .32rem;
+            color: #fff;
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+        }
+        .travel-mai{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            background-color: #fff;
+            padding: .4rem .3rem;
+            margin-top:.2rem;
+        }
+        .travel-mai .title{
+            width: 100%;
+            text-align: left;
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .travel-mai .list{
+            width:  100%;
+            height: auto;
+            background-color: #F8F9FB;
+            border-radius: .1rem;
+            padding: .3rem .3rem;
+            margin-top: .25rem;
+        }
+        .travel-mai .list .item{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            margin-bottom: .3rem;
+        }
+        .travel-mai .list .item:last-child{
+            margin-bottom: 0;
+        }
+        .travel-mai .list .item .cirle{
+            width: .1rem;
+            height: .1rem;
+            float: left;
+            background-color: #0086F7;
+            border-radius: 50%;
+            margin-top: .15rem;
+            margin-right: .08rem;
+        }
+        .travel-mai .list .item .text{
+            width:6rem;
+            height: auto;
+            float: left;
+        }
+        .travel-mai .list .item .text span:first-child{
+            display: block;
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            float: left;
+            margin-right: .06rem;
+        }
+        .travel-mai .list .item .text span:last-child{
+            display: inline-block;
+            width: 4.6rem;
+            font-size: .28rem;
+            color: #333;
+        }
+        .travel-shop{
+            width: 100%;
+            height: 1.51rem;
+            padding: 0 .3rem;
+            margin-top: .3rem;
+            background-color: #fff;
+        }
+        .travel-shop .left{
+            width: .88rem;
+            height: .88rem;
+        }
+        .travel-shop .left img{
+            width: .88rem;
+            height: .88rem;
+            border-radius: .1rem;
+        }
+        .travel-shop .middle{
+            width: 4.36rem;
+            height: .88rem;
+        }
+        .travel-shop .middle .t{
+            width: 100%;
+            text-align: left;
+            font-size: .3rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .travel-shop .middle .b{
+            width: 100%;
+            text-align: left;
+            font-size: .26rem;
+            color: #999;
+
+        }
+        .travel-shop .middle .b span{
+            font-weight: bold;
+        }
+        .travel-shop .right{
+            width: 1.6rem;
+            font-size: .3rem;
+            color: #0086F7;
+            font-weight: bold;
+        }
+        .travel-shop .right .iconfont{
+            font-size: .24rem;
+        }
+        .travel-list{
+            width: 100%;
+            height:auto;
+            overflow: hidden;
+            padding: 0 .3rem;
+            padding-bottom: 1.35rem;
+        }
+        .travel-list .title{
+            width: 100%;
+            text-align: left;
+            font-size: .34rem;
+            color: #333;
+            font-weight: bold;
+            margin: .35rem 0;
+        }
+        .travel-list .list{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+        .travel-list .list .item{
+            width: 3.36rem;
+            height: auto;
+            overflow: hidden;
+            background-color: #fff;
+            border-radius: .1rem;
+            margin-bottom: .2rem;
+            float: left;
+        }
+        .travel-list .list .item:nth-child(2n+1){
+            margin-right: .18rem;
+        }
+        .travel-list .list .item img{
+            width: 3.36rem;
+            height: 2.5rem;
+        }
+        .travel-list .list .item .text{
+            width: 100%;
+            padding: 0 .12rem;
+            height: .34rem;
+            text-align: left;
+            font-size: .28rem;
+            color: #333;
+            font-weight: bold;
+            margin-top: .2rem;
+            margin-bottom: .06rem;
+        }
+        .travel-list .list .item .mai-sale{
+            width: 100%;
+            padding: 0 .12rem;
+        }
+        .travel-list .list .item .mai-sale span{
+            font-size: .26rem;
+            color: #999;
+        }
+        .travel-list .list .item .mai-sale span:first-child{
+            margin-right: .15rem;
+        }
+        .travel-list .list .item .price{
+            width: 100%;
+            padding: 0 .12rem;
+            font-size: .28rem;
+            color: #FE6602;
+            font-weight: bold;
+            margin-top: .1rem;
+            margin-bottom: .1rem;
+        }
+        .travel-list  .watch-more{
+            width: 6.9rem;
+            height: .9rem;
+            margin: 0 auto;
+            text-align: center;
+            line-height: .9rem;
+            font-size: .3rem;
+            color: #0086F7;
+            background-color: #fff;
+            border-radius: .1rem;
+            font-weight: bold;
+        }
+        .dtl-footer{
+            width: 100%;
+            height: 1.1rem;
+            background-color: #fff;
+            position: fixed;
+            z-index: 1100;
+            bottom: 0;
+            padding: 0 .3rem;
+        }
+        .dtl-footer .left{
+            width: 2.63rem;
+            height: .9rem;
+            float: left;
+            margin-top: .1rem;
+        }
+        .dtl-footer .left > div{
+            text-align: center;
+        }
+        .dtl-footer .left > div .text{
+            font-size: .2rem;
+            color: #333;
+        }
+        .dtl-footer .left .iconfont{
+            font-size: .46rem;
+            color: #333;
+        }
+        .dtl-footer .left .iconshoucang{
+            color: #4489fe;
+        }
+        .dtl-footer .right{
+            width: 4.26rem;
+            height: .9rem;
+            float: right;
+            margin-top: .1rem;
+            text-align: center;
+            line-height: .9rem;
+            border-radius: .1rem;
+            background:linear-gradient(90deg,rgba(68,137,254,1),rgba(124,136,255,1));
+            font-size: .32rem;
+            color: #fff;
+        }
+        .loading{
+            position: fixed;
+        }
+        .swiper-pagination-custom{
+            bottom:30px;
+         }
+         .mask{
+             width: 100%;
+             height: 100%;
+             background: #000;
+             position: fixed;
+             left: 0;
+             top: 0;
+             z-index: 1450;
+             opacity: .65;
+            
+         }
+         .confirm-time{
+            width: 80vw;
+            height: 5rem;
+            overflow: hidden;
+            border-radius: .1rem;
+            background-color: #fff;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1500;
+            margin: auto;
+         }
+         .confirm-time .title{
+             width: 100%;
+             height: .8rem;
+             text-align: center;
+             line-height: .8rem;
+         }
+         .confirm-time .btns{
+             width: 100%;
+             height: .8rem;
+             margin: auto;
+             position: absolute;
+             bottom: 0;
+             color: #fff;
+             background-color: #0086F7;
+         }
+    </style>
+</head>
+<body>
+    <div class="container" id="root" >
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+        <div class="mask" v-show="shareBox" @click="closeShare"></div>
+        <share-box  v-show="shareBox" :shareurl="shareUrl" :class="[shareBox ? 'animated bounceInDown' : 'animated zoomOutDown']"></share-box>
+        <div class="header">
+            <div class="back hb flex flex_center align-items" @click="back">
+                <i class="iconfont iconfanhui"></i>
+            </div>
+            <div :class="allData.is_praise == 0 ? 'zan hb flex flex_center align-items' : 'zan zan-active hb flex flex_center align-items'" @click="sendZan">
+                <i class="iconfont iconshijian-"></i>
+            </div>
+            <div class="share hb flex flex_center align-items" @click="openShare">
+                <i class="iconfont iconfenxiang"></i>
+            </div>
+        </div>
+        <div class="banner">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="(item,index) in specificPack.detail_img" :key="index"><img :src="item" alt=""></div>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="travel-info">
+            <div class="info">{{ specificPack.title1 }}</div>
+            <div class="bt flex align-items space-between">
+                <div class="left" v-if="type == 1">￥{{ travelInfo.price }} <span>起/人</span></div>
+                <div class="left" v-else>￥{{ specificPack.real_price }} <span>起/人</span></div>
+            </div>
+            <div class="manyi flex space-between align-items">
+                <div class="left">
+                    {{ allData.rate }}% <span>满意度</span>
+                </div>
+                <div class="right">{{ allData.comment_num }}人评价
+                    <!-- <i class="iconfont icongengduo"></i> -->
+                </div>
+            </div>
+        </div>
+        <div class="travel-date" v-if="type == 1">
+            <div class="title">出行日期</div>
+            <div class="list flex align-items flex_start">
+                <div class="item " v-for="(item,index) in allData.attrtime" :class="{active: index == currentTime}" @click="changeTime(index)">
+                    <div>{{ item.time }}</div>
+                    <div v-if="item.real_price">￥{{ item.real_price }}</div>
+                    <div v-else>￥2000</div>
+                </div>
+                <!-- <div v-if="travelInfo.time.length > 4" class="item last">
+                    <div>更多</div>
+                    <div>班期</div>
+                </div> -->
+            </div>
+        </div>
+        <div class="travel-xingcheng">
+            <div class="title" v-if="type == 1">行程概要</div>
+            <div class="title" v-else>健康套餐</div>
+            <div class="list">
+                <div class="item" v-for="(item,index) in travelInfo.attrdetail" :class="[currentIndex == index ? 'active' : '']"  :key="index" @click="choseTs(index)">
+                    <div class="ellipse">{{ item.title }}</div>
+                    <div class="ellipse">{{ item.title1 }}</div>
+                </div>
+            </div>
+            <div class="tr-opt flex flex-start align-items">
+                <i class="iconfont iconxingzhuang7"></i>
+                <span class="text">行程天数：{{ specificPack.day }}</span>
+            </div>
+            <div class="tr-opt flex flex-start align-items">
+                <i class="iconfont iconxingzhuang2"></i>
+                <span class="text">住宿标准：{{ specificPack.standard }}</span>
+            </div>
+        </div>
+        <div class="travel-mai">
+            <div class="title">商家卖点</div>
+            <div class="list">
+                <div class="item" v-for="item in specificPack.attrfeatures">
+                    <div class="cirle"></div>
+                    <div class="text">
+                        <span>{{ item.title }}</span>
+                        <span>{{ item.title1 }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="travel-detail">
+            <div class="title">线路特色</div>
+            <div class="detail">
+                <img :src="specificPack.line_img" alt="">
+            </div>
+        </div>
+        <div class="travel-shop flex align-items space-between" @click="openShop" :style="{marginBottom:shopList.length > 0 ? '' : '1.35rem',height:shopList.length > 0 ? '' : '1.86rem'}">
+            <div class="left">
+                <img :src="shop.shop_img" alt="">
+            </div>
+            <div class="middle">
+                <div class="t">{{ shop.shop_name }}</div>
+                <div class="b"><span>{{ shop.focus }}</span>人关注</div>
+            </div>
+            <div class="right">
+                <span>进入店铺</span>
+                <i class="iconfont  icongengduo"></i>
+            </div>
+        </div>
+        <div class="travel-list" v-if="shopList.length > 0">
+            <div class="title">相似推荐</div>
+            <div class="list">
+
+                <div class="item" v-for="(item,index) in shopList" @click="jumpSimple(item)">
+                    <img :src="item.attr_img" alt="">
+                    <div class="text ellipse">{{ item.attrname }}</div>
+                    <div class="mai-sale">
+                        <span>{{ item.rate }}%满意度</span>
+                        <span>{{ item.sales }}销量</span>
+                    </div>
+                    <div class="price">￥{{ item.price }}</div>
+                </div>
+
+            </div>
+            <!-- <div class="watch-more">查看更多</div>  -->
+        </div>
+
+        <div class="dtl-footer ifooter">
+            <div class="left flex align-items space-around">
+                <div v-show="allData.is_collect == 0" class="collect" @click="sendCollect(1)">
+                    <i class="iconfont iconxingzhuang8"></i>
+                    <div class="text">收藏</div> 
+                </div>
+                <div v-show="allData.is_collect == 1" class="collect" @click="sendCollect(0)">
+                    <i  class="iconfont iconshoucang"></i>
+                    <div class="text" style="color: #4489fe">收藏</div>
+                </div>
+                <div class="collect" @click="openKefu">
+                    <i class="iconfont iconxingzhuang3"></i>
+                    <div class="text">客服</div>
+                </div>
+            </div>
+            <div class="right" @click="confirmBtn">立即预定</div>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/swiper.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var mySwiper = "";
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            //分享组件
+            Vue.component('share-box',{
+                template:'<div class="shareComponent flex space-around align-content-center"><div class="item" v-for="(item,index) in list" @click="share(index)"><img :src="item.src"><div class="text">{{ item.name }}</div></div></div>',
+                data:function(){
+                    return {
+                        list:[{name:"微信",src:"../../image/weixinchat@2x.png"},{name:"朋友圈",src:"../../image/pyq@2x.png"},{name:"微博",src:"../../image/weibo@2x.png"}]
+                    }
+                },
+                props:['shareurl'],
+                methods:{
+                    share:function(type){
+                        var _this = this;
+                        if (type == 0 || type == 1) { //微信好友
+                            var wx = api.require('wx');
+                            wx.isInstalled(function(ret, err) {
+                                if (ret.installed) {
+                                    var weiType =  type == 0 ? 'session' : 'timeline'
+                                    _this.weixinShare(weiType)
+                                } else {
+                                    api.toast({msg:"检测到您的设备为安装微信"})
+                                }
+                            });
+                        }else if(type == 2){ //微博
+                            api.toast({msg:"暂未开放，敬请期待"})
+                        }
+                    },
+                    //微信分享好友
+                    weixinShare:function(type){ //类型  timeline 朋友圈   session 好友
+                        var _this = this;
+                        var wx = api.require('wx');
+                        wx.shareWebpage({
+                            apiKey: '',
+                            scene: type,
+                            title: '好玩好货都在鑫海',
+                            description: '鑫海,专业的旅游平台',
+                            thumb: 'widget://image/logo.png',
+                            contentUrl: _this.shareurl,
+                        }, function(ret, err) {
+                            // if (ret) {
+                            //     api.toast({msg:"分享成功"})
+                            // }else{
+                            //     api.toast({msg:"分享失败"})
+                            // }
+                            _this.$parent.closeShare()
+                        });
+                    }
+                },
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    reqParam:{},
+                    loading:true,
+                    opt:'1',
+                    travelInfo:{
+                        attrdetail:[]
+                    }, //当前日期
+                    allData:{},    //所有数据
+                    currentIndex:0,
+                    shop:{},
+                    shopList:[],
+                    currentTime:0,
+                    shareBox:false,
+                    shareUrl:"",
+                    type:1,
+                },
+                methods:{
+                    getDtl:function(){
+                        var _this = this;
+                        request('/tourism/tourism_cat_list_detail',_this.reqParam,function(err,res){
+                            setTimeout(function(){
+                                _this.loading = false;
+                            },700)
+                            if (!err && res.code == 1) {
+                                _this.allData = res.data.shuju;
+                                if (_this.type == 1) {
+                                    _this.travelInfo = res.data.shuju.attrtime[0]; //设置要展示的时间
+                                } else {
+                                    _this.travelInfo.attrdetail = res.data.shuju.health;
+                                }
+                                _this.shop = res.data.shuju.tourism_shop;
+                                _this.shopList = res.data.shuju.tourism_list;
+                                _this.$nextTick(function(){
+                                    _this.startSwiper();
+                                })
+                            }else{
+                                
+                            }
+                        })
+                    },
+                    getShareDtl:function(){
+                        var _this = this;
+                        request('/shopping/goods_fenxiang',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.shareUrl = res.data;
+                            }
+                        })
+                    },
+                    startSwiper:function(){
+                        mySwiper = new Swiper('.swiper-container', {
+                            autoplay: true,//可选选项，自动滑动
+                            pagination: {
+                                el: '.swiper-pagination',
+                                type: 'custom',
+                                renderCustom: function (swiper, current, total) {
+                                    return current + ' / ' + total;
+                                }
+                            },
+                        })
+                    },
+                    changeTime:function(index){
+                        var _this = this;
+                        _this.currentTime = index;
+                        _this.travelInfo = _this.allData.attrtime[index];
+                        _this.$nextTick(function(){
+                            mySwiper.updateSlides()
+                        })
+                    },
+                    choseTs:function(index){
+                        var _this = this;
+                        _this.currentIndex = index;
+                    },
+                    //发起收藏
+                    sendCollect:function(onlyVal){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        _this.allData.is_collect = onlyVal;
+                        request('/tourism/tourism_collect',{attrid:_this.allData.attrid,type:_this.allData.type},function(err,res){
+                            api.sendEvent({name:"refreshUserInfo"}); //刷新用户信息
+                            if (!err && res.code == 1) {
+                                onlyVal == 1 ? api.toast({msg:"收藏成功"}) : ""
+                            }
+                        },'get')
+                    },
+                    //发起点赞
+                    sendZan:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        _this.allData.is_praise == 0 ?  _this.allData.is_praise = 1 : _this.allData.is_praise = 0;
+                        request('/tourism/tourism_praise',{attrid:_this.allData.attrid,type:_this.allData.type},function(err,res){
+                            if (!err && res.code == 1) {}
+                        },'get')
+                    },
+                    //弹窗再次确认时间
+                    confirmBtn:function(){
+                        var _this = this;
+                        if (_this.type == 2) {
+                            _this.healthOrder();
+                            return false
+                        }
+                        var cnt = _this.allData.attrtime[_this.currentTime].time;
+                        var dialogBox = api.require('dialogBox');
+                        dialogBox.alert({
+                            texts: {
+                                title: '提示',
+                                content: "您将于"+cnt+"出行，请确认",
+                                leftBtnTitle: '再看看',
+                                rightBtnTitle: '确定'
+                            },
+                            styles: {
+                                bg: '#fff',
+                                w: 300,
+                                corner:5,
+                                title: {
+                                    marginT: 20,
+                                    icon: 'widget://res/gou.png',
+                                    iconSize: 40,
+                                    titleSize: 14,
+                                    titleColor: '#000'
+                                },
+                                content: {
+                                    color: '#000',
+                                    size: 14
+                                },
+                                left: {
+                                    marginB: 7,
+                                    marginL: 20,
+                                    w: 130,
+                                    h: 35,
+                                    corner: 5,
+                                    bg: '#ccc',
+                                    color:'#fff',
+                                    size: 12
+                                },
+                                right: {
+                                    marginB: 7,
+                                    marginL: 10,
+                                    w: 130,
+                                    h: 35,
+                                    corner: 5,
+                                    bg: '#0086F7',
+                                    color:'#fff',
+                                    size: 12
+                                }
+                            }
+                        }, function(ret) {
+                            if (ret.eventType == 'right') {
+                               _this.startBuy();
+                            }
+                            dialogBox.close({
+                                dialogName: 'alert'
+                            });
+                        });
+                    },
+                    // 健康下单
+                    healthOrder:function(){
+                       var _this = this;
+                       _this.loading = true;
+                       _this.opt = "0.65"
+                        var config = {      //配置下单参数
+                            id:_this.allData.attrid,
+                            type:3,
+                            number:1,
+                            order_type:1,
+                            timeid:"",
+                            detailid:_this.specificPack.detailid,
+                            shopid:_this.allData.shopid,
+                        }
+                       //订单确认
+                       request('/tourism/order_confirm',config,function(err,res){
+                           if (!err && res.code == 1) {
+                               //下单进收银台
+                               var ordeConfig = {
+                                    rec_ids:res.data.rec_id,
+                                    type:3,
+                                    order_sn:res.data.order_sn,
+                                    bonus_id:res.data.is_bonus,
+                               }
+                                request('/tourism/order_post',ordeConfig,function(err,resp){
+                                    _this.loading = false;
+                                    if (!err && resp.code == 1) {
+                                        api.openWin({
+                                            name:"payType",
+                                            url:"../user/pay_type.html",
+                                            reload:true,
+                                            pageParam:{
+                                                orderno:resp.data,
+                                                source:4,
+                                            }
+                                        })
+                                    }else{
+                                        err ? console.log(JSON.stringify(err)) : api.toast({msg:resp.msg})
+                                    }
+                                })
+                           } else {
+                               _this.loading = false;
+                               err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                           }
+                       })
+                    },
+                    //立即预定
+                    startBuy:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        _this.loading = true;
+                        _this.opt = '.65';
+                        var config = {
+                            id:_this.allData.attrid,
+                            type:_this.allData.type == 1 ? 2 : 3 ,
+                            order_type:1,
+                            detailid:_this.specificPack.detailid,
+                            timeid:_this.travelInfo.timeid,
+                            shopid:_this.allData.shopid,
+                        }
+                        config.price =_this.travelInfo.price;
+                        _this.loading = false;
+                        api.openWin({
+                            name:"proSubmit",
+                            url:"../view/pro-submit.html",
+                            pageParam:{
+                                config:JSON.stringify(config)
+                            }
+                        })
+                        // request('/tourism/order_confirm',config,function(err,res){
+                        //     _this.loading = false;
+                        //     if (!err && res.code == 1) {
+                        //         config = Object.assign(config,res.data)
+                        //     }else{
+                        //         api.toast({msg:"订单确认失败"})
+                        //     }
+                        // })
+                    },
+                    //进入店铺
+                    openShop:function(){
+                        var _this = this;
+                        api.openWin({
+                           name:"storedetail",
+                           url:"../view/storedetail.html",
+                           pageParam:{
+                               shopid:_this.shop.shopid,
+                           }
+                       })
+                    },
+                    //打开分享
+                    openShare:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        this.shareBox = true;
+                    },
+                    closeShare:function(){
+                        this.shareBox = false;
+                    },
+                    back:function(){
+                        api.sendEvent({name:"refreshUserInfo"})
+                        api.closeWin()
+                    },
+                    jumpSimple:function(item){
+                        api.openWin({
+                            name:"travelDtl",
+                            url:"./travel_dtl.html",
+                            pageParam:{
+                               obj:JSON.stringify({attrid:item.attrid,type:item.type})
+                            },
+                            reload:true,
+                        })
+                    },
+                    openKefu:function(){
+                        api.toast({msg:"暂未开放"})
+                        // if (!isLogin()) {
+                        //     api.openWin({
+                        //         name: 'login',
+                        //         url: '../guoshujie/login.html'
+                        //     });
+                        //     return false
+                        // }
+                        // api.openWin({
+                        //     name:"kefu",
+                        //     url:"../chat/chat_list.html",
+                        //     reload:true,
+                        // });
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var back = document.querySelector('.back');
+                        var zan  = document.querySelector('.zan');
+                        var share= document.querySelector('.share');
+                        var backTop = back.offsetTop;
+                        var zanTop  = zan.offsetTop;
+                        var shareTop= share.offsetTop;
+                        back.style.top = safeArea+ backTop  + "px";
+                        zan.style.top  = safeArea+ zanTop   + "px";
+                        share.style.top= safeArea+ shareTop + "px";
+                        handerIOSX()
+                    };
+                    this.reqParam = JSON.parse(api.pageParam.obj);
+                    this.type = JSON.parse(api.pageParam.obj).type;
+
+                    this.getDtl()
+                    this.getShareDtl();
+                    var _this = this;
+                    api.addEventListener({name:"refreshtravDtl"},function(){
+                        _this.getDtl();
+                        _this.getShareDtl();
+                    });
+                },
+                computed:{
+                    specificPack:function(){
+                        // if (this.travelInfo.attrdetail.length != 0 && this.type == 1) {
+                        //     return  this.travelInfo.attrdetail.length != 0 ? this.travelInfo.attrdetail[this.currentIndex] : {}
+                        // }else{
+                        //     return this.travelInfo.attrdetail[this.currentIndex];
+                        // }
+                        return  this.travelInfo.attrdetail.length != 0 ? this.travelInfo.attrdetail[this.currentIndex] : {}
+                    },
+                }
+            })
+        }
+    </script>
+</body>
+</html>

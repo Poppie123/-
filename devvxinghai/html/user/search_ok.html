@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_vgzk7s2d7mp.css">
+    <script src="../../js/rem.js"></script>
+    <title>搜索成功</title>
+    <style>
+        .container{
+            padding-top: 1.08rem;
+        }
+        .header{
+            width: 100%;
+            height: .88rem;
+            padding: 0 .3rem;
+            line-height: .88rem;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            z-index: 1300;
+        }
+        .header i{
+            font-size: .3rem;
+        }
+        .header_cen{
+            width: 5.56rem;
+            height: .6rem;
+            border: 1px solid #CCCCCC;
+            border-radius: .3rem;
+            padding: 0 .31rem;
+            line-height: .55rem;
+            margin-top: .14rem;
+        }
+        .header_cen i{
+            font-size: .3rem;
+            color: #999;
+        }
+        .header span{
+            font-size: .28rem;
+        }
+        .header_cen input{
+            width: 100%;
+            height: 100%;
+            padding: .11rem;
+            font-size: .28rem;
+        }
+        input::placeholder{
+            font-size: .28rem;
+            color: #999;
+        }
+        /* 主要内容 */
+        .main{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+        }
+        .main ul{
+            overflow: hidden;
+            width: 100%;
+            height: auto;
+        }
+        .main li{
+            width: 3.36rem;
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            margin-bottom: .2rem;
+            border-radius: .1rem;
+            float: left;
+        }
+        .main li img{
+            width: 100%;
+            height: 3.36rem;
+            border-radius: .1rem;
+        }
+        .main_cen{
+            width: 100%;
+            height: auto;
+            padding: .22rem .32rem 0 .22rem;
+            margin-bottom: .25rem;
+        }
+        .main_name{
+            width: 100%;
+            font-size: .28rem;
+            font-weight: bold;
+            line-height: .34rem;
+            margin-bottom: .1rem;
+        }
+        .main_status{
+            width: .9rem;
+            max-height: .3rem;
+            padding: 0 .12rem;
+            background:rgba(0,134,247,0.05);
+            border-radius:.04rem;
+            line-height: .3rem;
+            margin-bottom: .14rem;
+            font-size: .2rem;
+            font-weight: 500;
+            color: #0086F7;
+        }
+        .main_sale{
+            width: auto;
+            height: .25rem;
+            line-height: .25rem;
+            font-size: .26rem;
+            color: #999;
+            margin-bottom: .1rem;
+        }
+        .main_sale span{
+            margin-right: .15rem;
+        }
+        .main_much{
+            width: auto;
+            height: .3rem;
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .main_much .bocus{
+            width: .36rem;
+            height: .32rem;
+            border-radius: .14rem;
+            font-size: .2rem!important;
+            background: #ff0000;
+            font-weight: normal;
+            line-height: normal;
+            margin-left: .2rem;
+        }
+        .main_much .bocus span{
+            color: #fff;
+            font-size: .24rem!important;
+        }
+        .qundao-price span{
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .qundao-price span:last-child{
+            font-size: .26rem;
+            color: #ff0000;
+            font-weight: bold;
+            margin-left: .2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+        <no-data v-show="searchList.length == 0" msg="暂无数据，换个关键词试试"></no-data>
+        <!-- 搜索框 -->
+        <div class="header flex space-between">
+            <i class="iconfont iconfanhui" @click="back"></i>
+            <div class="header_cen flex">
+                <i class="iconfont iconxingzhuang9"></i>
+                <input type="text" placeholder="搜索" v-model="searchVal">
+            </div>
+            <span @click="sendSearch()">搜索</span>
+        </div>
+        <!-- 页面内容 -->
+        <div class="main">
+            <ul class="flex space-between flex_wrap">
+                <li v-for="item in searchList" :key="item.goods_id">
+                    <img :src="item.goods_img">
+                    <div class="main_cen">
+                        <div class="main_name ellipsis2">{{ item.goods_name}}</div>
+                        <div class="main_sale">
+                            <span>{{ item.satisfaction }}%满意度</span>
+                            <span>{{ item.sales }}销量</span>
+                        </div>
+                        <div class="main_much flex align-items price">
+                            <span>￥{{ item.shop_price}}</span>
+                            <div class="bocus fn-ctr"  v-if="item.is_youhuiquan == 1"><span >券</span></div> 
+                        </div>
+                        <div class="qundao-price flex align-items" v-if="isQundao == 1">
+                            <span>￥</span><span>{{ item.qudao_price }}</span><span>渠道价</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            //  加载组件
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            //  无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    searchVal:"",
+                    searchList:[],
+                    totalCount:0,
+                    isTotal:true,  //是否正在发送请求，true代表当前可以发送，请求，false代表请求未结束
+                    loading:true,
+                    isQundao:0,
+                },
+                methods:{
+                    getSearch:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/shopping/goods_search',{keywords:_this.searchVal,start:0},function(err,res){
+                            _this.loading = false;
+                            _this.isTotal = true;
+                            if (!err && res.code == 1) {
+                                api.sendEvent({name:"refreshSearch"})
+                                _this.searchList = _this.searchList.concat(res.data.data);
+                                _this.totalCount = res.data.total;
+                            }else{
+                                if (err) {
+                                    
+                                }
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    },
+                    sendSearch:function(){
+                        this.loading = true;
+                        this.searchList.splice(0)
+                        this.getSearch();
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.main')
+                        var header = document.querySelector('.header');
+                        var headerHeight = header.clientHeight;
+                        header.style.height = headerHeight + safeArea + "px"
+                        header.style.paddingTop = safeArea +"px";
+                        main.style.paddingTop = safeArea  + "px"
+                    }
+                    this.searchVal = api.pageParam.searchVal;
+                    this.getSearch();
+                    
+                    // 上拉加载
+                    var _this = this;
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.searchList.length == _this.totalCount) {
+                            if (_this.totalCount < 6) {
+                                return false;
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getSearch();
+                            },300)
+                        }
+                    });
+
+                    window.onkeydown = function(e){
+                        if (e && e.keyCode==13) {
+                            _this.sendSearch()
+                        }
+                    };
+                     //监听是否渠道价格
+                     _this.isQundao = $api.getStorage('isQundao') || 0;
+                    api.addEventListener({name:"refreshQundao"},function(ret){
+                        _this.isQundao = ret.value.isQundao || 0;
+                    })
+                }
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

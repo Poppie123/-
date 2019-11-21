@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的-我的订单-待发货</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+
+        .header {
+            width: 7.5rem;
+            height: .93rem;
+            background-color: #FFFFFF;
+            padding: .3rem;
+        }
+
+        .header .iconfanhui {
+            font-size: .3rem;
+            color: #333333;
+            float: left;
+        }
+
+        .header .order {
+            font-size: .36rem;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
+   
+        }.header .myhead{
+            width: .3rem;
+            height: .3rem;
+        }
+        .biaoti {
+            width: 7.5rem;
+            height: .88rem;
+            padding-left: .31rem;
+            background-color: #FFFFFF;
+            overflow: hidden;
+         
+        }
+
+        .biaoti .all {
+            font-size: .32rem;
+            color: #999999;
+            text-align: left;
+            overflow-x: scroll;
+        }
+
+        .active {
+            color: #0086F7!important;
+        }
+
+        .middle {
+            width: 7.5rem;
+            padding-left: .3rem;
+            padding-right: .3rem;
+            margin-bottom: .5rem;
+        }
+
+        .middle .main {
+            width: 6.9rem;
+            /* height: 3.97rem; */
+            background-color: #FFFFFF;
+            padding: .3rem;
+            overflow: hidden;
+            margin-top: .2rem;
+            padding-bottom: 0;
+        }
+
+        .middle .main .main-title {
+            font-size: .28rem;
+            color: #999999;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .middle .main .main-title .time {
+            float: left;
+        }
+
+        .middle .main .main-title .paid {
+            float: right;
+        }
+
+        .middle .main .main-center {
+            height: 2.2rem;
+            margin-top: .2rem;
+            overflow: hidden;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        .middle .main .main-center img {
+            width: 2.5rem;
+            height: 1.85rem;
+            border-radius: .05rem;
+            float: left;
+            /* margin-right: .2rem; */
+        }
+
+        .middle .main .main-center .right {
+            margin-left: .15rem;
+            float: left;
+            overflow: hidden;
+
+        }
+
+        .middle .main .main-center .right .right-title {
+            width: 3.62rem;
+            font-size: .28rem;
+            font-weight: bold;
+            color: #333333;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .middle .main .main-center .right .right-price {
+            margin-top: .55rem;
+            overflow: hidden;
+        }
+
+        .middle .main .main-center .right .right-price .fahuo {
+            font-size: .24rem;
+            color: #999999;
+            text-align: left;
+            float: left;
+        }
+
+        .middle .main .main-center .right .right-price .num {
+            font-size: .2rem;
+            color: #333333;
+            text-align: left;
+            float: right;
+        }
+
+        .middle .main .main-center .right .right-price .num .three {
+            font-size: .28rem;
+        }
+
+        .heji {
+            height: .89rem;
+            float: right;
+            font-size: .28rem;
+            color: #333333;
+            text-align: left;
+        }
+
+        .heji .sum {
+            margin-left: .15rem;
+        }
+
+        .heji .sum span {
+            color: #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header flex align-items space-between flex_center">
+        <i class="iconfont iconfanhui "></i>
+        <div class="order" >我的订单</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="biaoti flex align-items space-between flex_center">
+        <div class="all ">全部</div>
+        <div class="all">待付款</div>
+        <div class="all active">待发货</div>
+        <div class="all">待收货</div>
+        <div class="all">待评价</div>
+        <div class="all">退款/售后</div>
+    </div>
+    <div class="middle">
+        <div class="main">
+            <div class="main-title">
+                <span class="time">2019-07-08</span>
+                <span class="paid active">待发货</span>
+            </div>
+            <div class="main-center">
+                <img src="../../image/m_tu.png" alt="">
+                <div class="right">
+                    <div class="right-title">海自营野山参鑫海自营野山参
+                        海自营野山参</div>
+                    <div class="right-price">
+                        <span class="fahuo">发货时间：鑫海承诺5天</span>
+                        <span class="num">x<span class="three">3</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="heji flex align-items">
+                共3件商品<span class="sum">合计<span>￥1500</span></span>
+            </div>
+        </div>
+        <div class="main">
+            <div class="main-title">
+                <span class="time">2019-07-08</span>
+                <span class="paid active">待发货</span>
+            </div>
+            <div class="main-center">
+                <img src="../../image/m_tu.png" alt="">
+                <div class="right">
+                    <div class="right-title">海自营野山参鑫海自营野山参
+                        海自营野山参</div>
+                    <div class="right-price">
+                        <span class="fahuo">发货时间：鑫海承诺5天</span>
+                        <span class="num">x<span class="three">3</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="heji flex align-items">
+                共3件商品<span class="sum">合计<span>￥1500</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/common.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <title>我的提问</title>
+    <style>
+        .header {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            top: 0;
+            z-index: 1300;
+            padding: 0 .3rem;
+            color: #333333;
+            font-size: .36rem;
+            border-bottom: 1px solid #eeeeee;
+            background: #fff;
+        }
+
+        .header i {
+            font-size: .32rem;
+        }
+
+        .header-a {
+            width: auto;
+            margin: 0 auto;
+            font-weight: bold;
+            position: relative;
+        }
+        .null{
+            width: .32rem;
+            height: .32rem;
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            padding-top: .88rem;
+        }
+
+        ul {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            padding: 0 .3rem;
+            overflow: hidden;
+        }
+
+        .item {
+            width: 100%;
+            height: 1.65rem;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .item:last-child{
+            border-bottom: 0;
+        }
+        .ask {
+            width: 100%;
+            height: .84rem;
+       
+        }
+
+        .ask i {
+            color: #0086F7;
+            font-size: .4rem;
+        }
+        .wen{
+            width:6.04rem;
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+            margin-left:.2rem;
+            position: relative;
+            top:-0.02rem;
+        }
+        .reply{
+            width: 100%;
+            height: .5rem;
+        }
+        .time{
+            font-size: .26rem;
+            color: #999999;
+        }
+        .no-reply{
+            width: 1.2rem;
+            height: .5rem;
+            line-height: .5rem;
+            font-size: .24rem;
+            color: #333333;
+            background:#F6F6F6;
+            border-radius: .06rem;
+           
+        }
+        .yes-reply{
+            width: 1.2rem;
+            height: .5rem;
+            line-height: .5rem;
+            font-size: .24rem;
+            color: #0086F7;
+            background:#F6F6F6;
+            border-radius: .06rem;
+         
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" opt="1"></v-loading>
+        <no-data v-show="list.length == 0" msg="您还没有提问,您的问题将会被专业专家回答哦"></no-data>
+    <div class="header flex align-items">
+        <i class="iconfont iconfanhui" @click="back"></i>
+        <span class="header-a">我的提问</span>
+        <div class="null"></div>
+    </div>
+    <div class="main">
+        <ul>
+            <li class="item" v-for="item in list" @click="openDtl(item)">
+                <div class="ask flex align-items">
+                    <i class="iconfont iconwen"></i>
+                    <div class="wen ellipse">{{ item.question }}</div>
+                </div>
+                <div class="reply flex align-items space-between">
+                    <div class="time">提问于{{ item.add_time }}</div>
+                    <div class="no-reply tc" v-if="item.is_reply == 0">无回复</div>
+                    <div class="no-reply tc" v-else>有回复(1)</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        api_init = function(){
+            // 加载组件
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            // 无数据组件
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>返回</span></div></div></div>',
+                data:function(){
+                    return {}
+                },
+                methods:{
+                    pageBack:function(){
+                        api.closeWin()
+                    }
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   list:[],
+                   total:0,
+                   isTotal:true,
+                   loading:true,
+                },
+                methods:{
+                    getList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/my/my_information',{start:0},function(err,res){
+                            _this.isTotal = true;
+                            setTimeout(function(){_this.loading = false},700)
+                            if (!err && res.code == 1) {
+                                _this.list = _this.list.concat(res.data.data);
+                                _this.total= res.data.total;
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    },
+                    openDtl:function(item){
+                        if (item.is_reply == 0) {
+                            return false;
+                        }
+                        api.openWin({
+                            name:"tiwenDetail",
+                            url:"../mapiaoliang/tiwen-detail.html",
+                            pageParam:{
+                                id:item.id
+                            }
+                        });
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main  = document.querySelector(".main");
+                        var search = document.querySelector('.header');
+                        var headerHeight = search.clientHeight;
+                        search.style.height = safeArea + headerHeight + "px";
+                        search.style.paddingTop = safeArea + "px";
+                        main.style.paddingTop = safeArea + headerHeight+ 'px'
+                    };
+                    this.getList()
+                    var _this = this;
+                    // 上拉加载
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.total < 6) {
+                                return false;
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getList();
+                            },300)
+                        }
+                    });
+                },
+            })
+        }
+    
+    
+    </script>
+</body>
+
+</html>

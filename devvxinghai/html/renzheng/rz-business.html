@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商家认证</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .top88 {
+            height: .88rem;
+        }
+
+        .img {
+            width: 6.9rem;
+            height: 10rem;
+            display: block;
+            margin: .4rem auto 0;
+        }
+        .main{
+            width: 6.9rem;
+            height: auto;
+            border-radius: .1rem;
+            margin: .4rem auto 0;
+            overflow: hidden;
+        }
+        .btn {
+            width: 6.9rem;
+            height: .88rem;
+            position: relative;
+            overflow: hidden;
+            background: #0086F7;
+            border-radius: .08rem;
+            margin: .47rem auto 0;
+            line-height: .88rem;
+            text-align: center;
+            font-size: .32rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>商家认证</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="main" v-html="infoDt.business_certification_copy">
+
+    </div>
+    <!-- <img class="img" src="../../image/rz-shangjia188@2x.png" alt=""> -->
+    <div class="btn zhezao" @click="startAuth">{{rzMsg}}</div></div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function () {
+            var root = new Vue({
+                el: "#root",
+                data: {
+                    infoDt:{},
+                },
+                methods: {
+                    getInfo:function(){
+                        var _this = this;
+                        request('/my/business_certification_copy',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.infoDt = res.data;
+                            }
+                        })
+                    },
+                    //开始认证
+                    startAuth:function(){
+                        var _this = this;
+                        if(_this.infoDt.is_certification == 0 && _this.infoDt.certification_status==0){  //正在审核
+                            api.openWin({
+                                name:"rzChecking",
+                                url:"../renzheng/rz-checking.html",
+                            })
+                        }else if(_this.infoDt.is_certification == 1 && _this.infoDt.certification_status == 1){ //审核成功
+                            api.openWin({
+                                name:"rzSuc",
+                                url:"../renzheng/rz-success.html",
+                            })
+                        }else if(_this.infoDt.is_certification == 0 && _this.infoDt.certification_status == 2){
+                            api.openWin({
+                                name:"rzSuc",
+                                url:"../renzheng/rz-failed.html",
+                                pageParam:{
+                                    msg:_this.audit_fail_reason,
+                                }
+                            })
+                        }else{
+                            api.openWin({
+                                name:"rzBegining",
+                                url:"../renzheng/rz-begining.html",
+                            })
+                        }
+                    },
+                    back:function(){
+                        api.closeWin();
+                    },
+                },
+                mounted: function () {
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    this.getInfo()
+                },
+                computed:{
+                    rzMsg:function(){
+                        var _this = this;
+                        if (_this.infoDt.is_certification == 0 && _this.infoDt.certification_status==0) { //正在审核
+                            msg = "正在审核";
+                        }else if(_this.infoDt.is_certification == 1 && _this.infoDt.certification_status == 1){  //审核通过
+                            msg = "审核通过"
+                        }else if(_this.infoDt.is_certification == 0 && _this.infoDt.certification_status == 2){ //审核不通过
+                            msg = "审核不通过"
+                        }else{
+                            msg = "审核不通过"
+                        }
+                        return msg
+                    }
+                }
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>

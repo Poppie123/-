@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>设置</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_6xy39461u4r.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background-color: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        .wrapper{
+            width: 100%;
+            background: #FFFFFF;
+            padding: 0 .3rem;
+        }
+        .list{
+            width: 100%;
+            height: 1.11rem;
+            background: #FFFFFF;
+            font-size: .3rem;
+            font-weight: bold;
+            border-bottom:1px solid #EEEEEE; 
+        }
+        .list .version{
+            color: #999999;
+            font-weight: 500;
+        }
+        .list i{
+            font-size: .21rem;
+            color: #CCCCCC;
+        }
+        .border0{
+            border: 0;
+        }
+        .log-out{
+            width: 100%;
+            height: 1.11rem;
+            background: #FFFFFF;
+            margin-top: .2rem;
+            line-height: 1.11rem;
+            text-align: center;
+            font-size: .3rem;
+            color: #333333;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>设置</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="wrapper">
+        <div class="list  flex space-between align-items" @click="jumpMyinfo">
+            <div>个人信息</div>
+            <i class="iconfont icongengduo"></i>  
+        </div>
+        <div class="list  flex space-between align-items" @click="editLoginPwd">
+            <div>修改登录密码</div>
+            <i class="iconfont icongengduo"></i>  
+        </div>
+        <div class="list  flex space-between align-items" @click="editPayPwd">
+            <div>{{ payTip }}</div>
+            <i class="iconfont icongengduo"></i> 
+        </div>
+        <div class="list  flex space-between align-items">
+            <div>版本更新</div>
+            <div>
+                <span class="version">{{ version }}</span>
+                <i class="iconfont icongengduo"></i>  
+            </div>
+        </div>
+        <div class="list  flex space-between align-items" @click="jumpSuggest">
+            <div>意见反馈</div>
+            <i class="iconfont icongengduo"></i>  
+        </div>
+        <div class="list  flex space-between align-items" @click="jumpAbout">
+            <div>关于我们</div>
+            <i class="iconfont icongengduo"></i>  
+        </div>
+        <div class="list  flex space-between align-items border0" @click="jumpQuestion">
+            <div>常见问题</div>
+            <i class="iconfont icongengduo"></i>  
+        </div>
+    </div>
+    <div class="log-out" @click="logout">退出登录</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   phone:"",
+                   version:"",
+                   payTip:"修改支付密码",
+                },
+                methods:{
+                    //跳转个人信息
+                    jumpMyinfo:function(){
+                        api.openWin({
+                            name:"editPerson",
+                            url:"../zhangtiantian/edit-person.html",
+                        })
+                    },
+                    //修改登录密码
+                    editLoginPwd:function(){
+                        var _this = this;
+                        api.openWin({
+                            name:"edit_pwd.html",
+                            url:"../guoshujie/edit_pwd.html",
+                            pageParam:{
+                                phone:_this.phone,
+                            }
+                        })
+                    },
+                    //修改支付密码
+                    editPayPwd:function(){
+                        var _this = this;
+                        if (_this.payTip == "修改支付密码") {
+                            api.openWin({
+                                name:"edit_paypwd",
+                                url:"../guoshujie/edit_paypwd.html",
+                                pageParam:{
+                                    phone:_this.phone,
+                                    title:_this.payTip,
+                                }
+                            })
+                        } else {
+                            api.openWin({
+                                name:"forget_paypwd",
+                                url:"../guoshujie/forget_paypwd.html",
+                                pageParam:{
+                                    phone:_this.phone,
+                                    title:_this.payTip,
+                                }
+                            })
+                        }
+                        
+                    },
+                    //跳转意见反馈
+                    jumpSuggest:function(){
+                        api.openWin({
+                            name:"feedback",
+                            url:"../zhangtiantian/feedback.html",
+                        })
+                    },
+                    //跳转关于我们
+                    jumpAbout:function(){
+                        api.openWin({
+                            name:"aboutUs",
+                            url:"../zhangtiantian/about-us.html",
+                        })
+                    },
+                    //跳转常见问题
+                    jumpQuestion:function(){
+                        api.openWin({
+                            name:"qusetion",
+                            url:"../zhangtiantian/qusetion.html",
+                        })
+                    },
+                    //退出登录
+                    logout:function(){
+                        var dialogBox = api.require('dialogBox');
+							dialogBox.alert({
+								texts: {
+									title: '提示',
+									content: '是否确认退出',
+									leftBtnTitle: '取消',
+									rightBtnTitle: '退出'
+								},
+								styles: {
+									bg: '#fff',
+									w: 300,
+									corner:5,
+									title: {
+										marginT: 20,
+										icon: 'widget://res/gou.png',
+										iconSize: 40,
+										titleSize: 14,
+										titleColor: '#000'
+									},
+									content: {
+										color: '#000',
+										size: 14
+									},
+									left: {
+										marginB: 7,
+										marginL: 20,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#0086F7',
+										color:'#fff',
+										size: 12
+									},
+									right: {
+										marginB: 7,
+										marginL: 10,
+										w: 130,
+										h: 35,
+										corner: 5,
+										bg: '#ccc',
+										color:'#fff',
+										size: 12
+									}
+								}
+							}, function(ret) {
+								if (ret.eventType == 'right') {
+								    request('/login/loginOut',{},function(err,res){
+                                        if (!err && res.code == 1) {
+                                            monAjax('退出登录成功')  //埋点代码
+                                            api.toast({msg:'退出成功'});
+                                            $api.rmStorage('uid');
+                                            api.sendEvent({name:"refreshUserInfo"})
+                                            setTimeout(function(){
+                                                var jsfun = 'api.setFrameGroupIndex({name: "index", index: 0, scroll: false})';
+                                                api.execScript({
+                                                    name: 'root',
+                                                    script: jsfun
+                                                });
+                                                api.closeToWin({
+                                                    name:"root"
+                                                })
+                                            },700)
+                                            
+                                        }
+                                    })
+								}
+								dialogBox.close({
+									dialogName: 'alert'
+								});
+							});
+                    },
+                    back:function(){
+                        api.closeWin()
+                    },
+                    refrepaypwd:function(){
+                        var _this = this;
+                        request('/my/check_set_pay_password',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.payTip = "修改支付密码";
+                            }else{
+                                _this.payTip = "设置支付密码";
+                            }
+                        })
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px"
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    };
+                    this.phone   = api.pageParam.phone; //用户手机号
+                    this.version = api.appVersion;      //系统版本
+                    //判断用户是否设置过支付密码
+                    var _this = this;
+                    _this.refrepaypwd();
+                    api.addEventListener({name:"refreshSetting"},function(){
+                        _this.refrepaypwd();
+                    })
+                }
+            })
+        }
+            
+    
+    
+    </script>
+</body>
+</html>

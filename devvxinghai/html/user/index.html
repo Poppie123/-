@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/swiper.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_vgzk7s2d7mp.css">
+    
+   <script src="../../js/rem.js"></script>
+    <title>首页</title>
+    <style>
+        .search{
+            width: 100%;
+            height: .6rem;
+            overflow: hidden;
+            padding: 0 .6rem;
+            position: fixed;
+            top: .2rem;
+            margin: auto;
+            z-index: 999;
+        }
+        .sea{
+            width: 6.3rem;
+            height: 100%;
+            opacity:0.9;
+            border-radius:.3rem;
+            background: #fff;
+            padding: 0 .27rem;
+            line-height: .66rem;
+            padding-left: .1rem;
+        }
+        .sea i{
+            font-size: .28rem;
+            color: #999;
+            /* margin-right: .16rem; */
+            position: absolute;
+            top: .16rem;
+            margin-left: .1rem;
+            line-height: normal;
+        }
+        .sea span{
+            font-size: .26rem;
+            color: #666;
+            margin-left: .5rem;
+        }
+        /* 轮播图 */
+        .banner{
+            width: 100%;
+            height: 4.6rem;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+        }
+        /* 导航 */
+        .nav{
+            width: 100%;
+            height: 6.15rem;
+            background: #fff;
+            padding-top:.34rem;
+            margin-bottom: .1rem;
+        }
+        .nav_top{
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+
+            padding: 0 .49rem;
+        }
+        .nav_o{
+            width: 1rem;
+            height: 100%;
+            margin-right: .7rem;
+            margin-bottom: .2rem;
+            text-align: center;
+        }
+        .nav_o:nth-child(4n){
+            margin-right: 0;
+        }
+        .nav_o:nth-child(n+5){
+            margin-bottom: .1rem;
+        }
+        .nav_o img{
+            width: .8rem;
+            height: .7rem;
+            margin: 0 auto;
+        }
+        .nav_o span{
+            font-size: .24rem;
+            line-height: .43rem;
+        }
+        .nav_cen{
+            width: 100%;
+            height: 2.47rem;
+            margin-top: .18rem;
+            padding: 0 .3rem;
+            color: #fff;
+        }
+        .nav_main_left{
+            width: 3.34rem;
+            height: 2.47rem;
+            border-radius:.1rem;
+            background: #FC966E;
+            padding: 0 .17rem;
+        }
+        .nav_main_top{
+            width: 100%;
+            height: .85rem;
+            padding: 0 .12rem;
+        }
+        .nav_cen span{
+            font-size: .34rem;
+        }
+        .nav_cen i{
+            font-size: .4rem;
+        }
+        .nav_main_cen{
+            width: 100%;
+            height: 1.42rem;
+        }
+        .nav_main_o{
+            width: 1.42rem;
+            height: 1.42rem;
+            overflow: hidden;
+            border-radius: .12rem;
+            position: relative;
+        }
+        .nav_main_o img{
+            width: 100%;
+            height: 100%;
+        }
+        .nav_main_suit{
+           width: 100%;
+           height: auto;
+           position: absolute;
+           top: 1rem;
+           font-size: .28rem;
+           text-align: center;
+        }
+        .item{
+            width: 100%;
+            height: .92rem;
+            line-height: .92rem;
+            font-size: .34rem;
+            font-weight: bold;
+            padding: 0 .29rem;
+        }
+        /* 主要内容 */
+        .main{
+            width: 100%;
+            height: auto;
+            padding: 0 .3rem;
+        }
+        .main ul{
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+        .main li{
+            width: 3.36rem;
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            border-radius: .1rem;
+            position: absolute;
+        }
+        .main li img{
+            width: 100%;
+            height: 2.5rem;
+        }
+        .main_cen{
+            width: 100%;
+            height: auto;
+            padding: .22rem .08rem 0 .08rem;
+            margin-bottom: .25rem;
+        }
+        .main_name{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            font-size: .28rem;
+            font-weight: bold;
+            line-height: .33rem;
+            margin-bottom: .1rem;
+        }
+        .main_status{
+            width: .9rem;
+            max-height: .3rem;
+            padding: 0 .12rem;
+            background:rgba(0,134,247,0.05);
+            border-radius:.04rem;
+            line-height: .3rem;
+            margin-bottom: .14rem;
+            font-size: .2rem;
+            font-weight: 500;
+            color: #0086F7;
+        }
+        .main_sale{
+            width: auto;
+            height: .25rem;
+            line-height: .25rem;
+            font-size: .26rem;
+            color: #999;
+            margin-bottom: .1rem;
+        }
+        .main_sale span{
+            float: left;
+            margin-right: .1rem;
+        }
+        .main_sale span:last-child{
+            float: right;
+            margin-right: 0;
+        }
+        .main_much{
+            width: auto;
+            height: .3rem;
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .main_much .bocus{
+            width: .36rem;
+            height: .32rem;
+            border-radius: .14rem;
+            font-size: .2rem!important;
+            background: #ff0000;
+            font-weight: normal;
+            line-height: normal;
+            margin-left: .2rem;
+        }
+        .main_much .bocus span{
+            color: #fff;
+            font-size: .24rem!important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="root" v-cloak>
+        <!-- 搜索框 -->
+        <div class="search" @click="openSearch()">
+            <div class="sea flex">
+                <i class="iconfont iconxingzhuang9"></i>
+                <span>探索世界</span>
+            </div>
+        </div>
+
+        <!-- 轮播图 -->
+        <div class="banner">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="item in bannerList"><img :src="item.pic"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <!-- 页面导航 -->
+
+        <div class="nav" id="">
+            <div class="nav_top flex flex_wrap space-around">
+                <div class="nav_o" v-for="item in menuList" @click="openLvJu(item)" tapmode>
+                    <img :src="item.pic">
+                    <span>{{ item.title }}</span>
+                </div>
+
+            </div>
+            <div class="nav_cen flex space-between">
+                <div class="nav_main_left">
+                    <div class="nav_main_top flex space-between align-items" @click="openLvJu(likeLeft[0])" tapmode>
+                        <span>精选旅游</span>
+                        <i class="iconfont icon_youjiantoudaiquan"></i>
+                    </div>
+                    <div class="nav_main_cen flex space-between">
+                        <div class="nav_main_o" v-for="item in likeLeft" @click.stop="openLvJu(item)" tapmode>
+                            <img :src="item.pic">
+                            <div class="nav_main_suit">{{ item.title }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav_main_left" style="background: #60C8EB" @click="openLvJu(likeRight[0])" tapmode>
+                    <div class="nav_main_top flex space-between align-items">
+                        <span>推荐商品</span>
+                        <i class="iconfont icon_youjiantoudaiquan"></i>
+                    </div>
+                    <div class="nav_main_cen flex space-between">
+                        <div class="nav_main_o" v-for="item in likeRight" @click.stop="openLvJu(item)" tapmode>
+                            <img :src="item.pic">
+                            <div class="nav_main_suit">{{ item.title }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">热门攻略</div>
+        <!-- 主要内容 -->
+        <div class="main hot-box">
+            <ul>
+                <li class="water-item" v-for="(item,index) in hotGdsList" @click="openHotDetail(item)" tapmode> 
+                    <img v-if="index > 4" src="../../image/zhanweiLv.png" class="hui-lazy" :lazySrc="item.detail_img"/>
+                    <img v-else :src="item.detail_img"  />
+                    <div class="main_cen">
+                        <div class="main_name">{{ item.title1}}</div>
+                        <div class="main_sale">
+                            <span>{{ item.rate }}%满意度</span>
+                            <span>{{ item.sales }}销量</span>
+                        </div>
+                        <div class="main_much flex align-items">
+                            <span>￥{{ item.price}}</span>
+                            <div class="bocus fn-ctr"  v-if="item.is_youhuiquan == 1"><span >券</span></div> 
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <v-loading v-show="loading"></v-loading>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/swiper.js"></script>
+    <script src="../../js/vue.min.js"></script>
+    <script src="../../js/hui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        // banner 图跳转
+        // 商城商品   ： gdsId：商品id
+        // 旅游商品   ： obj:   JSON.stringify({detailid:item.detailid,attrid:item.attrid,type:1})
+        // 旅居卡商品 ： gds:   JSON.stringify({id:""}),
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                   bannerList:[],
+                   hotGdsList:[],
+                   menuList:[],
+                   likeLeft:[],
+                   likeRight:[],
+                   loading:true,
+                },
+                methods:{
+                    getBanner:function(){
+                        var _this = this;
+                        request('/tourism/get_banner',{},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.bannerList = res.data;
+                                _this.$nextTick(function(){
+                                    var swiper = new Swiper('.swiper-container', {
+                                        loop: true,
+                                        pagination: {
+                                        el: '.swiper-pagination',
+                                        },
+                                        autoplay: {
+                                        delay: 3000,
+                                        disableOnInteraction: false,
+                                        },
+                                        on: {
+                                            touchStart: function(event) {
+                                                api.setFrameAttr({
+                                                name: api.frameName,
+                                                bounces: false
+                                                });
+                                            },
+                                            touchEnd: function(event) {
+                                                api.setFrameAttr({
+                                                name: api.frameName,
+                                                bounces: true
+                                                });
+                                            },
+                                            click: function(){     //跳转页面
+                                                var item = _this.bannerList[this.activeIndex - 1];
+                                                var bannerParams = getBannerQuery(item.curl);
+                                                switch(bannerParams.url){
+                                                    case '../user/travel_card_view.html':
+                                                        api.openWin({
+                                                            name:"travelCardView",
+                                                            url:"../user/travel_card_view.html",
+                                                            pageParam:{
+                                                                gds:JSON.stringify(bannerParams.params),
+                                                            },
+                                                            reload:true,
+                                                        })
+                                                    break
+                                                    case '../mapiaoliang/detail-page.html':
+                                                        api.openWin({
+                                                            name:"detailPage",
+                                                            url:"../mapiaoliang/detail-page.html",
+                                                            pageParam:{
+                                                                gdsId:bannerParams.params.goods_id,
+                                                            },
+                                                            reload:true,
+                                                        })
+                                                    break
+                                                    case '../user/travel_dtl.html':
+                                                        api.openWin({
+                                                            name:"travelDtl",
+                                                            url:"../user/travel_dtl.html",
+                                                            pageParam:{
+                                                                obj:JSON.stringify({attrid:bannerParams.params.attrid,type:bannerParams.params.type})
+                                                            },
+                                                            reload:true,
+                                                        })
+                                                    break
+                                                }
+                                                
+                                            },
+                                        }
+                                    });
+                                })
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : api.toast({msg:res.msg})
+                            }
+                        },'get')
+                    },
+                    // 获取数据后重整瀑布流
+                    getHotGds:function(){
+                        var _this = this;
+                        request('/tourism/get_hot',{},function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                _this.hotGdsList = res.data;
+                                _this.$nextTick(function(){
+                                    renderWaterFull('water-item',15,0) //生成瀑布流布局
+                                    _this.handerWaterheight()           //计算瀑布流最高高度
+                                })
+                            }else{
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                    // 处理瀑布流元素的高度
+                    handerWaterheight:function(){
+                        var _this = this;
+                        var hotGdsListLen = _this.hotGdsList.length;
+                        var lastnum = (hotGdsListLen % 2 == 0) ? 2 : 1; //计算数据是单数还是双数
+                        var hotBox = document.querySelector('.hot-box');
+                        if (lastnum  == 2) {   //双的
+                            var lastele = document.getElementsByClassName('water-item')[hotGdsListLen - 1]; //最后一个元素
+                            var prevele = document.getElementsByClassName('water-item')[hotGdsListLen - 2]; //倒数第二个元素
+                            var lasteleHeight = lastele.clientHeight + Number(getEleCss(lastele,'top',2));  //获取最后一个具顶部的高度
+                            var preveleHeight = prevele.clientHeight + Number(getEleCss(prevele,'top',2));  //获取倒数第二个具顶部的高度
+                            hotBox.style.height = Math.max(lasteleHeight,preveleHeight) + 15 + "px";  //求最大值并赋予父元素
+                        } else {        //单的
+                            var waterItem = document.getElementsByClassName('water-item')[hotGdsListLen - 1];
+                            var waterItemHg = waterItem.clientHeight;
+                            var waterItemTop = getEleCss(waterItem,'top',2);
+                            hotBox.style.height = waterItemHg + Number(waterItemTop) + 15 +"px";
+                        }
+                    },
+                    getCenterMenu:function(){
+                        var _this = this;
+                        request('/tourism/get_center_banner',{},function(err,res){
+                           if (!err && res.code == 1) {
+                               _this.menuList = res.data;
+                               _this.$nextTick(function(){
+                                   _this.loading = false;
+                               })
+                           }else{
+                               _this.loading = false;
+                           }
+                        },'get')
+                    },
+                    getlikeGds:function(){
+                        var _this = this;
+                        request('/tourism/get_like_banner',{},function(err,res){
+                            api.refreshHeaderLoadDone()
+                            if (!err && res.code == 1) {
+                                _this.likeLeft = res.data.splice(0,2);
+                                _this.likeRight = res.data.splice(0,2)
+                            }
+                        },'get')
+                    },
+                    //跳转旅居卡
+                    openLvJu:function(item){
+                        // 旅居卡 =》 ../user/travel_card.html
+                        // 康养旅游，特色旅游，传统旅游，健康食品   =》  ../mapiaoliang/foodLv.html
+                        // 健康服务 =》 ../mapiaoliang/home.html
+                        // 专家问答 =》 ../mapiaoliang/answer-zhuanjia.html
+                        // 线路定制 =》 ../mapiaoliang/route-dingzhi.html
+                        // 筛选排序页面 
+                        // if (item.id == 3) {
+                        //     api.toast({msg:"该功能暂未开放"})
+                        //     return false
+                        // }
+                        // monAjax('进入首页菜单'+item.title)  //埋点代码
+                        api.openWin({
+                            name:item.curl,
+                            url:item.curl,
+                            pageParam:item,
+                        });
+                    },
+                    //跳转热门攻略
+                    openHotDetail:function(item){
+                        api.openWin({
+                            name:"travelDtl",
+                            url:"../user/travel_dtl.html",
+                            pageParam:{
+                               obj:JSON.stringify({detailid:item.detailid,attrid:item.attrid,type:item.type})
+                            },
+                            reload:true,
+                        })
+                    },
+                    //跳转搜索
+                    openSearch:function(){
+                        api.openWin({
+                            name:"search",
+                            url:"../user/search.html",
+                        });
+                    },
+                    init:function(){
+                        this.getHotGds();
+                        this.getlikeGds();
+                    }
+                },
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.search');
+                        search.style.marginTop = safeArea + "px"
+                    }
+                    _this.getBanner();
+                    _this.getCenterMenu();
+                    _this.getHotGds();
+                    _this.getlikeGds();
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#eee',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新'
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.init()
+                    });
+                    hui.lazyLoad();    //图片懒加载
+                    hui.lazyLoadNow();
+                    api.parseTapmode();
+                }
+            })
+        }
+    </script>
+</body>
+</html>

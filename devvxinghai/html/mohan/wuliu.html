@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>查看物流信息</title>
+<link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_lp9c1mv9ir.css">
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+html,
+body {
+    height: 100%;
+    background-color: #F8F9FB;
+}
+.header {
+    width: 7.5rem;
+    height: .93rem;
+    background-color: #FFFFFF;
+    padding: .3rem;
+}
+
+.header .iconfanhui {
+    font-size: .3rem;
+    color: #333333;
+    float: left;
+}
+
+.header .order {
+    font-size: .36rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+
+}
+.header .myhead{
+    width: .3rem;
+    height: .3rem;
+}
+
+.middle{
+    width: 7.5rem;
+    height: 12.06rem;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    overflow: hidden;
+}
+.middle .first{
+    /* width: 7.5rem; */
+    height: 1.9rem;
+    overflow: hidden;
+    padding-right: .3rem;
+    /* margin-top: .3rem; */
+}
+.middle .left{
+    float: left;
+    /* margin-left: .3rem; */
+    margin-top: .5rem;
+}
+.middle img{
+    width:.36rem;
+    height:.36rem;
+    position: relative;
+    top: 0.05rem;
+}
+.middle .first .line{
+    width: .01rem;
+    height: 1rem;
+    margin-left: .16rem;
+    background-color: #EEEEEE;
+}
+.middle .upline{
+    width: .01rem;
+    height: .4rem;
+    margin-left: .16rem;
+    background-color: #EEEEEE;
+    margin-top: -0.5rem;
+}
+.middle .right{
+    float: left;
+    width: 6rem;
+    margin-left: .2rem;
+    margin-top: .5rem;
+    border-bottom: 1px solid #EEEEEE;
+}
+.middle .right .title{
+    /* width: 4.78rem; */
+    font-size: .32rem;
+    color: #0086F7;
+    text-align: left;
+}
+.middle .right .time{
+    font-size: .26rem;
+    color: #999999;
+    text-align: left;
+    margin-top: .15rem;
+    margin-bottom: .4rem;
+}
+.middle .circle{
+    width: .13rem;
+    height: .13rem;
+    background-color: #999999;
+    border-radius: 50%;
+    margin-left: .1rem;
+}
+.middle .second{
+    height: 1.9rem;
+    overflow: hidden;
+    padding-right: .3rem;
+    margin-top:0
+}
+.middle .second .right{
+    margin-top: .3rem;
+    float: left;
+    width: 6rem;
+    margin-left: .2rem;
+    border-bottom: 1px solid #EEEEEE;
+}
+.middle .second .right .title{
+    width: 4.78rem;
+    font-size: .32rem;
+    color: #333333;
+    text-align: left;
+    
+}
+.middle .second .right .time{
+    font-size: .26rem;
+    color: #999999;
+    text-align: left;
+    margin-top: .15rem;
+    margin-bottom: .2rem;
+}.middle .second .line{
+    width: .01rem;
+    height: 1.4rem;
+    margin-left: .16rem;
+    background-color: #EEEEEE;
+}
+</style>
+</head>
+<body>
+    <div class="header flex align-items space-between">
+        <i class="iconfont iconfanhui "></i>
+        <div class="order flex_center">物流信息</div>
+        <div class="myhead"></div>
+    </div>
+    <div class="middle">
+        <div class="first ">
+            <div class="left">
+                    <img src="../../image/m_cart.png" alt="">
+                    <div class="line"></div>
+            </div>
+            <div class="right">
+                <div class="title">
+                    您的快件已到达中海加速器转运站
+                </div>
+                <div class="time">
+                        2018-18-13 10:30
+                </div>
+            </div>
+        </div>
+        <div class="second ">
+                <div class="left">
+                        <div class="upline"></div>
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                </div>
+                <div class="right">
+                    <div class="title">
+                            您的订单在北京分拣完成，准备送往中海
+                            加速器转运中心
+                    </div>
+                    <div class="time">
+                            2018-18-13 10:30
+                    </div>
+                </div>
+            </div>
+            <div class="second ">
+                    <div class="left">
+                            <div class="upline"></div>
+                            <div class="circle"></div>
+                            <!-- <div class="line"></div> -->
+                    </div>
+                    <div class="right">
+                        <div class="title">
+                                扫描员已扫描
+                        </div>
+                        <div class="time">
+                                2018-18-13 10:30
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+    <script src="../../js/common.js"></script>
+</body>
+</html>

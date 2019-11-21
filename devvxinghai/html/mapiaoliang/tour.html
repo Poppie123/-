@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/hui.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_v8eoxklephb.css">
+    <script src="../../js/rem.js"></script>
+    <title>旅游</title>
+    <style>
+        .head {
+            width: 100%;
+            height: 1.08rem;
+            background: linear-gradient(0deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+            background: -webkit-linear-gradient(0deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            z-index: 1200;
+        }
+
+        .search {
+            width: 6.3rem;
+            height: .6rem;
+            line-height: .6rem;
+            border-radius: .3rem;
+            background: #ffffff;
+            margin: .24rem auto;
+            position: relative;
+        }
+
+        .search i {
+            font-size: .26rem;
+            color: #999999;
+            position:absolute;
+            left: .2rem;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        .search input{
+            display: block;
+            box-sizing: border-box;
+            width:100%;
+            height: .6rem;
+            border-radius: .3rem;
+            line-height: .6rem;
+            padding-left: .52rem;
+            padding-top: .02rem;
+        }
+        input::-webkit-input-placeholder {
+            font-size: .26rem;
+            color: #666666;
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            padding-top: 1.08rem;
+        }
+
+        .bg {
+            width: 100%;
+            height: 1.42rem;
+            background: linear-gradient(0deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+            background: -webkit-linear-gradient(0deg, rgba(68, 137, 254, 1), rgba(124, 136, 255, 1));
+        }
+
+        .nav {
+            width: 6.9rem;
+            height: 1.8rem;
+            background: #ffffff;
+            margin: -.84rem auto .4rem;
+            border-radius: .1rem;
+        }
+
+        .nav .item {
+            width: 25%;
+            height: 1rem;
+            overflow: hidden;
+            font-size: .24rem;
+            color: #333333;
+            text-align: center;
+        }
+
+        .nav .item img {
+            width: .52rem;
+            height: .52rem;
+            /* margin-bottom: .15rem; */
+            display: inline-block;
+        }
+
+        .type {
+            width: 100%;
+            height: 2.6rem;
+            padding: 0 .3rem;
+        }
+
+        .type .item {
+            width: 2.24rem;
+            height: 2.6rem;
+            color: #ffffff;
+            font-size: .2rem;
+            background-size: 2.24rem 2.6rem;
+        }
+
+        .type .item p {
+            margin-top: 1.7rem;
+            font-size: .32rem;
+            font-weight: bold;
+            margin-bottom: 0.05rem;
+        }
+
+        .type .item:first-child{
+            border-radius: .2rem 0 0 .2rem;
+        }
+        .type .item:nth-child(2){
+            background-size: 2.24rem 2.6rem;
+        }
+        .type .item:nth-child(3){
+            border-radius: 0 .2rem .2rem 0;
+        }
+        .hot {
+            width: 100%;
+            height: auto;
+            overflow: visible;
+            padding: .5rem .3rem 0;
+        }
+        .tit {
+            font-size: .34rem;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: .1rem;
+        }
+        .list {
+            width: 100%;
+            position:relative;
+            z-index: 999;
+        }
+
+        .list li {
+            width: 3.36rem;
+            height: auto;
+            overflow: hidden;
+            border-radius: .1rem;
+            background: #fff;
+            position: absolute;
+        }
+        .list li:nth-child(2n){
+            margin-right: 0;
+        }
+        .list li img {
+            width: 3.36rem;
+            height: 3.36rem;
+        }
+
+        .food-message {
+            width: 100%;
+            height: auto;
+            padding: .2rem .1rem .2rem .12rem;
+        }
+        .food-name {
+            width: 2.8rem;
+            /* line-height: .29rem; */
+            font-size: .28rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .food-message p {
+            font-size: .26rem;
+            color: #999999;
+            margin-top: .15rem;
+            overflow: hidden;
+        }
+
+        .price {
+            color: #FE6602;
+            margin-top: .1rem;
+            font-weight: bold;
+        }
+        .price span:first-child {
+            font-size: .28rem;
+        }
+        .price span:last-child {
+            font-size: .32rem;
+
+        }
+        .ongoing{
+            width:.8rem;
+            height:.3rem;
+            background:rgba(0,134,247,0.05);
+            border-radius:.04rem;
+            font-size: .2rem;
+            color: #0086F7;
+            margin-top:0.14rem;
+            line-height: .3rem;
+
+
+        }
+        .main_much{
+            width: auto;
+            height: .3rem;
+            font-size: .3rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+        .main_much .bocus{
+            width: .36rem;
+            height: .32rem;
+            border-radius: .14rem;
+            font-size: .2rem!important;
+            background: #ff0000;
+            font-weight: normal;
+            line-height: normal;
+            margin-left: .2rem;
+        }
+        .main_much .bocus span{
+            color: #fff;
+            font-size: .24rem!important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+    <div class="head">
+        <div class="search ">
+            <i class="iconfont iconxingzhuang9"></i>
+            <input type="text" placeholder="探索世界" v-model="keyWord">
+        </div>
+    </div>
+    <div class="main">
+        <div class="bg"></div>
+        <div class="nav flex align-items">
+            <div class="item " v-for="(item,index) in topMenu" :key="index" @click="openfenlei(item)">
+                <img :src="item.cat_img" alt="">
+                <div>{{ item.catname }}</div>
+            </div>
+        </div>
+        <div class="type flex space-between" >
+            <div v-for="(item,index) in btMenu" :key="index" class="item tc" :style="{backgroundImage: 'url('+item.cat_img+')'}" @click="openfenlei(item)">
+                <p>{{ item.catname }}</p>
+                <span>{{ item.like_num }}人喜欢</span>
+            </div>
+        </div>
+        <div class="hot" >
+            <div class="tit">热门攻略</div>
+            <ul class="list hot-box">
+                <li class="water-item" v-for="(item,index) in gdsList" :key="index" @click="openHotDetail(item)" >
+                    <img v-if="index > 4" src="../../image/zhanweiShop.png" class="hui-lazy" :lazySrc="item.attr_img"/>
+                    <img v-else :src="item.attr_img"  />
+                    <!-- <img :src="item.attr_img" alt=""> -->
+                    <div class="food-message">
+                        <div class="food-name">{{ item.content }}</div>
+                        <p><span>{{ item.rate }}%满意度</span>&nbsp;&nbsp;<span>{{ item.sales}}销量</span></p>
+                        <div class="main_much flex align-items price">
+                            <span>￥{{ item.price}}</span>
+                            <div class="bocus fn-ctr"  v-if="item.is_youhuiquan == 1"><span >券</span></div> 
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/hui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    keyWord:"",
+                    topMenu:[],
+                    btMenu:[],
+                    gdsList:[],
+                },
+                methods:{
+                    getMenu:function(){
+                       var _this = this;
+                       request('/tourism/tourism_main',{start:0,keyword:_this.keyWord},function(err,res){
+                            api.refreshHeaderLoadDone()
+                            if (!err && res.code == 1) {
+                                _this.topMenu = res.data.main.splice(0,4);
+                                _this.btMenu  = res.data.main.splice(0,3);
+                                _this.gdsList = res.data.info;
+                                _this.$nextTick(function(){
+                                    renderWaterFull('water-item',15,0) //生成瀑布流布局
+                                    _this.handerWaterheight();
+                                })
+                            }
+                       })
+                    },
+                     // 处理瀑布流元素的高度
+                     handerWaterheight:function(){
+                        var _this = this;
+                        var hotGdsListLen = _this.gdsList.length;
+                        var lastnum = (hotGdsListLen % 2 == 0) ? 2 : 1; //计算数据是单数还是双数
+                        var hotBox = document.querySelector('.hot-box');
+                        if (lastnum  == 2) {   //双的
+                            var lastele = document.getElementsByClassName('water-item')[hotGdsListLen - 1]; //最后一个元素
+                            var prevele = document.getElementsByClassName('water-item')[hotGdsListLen - 2]; //倒数第二个元素
+                            var lasteleHeight = lastele.clientHeight + Number(getEleCss(lastele,'top',2));  //获取最后一个具顶部的高度
+                            var preveleHeight = prevele.clientHeight + Number(getEleCss(prevele,'top',2));  //获取倒数第二个具顶部的高度
+                            hotBox.style.height = Math.max(lasteleHeight,preveleHeight) + 15 + "px";  //求最大值并赋予父元素
+                        } else {        //单的
+                            var waterItem = document.getElementsByClassName('water-item')[hotGdsListLen - 1];
+                            var waterItemHg = waterItem.clientHeight;
+                            var waterItemTop = getEleCss(waterItem,'top',2);
+                            hotBox.style.height = waterItemHg + Number(waterItemTop) + 15 +"px";
+                        }
+                    },
+                    getHotGds:function(){
+                        
+                    },
+                    openfenlei:function(item){
+                        api.openWin({
+                            name:item.curl,
+                            url:item.curl,
+                            pageParam:item,
+                        })
+                    },
+                    //跳转热门攻略
+                    openHotDetail:function(item){
+                        api.openWin({
+                            name:"travelDtl",
+                            url:"../user/travel_dtl.html",
+                            pageParam:{
+                               obj:JSON.stringify({attrid:item.attrid,type:item.type})
+                            },
+                            reload:true,
+                        })
+                    },
+                     //跳转搜索
+                   openSearch:function(){
+                        api.openWin({
+                            name:"search",
+                            url:"../user/search.html",
+                        })
+                    },
+                    refreshPage:function(){
+                        this.getMenu();
+                    }
+                }, 
+                mounted:function(){
+                    var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.head');
+                        var searchHeight = search.clientHeight;
+                        search.style.height = searchHeight+safeArea+"px"
+                        search.style.paddingTop = safeArea + "px"
+                    }
+                    _this.getMenu();
+                    api.setCustomRefreshHeaderInfo({
+                        bgColor : '#fff',
+                        images : ['widget://image/dropdown_anim_00.png', 'widget://image/dropdown_anim_01.png', 'widget://image/dropdown_anim_02.png', 'widget://image/dropdown_anim_03.png', 'widget://image/dropdown_anim_04.png', 'widget://image/dropdown_anim_05.png', 'widget://image/dropdown_anim_06.png','widget://image/dropdown_anim_07.png','widget://image/dropdown_anim_08.png','widget://image/dropdown_anim_09.png','widget://image/dropdown_anim_10.png'],
+                        tips : {
+                            pull : '下拉刷新',
+                            threshold : '松开立即刷新',
+                            load : '正在刷新'
+                        }
+                    }, function() {
+                        //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                        //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
+                        _this.refreshPage()
+                    });
+                    window.onkeydown = function(e){
+                        if (e && e.keyCode==13) {
+                            _this.getMenu()
+                        }
+                    }
+                    hui.lazyLoad();
+                    hui.lazyLoadNow();
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 视图窗口，移动端特属的标签。 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 user-scalable=no"用户可扩展否 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旅游产品提交订单页</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_b2hhsbowrc.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            background: #F8F9FB;
+        }
+        .top{
+            width:100%;
+            height:.88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+        }
+        .top .content{
+            width: 1.2rem;
+        }
+        .top .i{
+            width: 1.2rem;
+        }
+        .top i{
+            font-size: .3rem;
+            color: #333333;
+        }
+        .top88{
+            height: .88rem;
+        }
+        /* 谷歌浏览器 blink v8引擎*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 苹果公司 safari*/
+        input::-webkit-input-placeholder{
+            color: #CCCCCC;
+        }
+        /* 火狐内核 */
+        input::-moz-placeholder{ 
+            color: #CCCCCC;
+
+        }
+        /* 由于我的IE刚好是IE9及以下不支持， */
+        input:-ms-input-placeholder{ 
+            color: #CCCCCC;    
+        }
+        .main{
+            padding-bottom: 1.1rem;
+        }
+        .wrapper{
+            width: 100%;
+            background-color: #fff;
+            padding: 0 .3rem;
+            margin-top: .2rem;
+        }
+        .firstw{
+            margin-top: 0;
+        }
+        .contact{
+            border: 1px solid red;
+            margin-top: .2rem;
+        }
+        .list{
+            width: 100%;
+            height: 1.1rem;
+            line-height: 1.1rem;
+            background: #FFFFFF;
+            font-size: .3rem;
+            color: #333333;
+            font-weight: bold;
+            border-bottom: 1px solid #EEEEEE;
+        }
+        .border0{
+            border: 0;
+        }
+        .list .key{
+            width: 2.29rem;
+        }
+        .list input{
+            width: 4.5rem;
+            height: .99rem;
+            line-height: .99rem;               
+            font-size: .3rem;
+            font-weight: normal;
+        }
+        .tip{
+            width: 100%;
+            height: .74rem;
+            line-height: .74rem;
+            font-size: .26rem;
+            color: #999999;
+            padding-left: .3rem;
+            background: #F8F9FB;
+        }
+        .list-last {
+            color: #0086F7;
+            font-weight: normal;
+            border: 0;
+            line-height: 1.1rem;
+        }
+        .list-last i{
+            font-size: .36rem;
+            color: #0086F7;
+            font-weight: normal;
+            margin-right: .1rem;
+        }
+        .bottom{
+            width: 100%;
+            height: 1.1rem;
+            background: #FFFFFF;
+            box-shadow:0px 1px 0px 0px rgba(238,238,238,1);
+            padding-left: .3rem;
+            line-height: 1.1rem;
+            position: fixed;
+            bottom: 0;
+        }
+        .bottom .submit{
+            width: 2.12rem;
+            height: 1.1rem;
+            background: #ccc;
+            font-size: .32rem;
+            color: #FFFFFF;
+            line-height: 1.1rem;
+            text-align: center;
+        }
+        .bottom .subactive{
+            background: #0086F7;
+        }
+        .bottom .heji{
+            font-size: .28rem;
+            color: #333333;
+            font-weight: 500;
+        }
+        .bottom .dollar{
+            font-size: .32rem;
+            color: #FE6602;
+            font-weight: 500;
+        }
+        .bottom .price{
+            font-size: .42rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i" @click="back">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>提交订单</div>
+        <div class="content"></div>
+    </div>
+    <div class="top88"></div>
+    <div class="main">
+    <div class="wrapper">
+        <div class="list border0">
+            <span class="key">出行人数</span> <input type="number" name="" id="" placeholder="请填写人数（人）" v-model.number="num">
+        </div>
+    </div>
+    <div class="tip">填写主要联系人信息</div>
+    
+    <div class="wrapper"  v-for="(item,index) in contactList" :class="{firstw:index == 0}">
+        <div class="contach" >
+            <div class="list">
+                <span class="key">姓名</span> <input type="text" name="" id="" placeholder="请输入姓名" v-model="item.name">
+            </div>
+            <div class="list">
+                <span class="key">联系人电话</span> <input type="tel" name="" id="" placeholder="请输入电话" v-model="item.phone">
+            </div>
+            <div class="list">
+                <span class="key">身份证号</span> <input type="number" name="" id="" placeholder="请输入身份证号" v-model="item.idCard">
+            </div>
+        </div>
+    </div>
+    <div class="list list-last flex align-items flex_center" @click="addContact" v-show="contactList.length == 1">
+        <i class="iconfont iconjuxing1"></i>添加联系人
+    </div>
+    <div class="list list-last flex align-items flex_center" @click="reduceContact" v-show="contactList.length == 2">
+        <i class="iconfont iconjianhao1"></i>取消第二位联系人
+    </div>
+    </div>
+    <div class="bottom flex space-between">
+        <div>
+            <span class="heji">合计:</span><span class="dollar">￥</span><span class="price">{{ orderPrice }}</span>
+        </div>
+        <div class="submit" :class="{subactive:isAllWrite}" @click="submitOrder">提交订单</div>
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    num:1,
+                    contactList:[{
+                        name:"",
+                        phone:"",
+                        idCard:"",
+                    }],
+                    config:{},
+                    loading:false,
+                    opt:".65"
+                },
+                methods:{
+                    addContact:function(){
+                        this.contactList.push({
+                            name:"",
+                            phone:"",
+                            idCard:"",
+                        })
+                    },
+                    reduceContact:function(){
+                        this.contactList.splice(1,1);
+                    },
+
+                    //提交订单
+                    submitOrder:function(){
+                        if (!this.isAllWrite) {
+                            return false;
+                        }
+                        var _this = this;
+                        _this.loading = true;
+                        _this.config.number = _this.num;
+                        request('/tourism/order_confirm',_this.config,function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1){
+                                _this.config = Object.assign(_this.config,res.data);
+                                _this.submitOrderTwo();
+                            }else{
+                                err ? api.toast({msg:"订单确认失败"}) : api.toast({msg:res.msg});
+                            }
+                        }) 
+                    },
+                    submitOrderTwo:function(){
+                        var _this = this;
+                        _this.config.people_num = _this.num;
+                        _this.config.contact1 = _this.contactList[0].name+","+_this.contactList[0].phone+","+_this.contactList[0].idCard;
+                        _this.contactList.length == 2 ? _this.config.contact2 = _this.contactList[1].name+","+_this.contactList[1].phone+","+_this.contactList[1].idCard : "";
+                        _this.config.rec_ids = _this.config.rec_id;
+                        request('/tourism/order_post',_this.config,function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                api.openWin({
+                                    name:"payType",
+                                    url:"../user/pay_type.html",
+                                    reload:true,
+                                    pageParam:{
+                                        orderno:res.data,
+                                        source:4,
+                                    }
+                                })
+                            }else{
+                                err ? console.log(JSON.stringify(err)+"/tourism/order_post") : api.toast({msg:res.msg});
+                            }
+                        })
+                    },
+                    back:function(){
+                        api.closeWin()
+                    },
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var top88 = document.querySelector('.top88');
+                        var searchHeight = search.clientHeight;
+                        var top8H = top88.clientHeight;
+                        top88.style.height = top8H+safeArea+"px";
+                        search.style.height = searchHeight+safeArea+"px";
+                        search.style.paddingTop = safeArea + "px";
+                    };
+                    this.config = JSON.parse(api.pageParam.config);
+                },
+                computed:{
+                    isAllWrite:function(){
+                        var _this = this;
+                        var status = true;
+                        for (var i = 0; i < _this.contactList.length; i++) {
+                            for (const key in  _this.contactList[i]) {
+                                if (_this.contactList[i][key] == "") {
+                                    status = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (_this.num == "" || _this.num < 1) {
+                            status = false;
+                        }
+                        return status;
+                    },
+                    orderPrice:function(){
+                        return Number(this.config.price)  * this.num
+                    }
+                },
+            })
+        }
+    
+    
+    
+    </script>
+</body>
+</html>

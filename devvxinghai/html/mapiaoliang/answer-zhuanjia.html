@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <title>回答</title>
+    <style>
+        .tc{
+            text-align: center;
+        }
+        .header {
+            width: 100%;
+            height: .88rem;
+            background: #ffffff;
+            position: fixed;
+            top: 0;
+            z-index: 1300;
+            padding: 0 .3rem;
+        }
+
+        .header i {
+            color: #333333;
+            font-size: .32rem;
+        }
+
+        .tit {
+            font-size: .36rem;
+            font-weight: bold;
+            color: #333333;
+
+        }
+
+        .i {
+            width: 1.2rem;
+        }
+
+        .qustion {
+            width: 1.2rem;
+            font-size: .3rem;
+            color: #0086F7;
+
+        }
+
+        .main {
+            width: 100%;
+            height: auto;
+            padding: .88rem .3rem .2rem;
+            overflow: hidden;
+        }
+
+        .item {
+            width: 100%;
+            height: 1.92rem;
+            background: #ffffff;
+            margin-top: .2rem;
+            border-radius: .1rem;
+            padding: 0 .3rem;
+        }
+
+        .right {
+            width: 1.5rem;
+            height: .66rem;
+            background: #F6F6F6;
+            font-size: .28rem;
+            color: #0086F7;
+            font-weight: bold;
+            border-radius: .06rem;
+            line-height: .66rem;
+
+        }
+
+        .left {
+            width: auto;
+            height: 1.92rem;
+            padding-top: .3rem;
+
+        }
+
+        .left img {
+            width: .94rem;
+            height: .94rem;
+            border-radius: .5rem;
+            margin-right: .25rem;
+        }
+
+        .user {
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .experience {
+            width: 2.3rem;
+            font-size: .26rem;
+            color: #333333;
+            margin-top: .15rem;
+        }
+
+        .experience-n {
+            font-weight: bold;
+        }
+
+        .time {
+            font-size: .24rem;
+            color: #999999;
+            margin-top: .15rem;
+        }
+        /* 弹窗 */
+        .popup {
+            width: 100%;
+            height: 7.6rem;
+            background: #ffffff;
+            position: fixed;
+            bottom: -7.65rem;
+            z-index: 1450;
+            transition: .4s;
+        }
+        .popupactive{
+            bottom: 0;
+        }
+        .bottom {
+            width: 100%;
+            height: 1.1rem;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .bot-left {
+            width: 5.38rem;
+            height: 1.1rem;
+            padding: .3rem .23rem;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .bot-right {
+            width: 2.2rem;
+            height: 1.1rem;
+            background: #0086F7;
+            font-size: .32rem;
+            color: #ffffff;
+            line-height: 1.1rem;
+        }
+
+        .tot {
+            font-size: .28rem;
+            color: #333333;
+        }
+
+        .tot-price {
+            font-size: .42rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+
+        .top {
+            padding: .5rem .3rem 0;
+            width: 100%;
+        }
+
+        .title {
+            width: 100%;
+            height: .9rem;
+            background: rgba(0, 134, 247, 0.05);
+            border-radius: .45rem;
+            line-height: .9rem;
+            color: #0086F7;
+            font-weight: bold;
+            font-size: .3rem;
+        }
+        .pay-type {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            padding: 0 .05rem .6rem;
+            overflow: hidden;
+        }
+
+        .pay-tit {
+            width: 100%;
+            height: 1.1rem;
+            line-height: 1.1rem;
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+
+
+        }
+
+        .payfor {
+            width: 100%;
+            height: .4rem;
+            margin-top: .5rem;
+      
+        }
+
+        .a {
+            margin-top: .3rem;
+        }
+
+        .pop-left img {
+            width: .4rem;
+            height: .4rem;
+            margin-right: .18rem;
+        }
+
+        .pop-left {
+            font-size: .3rem;
+            color: #333333;
+
+        }
+
+        .select {
+            width: .36rem;
+            height: .36rem;
+            border-radius: .5rem;
+            border: 1px solid #dddddd;
+            position: relative;
+        }
+        .select i{
+            color:#0086F7;
+            font-size: .38rem;
+            position: absolute;
+            top:-0.05rem;
+            left:-0.02rem;
+            /* display: none; */
+        }
+        .payfor .select i{
+            display: none;
+        }
+        .payfor  .active i{
+            display: block;
+        }
+        .mask{
+            z-index: 1400;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading"></v-loading>
+        <no-data v-show="isLogin" msg="您还没有登录，马上去登录"></no-data>
+    <div class="header flex align-items space-between">
+        <div class="i" @click="back"><i class="iconfont iconfanhui"></i></div>
+        <div class="tit">专家问答</div>
+        <div class="qustion" @click="openMytiwen">我的提问</div>
+    </div>
+    <div class="main">
+        <ul>
+
+            <li class="item flex align-items space-between" v-for="item in list">
+                <div class="left flex">
+                    <img :src="item.headimg" alt="">
+                    <div class="use">
+                        <div class="user">{{ item.name }}</div>
+                        <div class="experience ellipse">{{ item.desc }}</div>
+                        <div class="time">服务时间 {{ item.server_start_time }}-{{ item.server_end_time }}</div>
+                    </div>
+                </div>
+                <div class="right tc" @click="consultation(item.price,item.id)">详情</div>
+            </li>
+
+        </ul>
+    </div>
+    <div class="mask" v-show="moneyBox" @click="closeMoneyBox"></div>
+    <!-- 弹窗 -->
+    <div class="popup" :class="{popupactive:moneyBox}">
+        <div class="top">
+            <div class="title tc">向专家咨询问题需支付<span style="color: #FE6602;font-size: .34rem">{{money}}</span>元/次</div>
+            <div class="pay-type">
+                <div class="pay-tit">支付方式</div>
+                <!-- <div class="payfor flex align-items space-between a" @click="changePayType(0)">
+                    <div class="pop-left flex">
+                        <img src="../../image/li_23.png" alt="">
+                        <span>银行卡支付</span>
+                    </div>
+                    <div class="select " :class="{active:currentType == 0}">
+                        <i class="iconfont iconxuanze"></i>
+                    </div>
+                </div> -->
+                <div class="payfor flex align-items space-between" @click="changePayType(2)">
+                    <div class="pop-left flex">
+                        <img src="../../image/zhifubao.png" alt="">
+                        <span>支付宝支付</span>
+                    </div>
+                    <div class="select" :class="{active:currentType == 2}">
+                        <i class="iconfont iconxuanze"></i>
+                    </div>
+                </div>
+                <div class="payfor flex align-items space-between" @click="changePayType(1)">
+                    <div class="pop-left flex">
+                        <img src="../../image/yue.png" alt="">
+                        <span>余额支付</span>
+                    </div>
+                    <div class="select " :class="{active:currentType == 1}">
+                        <i class="iconfont iconxuanze"></i>
+                    </div>
+                </div>
+                <div class="payfor flex align-items space-between" @click="changePayType(3)">
+                    <div class="pop-left flex">
+                        <img src="../../image/weixin.png" alt="">
+                        <span>微信支付</span>
+                    </div>
+                    <div class="select" :class="{active:currentType == 3}">
+                        <i class="iconfont iconxuanze"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom flex space-between" v-show="moneyBox">
+                <div class="bot-left">
+                    <span class="tot">合计:</span><span style="color: #FE6602;font-size: .32rem">￥</span><span
+                        class="tot-price">{{money}}</span>
+                </div>
+                <div class="bot-right tc" @click="sendPay">去支付</div>
+            </div>
+        </div>
+        
+    </div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+            })
+            Vue.component('no-data',{
+                template:'<div class="no-data"><img src="../../image/no_data.png"><div class="no-data-text"><div class="text">{{ msg }}</div><div class="btn fn-ctr" @click="pageBack"><span>登录</span></div></div></div>',
+                data:function(){
+                    return {
+                        
+                    }
+                },
+                methods:{
+                    pageBack:function(){
+                        api.openWin({
+                            name: 'login',
+                            url: '../guoshujie/login.html'
+                        });
+                    },
+                },
+                props:{
+                    msg:{type:String,default:'暂无数据'}
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    loading:true,
+                    list:[],
+                    total:0,
+                    isTotal:true,
+                    moneyBox:false,
+                    money:0,
+                    zhuanjiaId:"",
+                    currentType:2,
+                    hasPwd:true,
+                    userPhone:"",
+                    orderId:"",
+                    isLogin:false,
+                },
+                mounted:function(){
+                      // 上拉加载
+                      var _this = this;
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var main = document.querySelector('.main');
+                        var header = document.querySelector('.header');
+                        var headHeight = header.clientHeight;
+                        header.style.height = headHeight + safeArea + 5 + "px";
+                        header.style.paddingTop = safeArea + 5 + "px";
+                        main.style.paddingTop = headHeight + safeArea + "px";
+                    }
+                    _this.getList()
+                    api.addEventListener({name:"refreshAnswer"},function(){
+                        _this.isLogin = !isLogin();
+                        _this.getList();
+                    })
+                    api.addEventListener({name:"refreshUserPay"},function(){ //监听设置完支付密码后刷新密码状态
+                        _this.hasPayPwd();
+                    });
+                    _this.isLogin = !isLogin();
+                    var timp = "";
+                    api.addEventListener({
+                    　　name:'scrolltobottom',
+                        extra:{threshold:20}
+                    }, function(ret, err){
+                　　　　 //上拉加载时需要加载的数据
+                        if (_this.list.length == _this.total) {
+                            if (_this.total < 7) {
+                                return false;
+                            }
+                            api.toast({msg:"到底了"})
+                        }else{
+                            clearTimeout(timp)
+                            timp = setTimeout(function(){
+                                _this.getList();
+                            },300)
+                        }
+                    });
+                },
+                methods:{
+                    getList:function(){
+                        var _this = this;
+                        if (!_this.isTotal) {
+                            return false
+                        }
+                        _this.isTotal = false;
+                        request('/my/expert_list',{start:_this.list.length},function(err,res){
+                            _this.isTotal = true;
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                console.log(JSON.stringify(res))
+                                _this.list = res.data.data;
+                                _this.total = res.data.total;
+                            }else{
+                                if (err) {
+                                    console.log(JSON.stringify(err)) 
+                                } else {
+                                    //api.toast({msg:res.msg})
+                                }
+                            }
+                        })
+                    },
+                    //跳转我的提问
+                    openMytiwen:function(){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        api.openWin({
+                            name:"wodetiwen",
+                            url:"../mapiaoliang/wodetiwen.html",
+                        })
+                    },
+                    //咨询
+                    consultation:function(money,id){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        api.openWin({
+                            name:"answerZhuanjiaDtl",
+                            url:"../mapiaoliang/answer-zhuanjia-dtl.html",
+                            pageParam:{
+                               zjid:id,
+                            }
+                        })
+                        // var _this = this;
+                        // _this.money = money;
+                        // _this.zhuanjiaId = id;
+                        // _this.moneyBox = true;
+
+                    },
+                    //发起支付
+                    sendPay:function(){
+                        var _this = this;
+                        //先生成订单
+                        if (_this.currentType == 0) {       //银行卡支付
+                            api.toast({msg:"功能暂未开通"})
+                        }else if(_this.currentType == 1){   //余额支付
+                            if (!_this.hasPwd) {
+                                api.toast({msg:"请先设置支付密码"})
+                                setTimeout(function(){
+                                    api.openWin({
+                                        name:"forget_paypwd",
+                                        url:"../guoshujie/forget_paypwd.html",
+                                        pageParam:{
+                                            phone:_this.userPhone
+                                        }
+                                    })
+                                },700)
+                               return false 
+                            }
+                            var paymentDialog = api.require('paymentDialog');
+                            var param = {
+                                styles:{
+                                    titleText:"请输入支付密码",
+                                    titleTextSize:16,
+                            }};
+                            paymentDialog.show(param,function(ret){
+                                paymentDialog.hide();
+                                if(ret.event == 'onFinish'){
+                                    _this.loading = true;
+                                    _this.moneyBox = false;
+                                    request('/my/consult_pay',{
+                                        expert_id:_this.zhuanjiaId,
+                                        money:_this.money,
+                                        payway:1
+                                    },function(err,res){
+                                        if (!err && res.code == 1) {
+                                            request('/pay/yue_pay',{order_id:res.data.order_id,pay_password:ret.content},function(errr,ress){
+                                                _this.loading = false;
+                                                if (!errr && ress.code == 1) {
+                                                    api.openWin({
+                                                        name:"zixun",
+                                                        url:"../mapiaoliang/zixun.html",
+                                                        pageParam:{
+                                                            id:_this.zhuanjiaId,
+                                                        }
+                                                    })
+                                                }else{
+                                                    errr ? console.log(JSON.stringify(errr)+"/pay/yue_pay") : api.toast({msg:ress.msg})
+                                                }
+                                            })
+                                        }else{
+                                            _this.loading = false;
+                                            err ? console.log(JSON.stringify(err)+"/my/consult_pay") : api.toast({msg:res.msg})
+                                        }
+                                    })
+                                }
+                            });
+                        }else if(_this.currentType == 2){   //支付宝支付
+                            request('/my/consult_pay',{
+                                expert_id:_this.zhuanjiaId,
+                                money:_this.money,
+                                payway:4,
+                            },function(err,res){
+                                if (!err && res.code == 1) {
+                                    _this.orderId = res.data.order_id;
+                                    _this.aliPay()
+                                }else{
+                                    _this.loading = false;
+                                    err ? console.log(JSON.stringify(err)+"/my/consult_pay") : api.toast({msg:res.msg})
+                                }
+                            })
+                        }else if(_this.currentType == 3){    //微信支付
+                            request('/my/consult_pay',{
+                                expert_id:_this.zhuanjiaId,
+                                money:_this.money,
+                                payway:3,
+                            },function(err,res){
+                                if (!err && res.code == 1) {
+                                    _this.orderId = res.data.order_id;
+                                    _this.weixinPay();
+                                }else{
+                                    _this.loading = false;
+                                    err ? console.log(JSON.stringify(err)+"/my/consult_pay") : api.toast({msg:res.msg})
+                                }
+                            })
+                        }
+                    },
+                    closeMoneyBox:function(){
+                        this.moneyBox = false;
+                    },
+                    changePayType:function(index){
+                        this.currentType = index;
+                    },
+                    //打开我的提问
+                    back:function(){
+                        api.closeWin()
+                    },
+                    //微信支付
+                    weixinPay:function(){
+                        var _this = this;
+                        var wxPay = api.require('wxPay');
+                        _this.loading = true;
+                        _this.moneyBox = false;
+                        /*微信*/
+                        api.ajax({
+                            url: url+'/pay/wxpay_before',
+                            method: 'post',
+                            data: {
+                                values: {
+                                    order_id: _this.orderId,
+                                }
+                            }
+                        },function (ret,err) {
+                            _this.loading = false;
+                            if (ret) {
+                                if (ret.code) {
+                                    wxPay.payOrder({
+                                        apiKey: ret.data.appid,
+                                        orderId: ret.data.prepayid,
+                                        mchId: ret.data.partnerid,
+                                        nonceStr: ret.data.noncestr,
+                                        timeStamp: ret.data.timestamp,
+                                        package: ret.data.package,
+                                        sign: ret.data.sign,
+                                    },function(ret, err) {
+                                        if (ret.status) {
+                                            api.openWin({
+                                                name:"zixun",
+                                                url:"../mapiaoliang/zixun.html",
+                                                pageParam:{
+                                                    id:_this.zhuanjiaId,
+                                                }
+                                            })
+                                        }else{
+                                            api.toast({msg:"支付失败"})
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: ret.msg
+                                    });
+                                }
+                            }
+                        });
+                    },
+                    //支付宝支付
+                    aliPay:function(){
+                        var aliPayPlus = api.require('aliPayPlus');
+                        var _this = this;
+                        _this.loading = true;
+                        /*支付宝*/
+                        api.ajax({
+                        url: url+'/pay/alipay_before',
+                        method: 'post',
+                        data: {
+                            values: {
+                                order_id: _this.orderId,
+                            }
+                        }
+                        },function (ret,err) {
+                            _this.loading = false;
+                            _this.moneyBox = false;
+                            if (ret) {
+                                if (ret.code) {
+                                    aliPayPlus.payOrder({
+                                        orderInfo: ret.data,
+                                    }, function(ret, err) {
+                                        if (ret.code == '9000') {
+                                            api.openWin({
+                                                name:"zixun",
+                                                url:"../mapiaoliang/zixun.html",
+                                                pageParam:{
+                                                    id:_this.zhuanjiaId,
+                                                }
+                                            });
+                                        }else{
+                                            api.toast({msg:"支付失败"});
+                                            err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(ret));
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: ret.msg
+                                    });
+                                }
+                            }else{
+                                console.log(JSON.stringify(err))
+                            }
+                        });
+                    },
+                    hasPayPwd:function(){
+                        var _this = this;
+                        request('/my/check_set_pay_password',{},function(err,res){
+                            if (!err && res.code == 0) {
+                                console.log(JSON.stringify(res))
+                                _this.hasPwd = false;
+                                _this.userPhone = res.data.phone;
+                            }else{
+                                _this.hasPwd = true;
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    
+    
+    
+    </script>
+</body>
+
+</html>

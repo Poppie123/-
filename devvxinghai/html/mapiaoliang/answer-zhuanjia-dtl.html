@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <title>Document</title>
+    <style>
+        .zj-info {
+            width:7.5rem;
+            height: 7rem;
+            overflow: hidden;
+            position: relative;
+            z-index: 1100;
+            text-align: center;
+          
+        }
+        .imgblur{
+            width:7.5rem;
+            height: 7rem;
+            border: 1px solid red;
+            /* background: url('../../image/li_07.png'); */
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .bg-blur{
+            float:left;
+            background-position:center;
+            background-repeat:no-repeat;
+            background-size:cover;
+            -webkit-filter: blur(4px);
+            -moz-filter: blur(4px);
+            -o-filter: blur(4px);
+            -ms-filter: blur(4px);
+            filter:blur(4px);
+        }
+        .zj-mask{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            background: #0086F7;
+            opacity: .35;
+            z-index: 1200;
+        }
+        .zj-info .zj-msg{
+            width: 100%;
+            height: auto;
+            position: absolute;
+            z-index: 1250;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        .zj-info .zj-msg img{
+            display: block;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 50%;
+            margin: 2.4rem auto 0;
+
+        }
+        .zj-info .zj-msg .zj-name{
+            width: 100%;
+            text-align: center;
+            font-size: .38rem;
+            color: #fff;
+            margin: .3rem auto;
+        }
+        .zj-info .zj-msg .zj-time{
+            width: 100%;
+            text-align: center;
+            font-size: .28rem;
+            color: #fff;
+        }
+        .btn{
+            width: 100%;
+            height: .8rem;
+            background: #0086F7;
+            color: #fff;
+            font-size: .36rem;
+            position: fixed;
+            bottom: 0;
+            z-index: 1000;
+        }
+        .zj-fuwenben{
+            width: 100%;
+            background-color: #fff;
+            padding-bottom: .8rem;
+            margin-top: .2rem;
+            padding: 0 .34rem;
+        }
+        .zj-fuwenben div{
+            width: 100%;
+            height: 1.5rem;
+        }
+        .head{
+            width: 100%;
+            height: .88rem;
+            padding: 0 .32rem;
+            background-color: rgba(255, 255, 255,0);
+            position: fixed;
+            top: 0%;
+            z-index: 1300;
+        }
+        .head .back{
+            width: .6rem;
+            height: .6rem;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, .5);
+        }
+        .head .iconfont{
+            font-size: .32rem;
+            font-weight: bold;
+            color: #fff;
+            margin-left: -0.05rem;
+        }
+        .head span:last-child{
+            width: .6rem;
+            height: .6rem;
+        }
+        .head .title{
+            font-size: .36rem;
+            font-weight: bold;
+        }
+        .zj-wrapper{
+            width: 100%;
+            height: 100vh;
+            position:absolute;
+            left:0;
+            top:0;
+            overflow: hidden;
+        }
+         /* 弹窗 */
+         .popup {
+            width: 100%;
+            height: 7.6rem;
+            background: #ffffff;
+            position: fixed;
+            bottom: -7.65rem;
+            z-index: 1450;
+            transition: .4s;
+        }
+        .popupactive{
+            bottom: 0;
+        }
+        .popup .bottom {
+            width: 100%;
+            height: 1.1rem;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+            z-index: 1500;
+        }
+
+        .popup .bot-left {
+            width: 5.38rem;
+            height: 1.1rem;
+            padding: .3rem .23rem;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .popup .bot-right {
+            width: 2.2rem;
+            height: 1.1rem;
+            background: #0086F7;
+            font-size: .32rem;
+            color: #ffffff;
+            line-height: 1.1rem;
+        }
+
+        .popup .tot {
+            font-size: .28rem;
+            color: #333333;
+        }
+
+        .popup .tot-price {
+            font-size: .42rem;
+            color: #FE6602;
+            font-weight: bold;
+        }
+
+        .popup .top {
+            padding: .5rem .3rem 0;
+            width: 100%;
+        }
+
+        .popup .title {
+            width: 100%;
+            height: .9rem;
+            background: rgba(0, 134, 247, 0.05);
+            border-radius: .45rem;
+            line-height: .9rem;
+            color: #0086F7;
+            font-weight: bold;
+            font-size: .3rem;
+        }
+        .popup .pay-type {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            padding: 0 .05rem .6rem;
+            overflow: hidden;
+        }
+
+        .popup .pay-tit {
+            width: 100%;
+            height: 1.1rem;
+            line-height: 1.1rem;
+            font-size: .32rem;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .popup .payfor {
+            width: 100%;
+            height: .4rem;
+            margin-top: .5rem;
+      
+        }
+
+        .popup .a {
+            margin-top: .3rem;
+        }
+
+        .popup .pop-left img {
+            width: .4rem;
+            height: .4rem;
+            margin-right: .18rem;
+        }
+
+        .popup .pop-left {
+            font-size: .3rem;
+            color: #333333;
+
+        }
+
+        .popup .select {
+            width: .36rem;
+            height: .36rem;
+            border-radius: .5rem;
+            border: 1px solid #dddddd;
+            position: relative;
+        }
+        .popup .select i{
+            color:#0086F7;
+            font-size: .38rem;
+            position: absolute;
+            top:-0.05rem;
+            left:-0.02rem;
+            /* display: none; */
+        }
+        .popup .payfor .select i{
+            display: none;
+        }
+        .popup .payfor  .active i{
+            display: block;
+        }
+        .mask{
+            z-index: 1400;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <header class="head flex align-items space-between" ref="header">
+            <div class="back fn-ctr" :style="{backgroundColor:backout}">
+                <i class="iconfont iconfanhui" @click="back" :style="{color:backin}"></i>
+            </div>
+            <span class="title" :style="{opacity:opt}">{{ zjDtl.name }}</span>
+            <span></span>
+        </header>
+        <div class="zj-wrapper" ref="listWrapperL">
+            <div class="zj-wra-box">
+        <div class="zj-info" ref="userhg">
+            <div class="imgblur bg-blur" :style="{backgroundImage:userbg}"></div>
+            <div class="zj-mask"></div>
+            <div class="zj-msg">
+                <img :src="zjDtl.headimg" alt="">
+                <div class="zj-name">{{ zjDtl.name }}</div>
+                <div class="zj-time">服务时间：{{ zjDtl.server_start_time }}----{{ zjDtl.server_end_time }}</div>
+            </div>
+        </div>
+        <!-- <div class="zj-fuwenben" v-html="zjDtl.desc">
+
+        </div> -->
+        <div class="zj-fuwenben" >
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+              <div>资深驴友</div>
+        </div>
+        </div>
+        </div>
+        <div class="btn fn-ctr" @click="consultation(zjDtl.price,zjDtl.id)"><span class="">咨询</span> </div>
+        <!-- 弹窗 -->
+        <div class="mask" v-show="moneyBox" @click="closeMoneyBox"></div>
+        <div class="popup" :class="{popupactive:moneyBox}">
+            <div class="top">
+                <div class="title tc">向专家咨询问题需支付<span style="color: #FE6602;font-size: .34rem">{{money}}</span>元/次</div>
+                <div class="pay-type">
+                    <div class="pay-tit">支付方式</div>
+                    <!-- <div class="payfor flex align-items space-between a" @click="changePayType(0)">
+                        <div class="pop-left flex">
+                            <img src="../../image/li_23.png" alt="">
+                            <span>银行卡支付</span>
+                        </div>
+                        <div class="select " :class="{active:currentType == 0}">
+                            <i class="iconfont iconxuanze"></i>
+                        </div>
+                    </div> -->
+                    <div class="payfor flex align-items space-between" @click="changePayType(2)">
+                        <div class="pop-left flex">
+                            <img src="../../image/zhifubao.png" alt="">
+                            <span>支付宝支付</span>
+                        </div>
+                        <div class="select" :class="{active:currentType == 2}">
+                            <i class="iconfont iconxuanze"></i>
+                        </div>
+                    </div>
+                    <div class="payfor flex align-items space-between" @click="changePayType(1)">
+                        <div class="pop-left flex">
+                            <img src="../../image/yue.png" alt="">
+                            <span>余额支付</span>
+                        </div>
+                        <div class="select " :class="{active:currentType == 1}">
+                            <i class="iconfont iconxuanze"></i>
+                        </div>
+                    </div>
+                    <div class="payfor flex align-items space-between" @click="changePayType(3)">
+                        <div class="pop-left flex">
+                            <img src="../../image/weixin.png" alt="">
+                            <span>微信支付</span>
+                        </div>
+                        <div class="select" :class="{active:currentType == 3}">
+                            <i class="iconfont iconxuanze"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom flex space-between" v-show="moneyBox" >
+                    <div class="bot-left">
+                        <span class="tot">合计:</span><span style="color: #FE6602;font-size: .32rem">￥</span><span
+                            class="tot-price">{{money}}</span>
+                    </div>
+                    <div class="bot-right tc" @click="sendPay">去支付</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/better-scroll.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            var root = new Vue({
+                el:"#root",
+                data:{    
+                    zjid:"",
+                    zjDtl:{},
+                    userHeight:"",  //用户高度
+                    opt:0,
+                    moneyBox:false,
+                    money:0,
+                    currentType:2,
+                    zhuanjiaId:"",
+                    hasPwd:true,
+                    userPhone:"",
+                    orderId:"",
+                    isLogin:false,
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var header = document.querySelector('.head');
+                        var headHeight = header.clientHeight;
+                        header.style.height = headHeight + safeArea + 5 + "px";
+                        header.style.paddingTop = safeArea + 5 + "px";
+                    }
+                    this.zjid = api.pageParam.zjid;
+                    this.getZjdtl();
+                    this.userHeight = this.$refs.userhg.clientHeight;
+                    var _this = this;
+                    api.addEventListener({name:"refreshUserPay"},function(){ //监听设置完支付密码后刷新密码状态
+                        _this.hasPayPwd();
+                    });
+                    _this.isLogin = !isLogin();
+                },
+                methods:{
+                    getZjdtl:function(){
+                        var _this = this;
+                        request('/my/expert_detail',{expert_id:_this.zjid},function(err,res){
+                            if (!err && res.code == 1) {
+                                _this.zjDtl = res.data;
+                               _this.initScroll()
+                            }
+                        })
+                    },
+                    initScroll:function() {
+                        var _this = this;
+                        this.$nextTick(function(){
+                            if (!_this.$refs.listWrapperL) {
+                                return
+                            }
+                            //配置: 可根据个人需求
+                            _this.listScroll = new BScroll(_this.$refs.listWrapperL,{
+                                probeType: 3,
+                                scrollY: true,
+                                click: true,
+                                useTransition:false,  // 防止iphone微信滑动卡顿
+                                bounce:false,
+                            });
+                            _this.listScroll.on('scroll', (pos) => {
+                                if (pos.y < 0) {
+                                    var scnum = Math.abs(pos.y);
+                                    var opt = (scnum / _this.userHeight);
+                                    _this.opt = opt;
+                                    _this.$refs.header.style.backgroundColor ='rgba(255, 255, 255, '+opt+')';
+                                }
+                            })
+                        });
+                    },
+                    // 弹窗
+                     //发起支付
+                    sendPay:function(){
+                        var _this = this;
+                        //先生成订单
+                        if (_this.currentType == 0) {       //银行卡支付
+                            api.toast({msg:"功能暂未开通"})
+                        }else if(_this.currentType == 1){   //余额支付
+                            if (!_this.hasPwd) {
+                                api.toast({msg:"请先设置支付密码"})
+                                setTimeout(function(){
+                                    api.openWin({
+                                        name:"forget_paypwd",
+                                        url:"../guoshujie/forget_paypwd.html",
+                                        pageParam:{
+                                            phone:_this.userPhone
+                                        }
+                                    })
+                                },700)
+                               return false 
+                            }
+                            var paymentDialog = api.require('paymentDialog');
+                            var param = {
+                                styles:{
+                                    titleText:"请输入支付密码",
+                                    titleTextSize:16,
+                            }};
+                            paymentDialog.show(param,function(ret){
+                                paymentDialog.hide();
+                                if(ret.event == 'onFinish'){
+                                    _this.loading = true;
+                                    _this.moneyBox = false;
+                                    request('/my/consult_pay',{
+                                        expert_id:_this.zhuanjiaId,
+                                        money:_this.money,
+                                        payway:1
+                                    },function(err,res){
+                                        if (!err && res.code == 1) {
+                                            request('/pay/yue_pay',{order_id:res.data.order_id,pay_password:ret.content},function(errr,ress){
+                                                _this.loading = false;
+                                                if (!errr && ress.code == 1) {
+                                                    api.openWin({
+                                                        name:"zixun",
+                                                        url:"../mapiaoliang/zixun.html",
+                                                        pageParam:{
+                                                            id:_this.zhuanjiaId,
+                                                        }
+                                                    })
+                                                }else{
+                                                    errr ? console.log(JSON.stringify(errr)+"/pay/yue_pay") : api.toast({msg:ress.msg})
+                                                }
+                                            })
+                                        }else{
+                                            _this.loading = false;
+                                            err ? console.log(JSON.stringify(err)+"/my/consult_pay") : api.toast({msg:res.msg})
+                                        }
+                                    })
+                                }
+                            });
+                        }else if(_this.currentType == 2){   //支付宝支付
+                            request('/my/consult_pay',{
+                                expert_id:_this.zhuanjiaId,
+                                money:_this.money,
+                                payway:4,
+                            },function(err,res){
+                                if (!err && res.code == 1) {
+                                    _this.orderId = res.data.order_id;
+                                    _this.aliPay()
+                                }else{
+                                    _this.loading = false;
+                                    err ? console.log(JSON.stringify(err)+"/my/consult_pay") : api.toast({msg:res.msg})
+                                }
+                            })
+                        }else if(_this.currentType == 3){    //微信支付
+                            request('/my/consult_pay',{
+                                expert_id:_this.zhuanjiaId,
+                                money:_this.money,
+                                payway:3,
+                            },function(err,res){
+                                if (!err && res.code == 1) {
+                                    _this.orderId = res.data.order_id;
+                                    _this.weixinPay();
+                                }else{
+                                    _this.loading = false;
+                                    err ? console.log(JSON.stringify(err)+"/my/consult_pay") : api.toast({msg:res.msg})
+                                }
+                            })
+                        }
+                    },
+                    closeMoneyBox:function(){
+                        this.moneyBox = false;
+                    },
+                    changePayType:function(index){
+                        this.currentType = index;
+                    },
+                    //微信支付
+                    weixinPay:function(){
+                        var _this = this;
+                        var wxPay = api.require('wxPay');
+                        _this.loading = true;
+                        _this.moneyBox = false;
+                        /*微信*/
+                        api.ajax({
+                            url: url+'/pay/wxpay_before',
+                            method: 'post',
+                            data: {
+                                values: {
+                                    order_id: _this.orderId,
+                                }
+                            }
+                        },function (ret,err) {
+                            _this.loading = false;
+                            if (ret) {
+                                if (ret.code) {
+                                    wxPay.payOrder({
+                                        apiKey: ret.data.appid,
+                                        orderId: ret.data.prepayid,
+                                        mchId: ret.data.partnerid,
+                                        nonceStr: ret.data.noncestr,
+                                        timeStamp: ret.data.timestamp,
+                                        package: ret.data.package,
+                                        sign: ret.data.sign,
+                                    },function(ret, err) {
+                                        if (ret.status) {
+                                            api.openWin({
+                                                name:"zixun",
+                                                url:"../mapiaoliang/zixun.html",
+                                                pageParam:{
+                                                    id:_this.zhuanjiaId,
+                                                }
+                                            })
+                                        }else{
+                                            api.toast({msg:"支付失败"})
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: ret.msg
+                                    });
+                                }
+                            }
+                        });
+                    },
+                    //支付宝支付
+                    aliPay:function(){
+                        var aliPayPlus = api.require('aliPayPlus');
+                        var _this = this;
+                        _this.loading = true;
+                        /*支付宝*/
+                        api.ajax({
+                        url: url+'/pay/alipay_before',
+                        method: 'post',
+                        data: {
+                            values: {
+                                order_id: _this.orderId,
+                            }
+                        }
+                        },function (ret,err) {
+                            _this.loading = false;
+                            _this.moneyBox = false;
+                            if (ret) {
+                                if (ret.code) {
+                                    aliPayPlus.payOrder({
+                                        orderInfo: ret.data,
+                                    }, function(ret, err) {
+                                        if (ret.code == '9000') {
+                                            api.openWin({
+                                                name:"zixun",
+                                                url:"../mapiaoliang/zixun.html",
+                                                pageParam:{
+                                                    id:_this.zhuanjiaId,
+                                                }
+                                            });
+                                        }else{
+                                            api.toast({msg:"支付失败"});
+                                            err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(ret));
+                                        }
+                                    });
+                                } else {
+                                    api.toast({
+                                        msg: ret.msg
+                                    });
+                                }
+                            }else{
+                                console.log(JSON.stringify(err))
+                            }
+                        });
+                    },
+                    hasPayPwd:function(){
+                        var _this = this;
+                        request('/my/check_set_pay_password',{},function(err,res){
+                            if (!err && res.code == 0) {
+                                console.log(JSON.stringify(res))
+                                _this.hasPwd = false;
+                                _this.userPhone = res.data.phone;
+                            }else{
+                                _this.hasPwd = true;
+                                err ? console.log(JSON.stringify(err)) : console.log(JSON.stringify(res))
+                            }
+                        })
+                    },
+                     //咨询
+                     consultation:function(money,id){
+                        if (!isLogin()) {
+                            api.openWin({
+                                name: 'login',
+                                url: '../guoshujie/login.html'
+                            });
+                            return false
+                        }
+                        var _this = this;
+                        if (_this.moneyBox) {
+                            
+                        } else {
+                            _this.money = money;
+                            _this.zhuanjiaId = id;
+                            _this.moneyBox = true;  
+                        }
+                       
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                computed:{
+                    userbg:function(){
+                        return this.zjDtl.headimg ? 'url('+this.zjDtl.headimg+')' : 'url(../../image/li_07.png)';
+                    },
+                    backopt:function(){
+                        // data opt 0 => 1;
+                        var backopt = 0.5;
+                        var eleColor = "#fff";
+                        if (this.opt > 0 && this.opt < 1) {
+                            backopt = (1 - this.opt) / 2;
+                            eleColor = 'rgb('+(1-this.opt) * 255+','+(1-this.opt) * 255+','+(1-this.opt) * 255+')';
+                        }else if(this.opt > 1){
+                            backopt = 0;
+                            eleColor = "#000";
+                        }else{
+                            backopt = 0.5;
+                            eleColor = "#fff";
+                        }
+                        return {
+                            opt:'rgba(0, 0, 0, '+backopt+')',
+                            eleColor:eleColor,
+                        }
+                    },
+                    backout:function(){
+                        return this.backopt.opt;
+                    },
+                    backin:function(){
+                        return this.backopt.eleColor;
+                    }
+                }
+            })
+        }
+            
+             
+    </script>
+</body>
+</html>

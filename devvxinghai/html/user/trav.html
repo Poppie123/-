@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../css/swiper.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_tblkllgieb9.css">
+    <script src="../../js/rem.js"></script>
+    <title>Document</title>
+    <style>
+       .banner{
+           width: 100%;
+           height: 7.5rem;
+           border: 1px solid red;
+       }
+         .swiper-slide{
+             width: 100%;
+             height: 7.5rem;
+         }
+         .swiper-pagination-custom{
+            bottom:45px;
+         }
+    </style>
+</head>
+<body>
+    <div class="banner" id="root" v-cloak>
+        <div v-for="item in list">{{ item.status }}</div>
+    </div>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/swiper.js"></script>
+    <script>
+       const root = new Vue({
+           el:"#root",
+           data:{
+                "list":{
+                    '0':{
+                        status:1
+                    },
+                    "1":{
+                        status:2,
+                    }
+                }
+           },
+
+       })
+       var arr = [{name:"翠花"},{name:"厉声"},{name:"水果"},{name:"十三"},{name:"七号"}];
+       
+       getRandomArr(arr,2)
+
+    
+    
+    </script>
+</body>
+</html>

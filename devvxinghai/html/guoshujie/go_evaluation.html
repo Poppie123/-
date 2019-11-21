@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>评价</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1380959_9eqkwqdlo9d.css">
+    <script src="../../js/rem.js"></script>
+    <style>
+        body {
+            background: rgba(248, 249, 251, 1);
+        }
+
+        .top {
+            width: 100%;
+            height: .88rem;
+            position: fixed;
+            z-index: 999;
+            padding: 0 .3rem;
+            font-size: .36rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px 1px 0px 0px rgba(238, 238, 238, 1);
+        }
+
+        .top .content {
+            width: 1.2rem;
+        }
+
+        .top .i {
+            width: 1.2rem;
+        }
+
+        .top i {
+            font-size: .3rem;
+            color: #333333;
+        }
+
+        .evaluation {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            padding-top: .88rem;
+        }
+
+        .evalu_main {
+            width: 100%;
+            height: auto;
+            padding-top: .38rem;
+            background: #FFF;
+        }
+
+        .evaluation .evalu_content {
+            width: 6.90rem;
+            height: 3.33rem;
+            background: rgba(247, 247, 247, 1);
+            border-radius: .10rem;
+            margin: 0 auto;
+        }
+
+        .evaluation .evalu_content img {
+            width: .32rem;
+            height: .32rem;
+            margin: .35rem .2rem 0 .25rem;
+        }
+
+        .evaluation .evalu_content textarea {
+            width: 5.8rem;
+            height: 2.8rem;
+            margin-top: .3rem;
+            outline: none;
+            border: none;
+            font-size: .28rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            background: rgba(247, 247, 247, 1);
+            line-height: .4rem;
+        }
+
+        /* 星星 */
+        .evalu_start {
+            width: 100%;
+            height: 1.19rem;
+            line-height: 1.19rem;
+            overflow: hidden;
+        }
+
+        .evalu_start .evalu_left {
+            font-size: .28rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            padding: 0 .25rem 0 .29rem;
+        }
+
+        .evalu_start .start img {
+            width: .4rem;
+            height: .4rem;
+            margin-right: .19rem;
+        }
+
+        /* 底部 */
+        .submit {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: .98rem;
+            background: #ccc;
+            text-align: center;
+            line-height: .98rem;
+            color: #FFF;
+            font-weight: bold;
+        }
+        .submitactive{
+            background: rgba(0, 134, 247, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" v-cloak>
+        <v-loading v-show="loading" :opt="opt"></v-loading>
+    <div class="top flex space-between align-items">
+        <div class="i">
+            <i class="iconfont iconfanhui"></i>
+        </div>
+        <div>评价</div>
+        <div class="content"></div>
+    </div>
+    <div class="evaluation">
+        <div class="evalu_main">
+            <div class="evalu_content flex">
+                <img src="../../image/gsj_write.png" alt="" srcset="">
+                <textarea name="" id="" cols="" rows="" placeholder="请输入您的评价内容" v-model="content"></textarea>
+            </div>
+            <div class="evalu_start flex">
+                <div class="evalu_left">评价星级</div>
+                <div class="start flex align-items">
+                    <img :src="[comment_rank >= 1 ? '../../image/gsj_star.png' :'../../image/gsj_stark.png']"  alt="" @click="setStar(1)">
+                    <img :src="[comment_rank >= 2 ? '../../image/gsj_star.png' :'../../image/gsj_stark.png']" alt="" @click="setStar(2)">
+                    <img :src="[comment_rank >= 3 ? '../../image/gsj_star.png' :'../../image/gsj_stark.png']" alt="" @click="setStar(3)">
+                    <img :src="[comment_rank >= 4 ? '../../image/gsj_star.png' :'../../image/gsj_stark.png']" alt="" @click="setStar(4)">
+                    <img :src="[comment_rank >= 5 ? '../../image/gsj_star.png' :'../../image/gsj_stark.png']" alt="" @click="setStar(5)">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="submit" @click="submitEve" :class="{submitactive:content != '' }">提交</div>
+    </div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/common.js"></script>
+    <script>
+        apiready = function(){
+            Vue.component('v-loading',{
+                template:'<div class="loading" :style="bgopt"><div class="middlews"><span class="left"></span><span class="right"></span></div></div>',
+                props:['opt'],
+                computed:{
+                    bgopt:function(){
+                        return {
+                            backgroundColor:"rgba(255,255,255,"+this.opt+")"
+                        }
+                    }
+                }
+            })
+            var root = new Vue({
+                el:"#root",
+                data:{
+                    order_id:"",
+                    content:"",
+                    comment_rank:5,
+                    loading:false,
+                    opt:'.65',
+                    type:"",
+                },
+                methods:{
+                    submitEve:function(){
+                        var _this = this;
+                        if (_this.content == "") {
+                            return false;
+                        }
+                        _this.loading = true;
+                        request('/my/order_pingjia',{order_id:_this.order_id,content:_this.content,comment_rank:_this.comment_rank,type:_this.type},function(err,res){
+                            _this.loading = false;
+                            if (!err && res.code == 1) {
+                                api.toast({msg:"评价成功"});
+                                api.sendEvent({name:"refreshOrder"})
+                                setTimeout(function(){api.closeToWin({name:"myorder"})},700);
+                            }else{
+                                console.log(JSON.stringify(res))
+                                err ? console.log('server500```/my/order_pingjia') : api.toast({msg:res.msg})
+                            }
+                        })
+                    },
+                    setStar:function(index){
+                        this.comment_rank = index;
+                    },
+                    back:function(){
+                        api.closeWin()
+                    }
+                },
+                mounted:function(){
+                    if (api.statusBarAppearance) {
+                        var safeArea = api.safeArea.top;
+                        var search = document.querySelector('.top');
+                        var main = document.querySelector('.evaluation');
+                        var th  = search.style.height;
+                        search.style.marginTop = safeArea + "px";
+                        main.style.paddingTop = safeArea+ 44 + "px";
+                    }
+                    this.order_id = api.pageParam.order_id;
+                    this.type = api.pageParam.type;
+                }
+            })
+        }
+            
+    </script>
+</body>
+
+</html>
